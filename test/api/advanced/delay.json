@@ -1,0 +1,24 @@
+{
+    "responses": [
+        {
+            "request": {
+                "parameters": {
+                    "foo": "foo"
+                }
+            },
+            "response": {
+                "status": 200,
+                "delay": 1000,
+                "body": {
+                    "message": "delayed"
+                }
+            }
+        }
+    ],
+    "defaultResponse": {
+        "status": 200,
+        "body": {
+            "message": "default"
+        }
+    }
+}

@@ -1,0 +1,6 @@
+{
+    "defaultResponse": {
+        "status": 200,
+        "body": { "id": "api" }
+    }
+}

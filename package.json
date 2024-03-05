@@ -1,0 +1,59 @@
+{
+  "name": "@forsakringskassan/apimock-express",
+  "version": "0.10.0",
+  "description": "Express middleware for mocking API calls with json & js files during development.",
+  "keywords": [
+    "rest",
+    "api",
+    "mock",
+    "middleware",
+    "express"
+  ],
+  "homepage": "https://github.com/Forsakringskassan/apimock-express",
+  "bugs": "https://github.com/Forsakringskassan/apimock-express/issues",
+  "repository": {
+    "url": "https://github.com/Forsakringskassan/apimock-express.git"
+  },
+  "license": "MIT",
+  "author": "Försäkringskassan",
+  "main": "main.js",
+  "files": [
+    "helpers.js",
+    "helpers.d.ts",
+    "main.js",
+    "main.d.ts",
+    "mockfile.d.ts"
+  ],
+  "scripts": {
+    "eslint": "eslint .",
+    "eslint:fix": "eslint --fix .",
+    "prettier:check": "prettier --check .",
+    "prettier:write": "prettier --write .",
+    "pretest": "run-s prettier:check eslint",
+    "test": "mocha --exit test/**/*.js"
+  },
+  "prettier": "@forsakringskassan/prettier-config",
+  "release": {
+    "extends": "@forsakringskassan/semantic-release-config"
+  },
+  "dependencies": {
+    "cli-table": "^0.3.0",
+    "debug": "^4.0.0",
+    "glob": "^7.0.0"
+  },
+  "devDependencies": {
+    "@forsakringskassan/eslint-config": "10.2.0",
+    "@forsakringskassan/eslint-config-cli": "10.2.0",
+    "@forsakringskassan/eslint-config-typescript": "10.2.0",
+    "@forsakringskassan/prettier-config": "1.4.0",
+    "chai": "4.4.1",
+    "express": "4.18.3",
+    "mocha": "10.3.0",
+    "npm-pkg-lint": "2.2.0",
+    "npm-run-all2": "6.1.2",
+    "request": "2.88.2"
+  },
+  "engines": {
+    "node": ">= 16"
+  }
+}

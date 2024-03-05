@@ -1,0 +1,37 @@
+{
+    "responses": [
+        {
+            "request": {
+                "headers": {
+                    "header1": "one",
+                    "header2": "two"
+                }
+            },
+            "response": {
+                "status": 401,
+                "body": {
+                    "message": "onetwo"
+                }
+            }
+        },
+        {
+            "request": {
+                "headers": {
+                    "header1": "one"
+                }
+            },
+            "response": {
+                "status": 402,
+                "body": {
+                    "message": "one"
+                }
+            }
+        }
+    ],
+    "defaultResponse": {
+        "status": 201,
+        "body": {
+            "message": "foofoofoo"
+        }
+    }
+}
