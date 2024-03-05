@@ -1,6 +1,6 @@
 {
   "name": "@forsakringskassan/apimock-express",
-  "version": "0.10.0",
+  "version": "1.0.0",
   "description": "Express middleware for mocking API calls with json & js files during development.",
   "keywords": [
     "rest",
