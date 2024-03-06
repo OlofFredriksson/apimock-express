@@ -53,6 +53,14 @@
     "npm-run-all2": "6.1.2",
     "request": "2.88.2"
   },
+  "peerDependencies": {
+    "vite": "^4 || ^5"
+  },
+  "peerDependenciesMeta": {
+    "vite": {
+      "optional": true
+    }
+  },
   "engines": {
     "node": ">= 16"
   }

@@ -62,3 +62,13 @@ export function mockRequest(
     response: Response,
     next: NextFunction,
 ): void;
+
+/**
+ * Vite plugin for apimock-express.
+ *
+ * @param mocks - Mock configuration
+ * @returns A Vite plugin instance.
+ */
+export function vitePlugin(mocks: MockEntry[]): {
+    name: "apimock-plugin";
+};

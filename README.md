@@ -15,6 +15,7 @@ Major differences from the original:
 -   Improved and configurable logging.
 -   Helpers such as `defineMock` to assist IDE writing mocks.
 -   Typescript support.
+-   Builtin Vite Plugin.
 
 ## Usage
 
@@ -63,22 +64,14 @@ app.listen(3000);
 
 ```ts
 import { defineConfig } from "vite";
-
-/* setup mocks */
-apimock.config([
-    { url: "/api/foo", dir: "tests/mock/foo" },
-    { url: "/api/bar", dir: "tests/mock/bar" },
-]);
+import { vitePlugin as apimockPlugin } from "@forsakringskassan/apimock-express";
 
 export default defineConfig({
     plugins: [
-        {
-            name: "apimock-plugin",
-            configureServer(server) {
-                /* install middleware */
-                server.middlewares.use("/", apimockExpress.mockRequest);
-            },
-        },
+        apimockPlugin([
+            { url: "/api/foo", dir: "tests/mock/foo" },
+            { url: "/api/bar", dir: "tests/mock/bar" },
+        ]),
     ],
 });
 ```

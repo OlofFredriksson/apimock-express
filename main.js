@@ -7,6 +7,10 @@ const Table = require("cli-table");
 const { version } = require("./package.json");
 
 /**
+ * @typedef {import("vite").Plugin} Plugin
+ */
+
+/**
  * @typedef {import("./main").MockEntry} MockEntry
  * @typedef {import("./main").MiddlewareConfiguration} MiddlewareConfiguration
  */
@@ -51,7 +55,7 @@ function toArray(value) {
     return Array.isArray(value) ? value : [value];
 }
 
-module.exports = {
+const apimock = {
     /**
      * Configuration of the mock.
      *
@@ -139,7 +143,25 @@ module.exports = {
             respondData(res, response);
         }
     },
+
+    /**
+     * Vite plugin for apimock-express.
+     *
+     * @param {MockEntry[]} mocks - Mock configuration
+     * @returns {Plugin}
+     */
+    vitePlugin(mocks) {
+        return {
+            name: "apimock-plugin",
+            configureServer(server) {
+                apimock.config(mocks);
+                server.middlewares.use("/", apimock.mockRequest);
+            },
+        };
+    },
 };
+
+module.exports = apimock;
 
 /**
  * Extracts filecontent for both js and json files
