@@ -1,18 +1,9 @@
-const fs = require("fs");
-const chai = require("chai");
-const request = require("request");
-
-const expect = chai.expect;
+import fs from "node:fs";
+import { expect } from "chai";
+import request from "request";
+import { hostname } from "../../test-server.mjs";
 
 describe("Multiconfig", function () {
-    let server;
-    let hostname;
-
-    before(function () {
-        server = require("./../../test-server");
-        hostname = `localhost:${server.address().port}`;
-    });
-
     it("Local config GET /api2/simple/users/ should return test/api/simple/users.json", function (done) {
         const expectedBody = fs.readFileSync("test/api/simple/users.json", {
             encoding: "utf-8",

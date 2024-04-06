@@ -10,7 +10,20 @@ module.exports = {
             extends: ["@forsakringskassan/typescript"],
         },
         {
-            files: "*.spec.[jt]s",
+            files: "*.mjs",
+            rules: {
+                "import/extensions": [
+                    "error",
+                    "never",
+                    {
+                        json: "always",
+                        mjs: "always",
+                    },
+                ],
+            },
+        },
+        {
+            files: "*.spec.mjs",
             env: {
                 mocha: true,
             },

@@ -1,18 +1,9 @@
-const fs = require("fs");
-const chai = require("chai");
-const request = require("request");
-
-const expect = chai.expect;
+import fs from "node:fs";
+import { expect } from "chai";
+import request from "request";
+import { hostname } from "../../test-server.mjs";
 
 describe("Url matching", function () {
-    let server;
-    let hostname;
-
-    before(function () {
-        server = require("./../../test-server");
-        hostname = `localhost:${server.address().port}`;
-    });
-
     it("A correct url that starts with mock url should match", function (done) {
         const expectedBody = fs.readFileSync("test/api/simple/users.json", {
             encoding: "utf-8",

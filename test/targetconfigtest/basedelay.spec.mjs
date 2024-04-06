@@ -1,18 +1,9 @@
-const chai = require("chai");
-
-const expect = chai.expect;
-const request = require("request");
+import { expect } from "chai";
+import request from "request";
+import { hostname } from "../../test-server.mjs";
 
 describe("Basedelay", function () {
     const DELAY_TIME = 1000;
-
-    let server;
-    let hostname;
-
-    before(function () {
-        server = require("./../../test-server");
-        hostname = `localhost:${server.address().port}`;
-    });
 
     describe("simple mockformat", function () {
         it("GET /api2/hello should not be delayed", function (done) {
