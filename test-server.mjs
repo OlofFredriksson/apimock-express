@@ -1,5 +1,7 @@
-const express = require("express");
-const mock = require("./main");
+import express from "express";
+
+/* eslint-disable-next-line import/extensions -- esm requires extension */
+import mock from "./main.js";
 
 const app = express();
 
@@ -21,5 +23,6 @@ const server = app.listen(0, function () {
     const addr = server.address();
     console.log("Example app listening at port", addr.port);
 });
+const hostname = `localhost:${server.address().port}`;
 
-module.exports = server;
+export { server, hostname };

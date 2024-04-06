@@ -1,17 +1,8 @@
-const chai = require("chai");
-
-const expect = chai.expect;
-const request = require("request");
+import { expect } from "chai";
+import request from "request";
+import { hostname } from "../../test-server.mjs";
 
 describe("Wildcard", function () {
-    let server;
-    let hostname;
-
-    before(function () {
-        server = require("./../../test-server");
-        hostname = `localhost:${server.address().port}`;
-    });
-
     it("should pick wildcard file for GET if specific not found", function (done) {
         const requestbody = {};
         request.get(

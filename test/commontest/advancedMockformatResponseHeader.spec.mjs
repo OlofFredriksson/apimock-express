@@ -1,17 +1,8 @@
-const chai = require("chai");
-
-const expect = chai.expect;
-const request = require("request");
+import { expect } from "chai";
+import request from "request";
+import { hostname } from "../../test-server.mjs";
 
 describe("Advanced mockformat", function () {
-    let server;
-    let hostname;
-
-    before(function () {
-        server = require("../../test-server");
-        hostname = `localhost:${server.address().port}`;
-    });
-
     describe("Headers", function () {
         it("POST /headers/sign should respond with 302 redirect", function (done) {
             request.post(

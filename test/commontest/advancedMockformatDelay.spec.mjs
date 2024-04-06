@@ -1,17 +1,8 @@
-const chai = require("chai");
-
-const expect = chai.expect;
-const request = require("request");
+import { expect } from "chai";
+import request from "request";
+import { hostname } from "../../test-server.mjs";
 
 describe("Advanced mockformat", function () {
-    let server;
-    let hostname;
-
-    before(function () {
-        server = require("./../../test-server");
-        hostname = `localhost:${server.address().port}`;
-    });
-
     const DELAY_TIME = 1000;
 
     describe("Delay", function () {

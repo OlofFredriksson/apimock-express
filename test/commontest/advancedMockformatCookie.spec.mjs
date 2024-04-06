@@ -1,17 +1,8 @@
-const chai = require("chai");
-
-const expect = chai.expect;
-const request = require("request");
+import { expect } from "chai";
+import request from "request";
+import { hostname } from "../../test-server.mjs";
 
 describe("Advanced mockformat", function () {
-    let server;
-    let hostname;
-
-    before(function () {
-        server = require("./../../test-server");
-        hostname = `localhost:${server.address().port}`;
-    });
-
     describe("Cookies", function () {
         it("Should return the response for the first cookie match", function (done) {
             const headers = {

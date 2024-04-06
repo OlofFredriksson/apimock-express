@@ -30,7 +30,7 @@
     "prettier:check": "prettier --check .",
     "prettier:write": "prettier --write .",
     "pretest": "run-s prettier:check eslint",
-    "test": "mocha --exit test/**/*.js"
+    "test": "mocha --exit test/**/*.spec.mjs"
   },
   "prettier": "@forsakringskassan/prettier-config",
   "release": {
@@ -46,7 +46,7 @@
     "@forsakringskassan/eslint-config-cli": "10.3.0",
     "@forsakringskassan/eslint-config-typescript": "10.3.0",
     "@forsakringskassan/prettier-config": "1.4.0",
-    "chai": "4.4.1",
+    "chai": "5.1.0",
     "express": "4.19.2",
     "mocha": "10.4.0",
     "npm-pkg-lint": "2.2.0",
