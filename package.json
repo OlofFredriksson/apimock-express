@@ -42,7 +42,7 @@
     "glob": "^7.0.0"
   },
   "devDependencies": {
-    "@forsakringskassan/eslint-config": "10.3.3",
+    "@forsakringskassan/eslint-config": "10.3.4",
     "@forsakringskassan/eslint-config-cli": "10.3.0",
     "@forsakringskassan/eslint-config-typescript": "10.3.0",
     "@forsakringskassan/prettier-config": "1.4.0",
