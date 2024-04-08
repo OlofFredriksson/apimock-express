@@ -45,7 +45,7 @@
     "@forsakringskassan/eslint-config": "11.0.0",
     "@forsakringskassan/eslint-config-cli": "11.0.0",
     "@forsakringskassan/eslint-config-typescript": "11.0.0",
-    "@forsakringskassan/prettier-config": "1.4.0",
+    "@forsakringskassan/prettier-config": "2.0.1",
     "chai": "5.1.0",
     "express": "4.19.2",
     "mocha": "10.4.0",
