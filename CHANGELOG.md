@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## [1.2.1](https://github.com/Forsakringskassan/apimock-express/compare/v1.2.0...v1.2.1) (2024-05-17)
+
+
+### Bug Fixes
+
+* **deps:** update dependency glob to v10.3.14 ([1dce60e](https://github.com/Forsakringskassan/apimock-express/commit/1dce60e806a37482c7fd3bf718d48277bb3827a2))
+* **deps:** update dependency glob to v10.3.15 ([9c138df](https://github.com/Forsakringskassan/apimock-express/commit/9c138df6c43bdff204a0c056bfa9a207f9eaa16f))
+
 ## [1.2.0](https://github.com/Forsakringskassan/apimock-express/compare/v1.1.0...v1.2.0) (2024-04-06)
 
 
