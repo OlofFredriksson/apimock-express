@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## [1.2.3](https://github.com/Forsakringskassan/apimock-express/compare/v1.2.2...v1.2.3) (2024-06-07)
+
+
+### Bug Fixes
+
+* **deps:** update dependency debug to v4.3.5 ([9de73f9](https://github.com/Forsakringskassan/apimock-express/commit/9de73f9c769cbb826bd9773269e9a9048649fb3f))
+
 ## [1.2.2](https://github.com/Forsakringskassan/apimock-express/compare/v1.2.1...v1.2.2) (2024-05-31)
 
 
