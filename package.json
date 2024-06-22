@@ -42,9 +42,9 @@
     "glob": "^10.0.0"
   },
   "devDependencies": {
-    "@forsakringskassan/eslint-config": "11.0.5",
-    "@forsakringskassan/eslint-config-cli": "11.0.0",
-    "@forsakringskassan/eslint-config-typescript": "11.0.6",
+    "@forsakringskassan/eslint-config": "11.1.0",
+    "@forsakringskassan/eslint-config-cli": "11.1.0",
+    "@forsakringskassan/eslint-config-typescript": "11.1.0",
     "@forsakringskassan/prettier-config": "2.1.0",
     "chai": "5.1.1",
     "express": "4.19.2",
