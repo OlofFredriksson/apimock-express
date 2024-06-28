@@ -44,7 +44,7 @@
   "devDependencies": {
     "@forsakringskassan/eslint-config": "11.1.0",
     "@forsakringskassan/eslint-config-cli": "11.1.0",
-    "@forsakringskassan/eslint-config-typescript": "11.1.1",
+    "@forsakringskassan/eslint-config-typescript": "11.1.2",
     "@forsakringskassan/prettier-config": "2.1.0",
     "chai": "5.1.1",
     "express": "4.19.2",
