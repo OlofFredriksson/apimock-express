@@ -411,6 +411,7 @@ function respondData(res, response) {
  * parameters, body, headers or cookies.
  * If no match could be found, then return the default response.
  */
+/* eslint-disable-next-line max-params -- technical debt */
 function selectResponse(
     res,
     mockdata,
