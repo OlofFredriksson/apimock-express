@@ -1,95 +1,88 @@
 import { expect } from "chai";
-import request from "request";
+import fetch from "node-fetch";
 import { hostname } from "../../test-server.mjs";
 
 describe("Advanced mockformat", function () {
     describe("Cookies", function () {
-        it("Should return the response for the first cookie match", function (done) {
+        it("Should return the response for the first cookie match", async () => {
             const headers = {
                 Cookie: "foo=foo",
             };
-            request.get(
-                `http://${hostname}/api/advanced/cookie`,
-                { headers: headers },
-                function (err, res, body) {
-                    expect(res.statusCode).to.equal(400);
-                    expect(res.headers["content-type"]).to.equal(
-                        "application/json;charset=UTF-8",
-                    );
-                    expect(body).to.equal('{"message":"foo"}');
-                    done();
-                },
+            const res = await fetch(`http://${hostname}/api/advanced/cookie`, {
+                method: "get",
+                headers: headers,
+            });
+            const body = await res.json();
+            expect(res.status).to.equal(400);
+            expect(res.headers.get("content-type")).to.equal(
+                "application/json;charset=UTF-8",
             );
+            expect(body).to.deep.equal({ message: "foo" });
         });
 
-        it("Should return the response for the second cookie match", function (done) {
+        it("Should return the response for the second cookie match", async () => {
             const headers = {
                 Cookie: "foo=bar",
             };
-            request.get(
-                `http://${hostname}/api/advanced/cookie`,
-                { headers: headers },
-                function (err, res, body) {
-                    expect(res.statusCode).to.equal(200);
-                    expect(res.headers["content-type"]).to.equal(
-                        "application/json;charset=UTF-8",
-                    );
-                    expect(body).to.equal('{"message":"bar"}');
-                    done();
-                },
+            const res = await fetch(`http://${hostname}/api/advanced/cookie`, {
+                method: "get",
+                headers: headers,
+            });
+            const body = await res.json();
+            expect(res.status).to.equal(200);
+            expect(res.headers.get("content-type")).to.equal(
+                "application/json;charset=UTF-8",
             );
+            expect(body).to.deep.equal({ message: "bar" });
         });
 
-        it("Should return the default response if no match", function (done) {
+        it("Should return the default response if no match", async () => {
             const headers = {
                 Cookie: "asdf=asdf",
             };
-            request.get(
-                `http://${hostname}/api/advanced/cookie`,
-                { headers: headers },
-                function (err, res, body) {
-                    expect(res.statusCode).to.equal(201);
-                    expect(res.headers["content-type"]).to.equal(
-                        "application/json;charset=UTF-8",
-                    );
-                    expect(body).to.equal('{"message":"foofoofoo"}');
-                    done();
-                },
+            const res = await fetch(`http://${hostname}/api/advanced/cookie`, {
+                method: "get",
+                headers: headers,
+            });
+            const body = await res.json();
+            expect(res.status).to.equal(201);
+            expect(res.headers.get("content-type")).to.equal(
+                "application/json;charset=UTF-8",
             );
+            expect(body).to.deep.equal({ message: "foofoofoo" });
         });
 
-        it("Should return the default response if no cookies in mockfile", function (done) {
+        it("Should return the default response if no cookies in mockfile", async () => {
             const headers = {
                 Cookie: "foo=foo",
             };
-            request.get(
+            const res = await fetch(
                 `http://${hostname}/api/advanced/cookie_no_cookies`,
-                { headers: headers },
-                function (err, res, body) {
-                    expect(res.statusCode).to.equal(201);
-                    expect(res.headers["content-type"]).to.equal(
-                        "application/json;charset=UTF-8",
-                    );
-                    expect(body).to.equal('{"message":"foofoofoo"}');
-                    done();
+                {
+                    method: "get",
+                    headers: headers,
                 },
             );
+            const body = await res.json();
+            expect(res.status).to.equal(201);
+            expect(res.headers.get("content-type")).to.equal(
+                "application/json;charset=UTF-8",
+            );
+            expect(body).to.deep.equal({ message: "foofoofoo" });
         });
 
-        it("Should return the default response if no cookies in request", function (done) {
+        it("Should return the default response if no cookies in request", async () => {
             const headers = {};
-            request.get(
-                `http://${hostname}/api/advanced/cookie`,
-                { headers: headers },
-                function (err, res, body) {
-                    expect(res.statusCode).to.equal(201);
-                    expect(res.headers["content-type"]).to.equal(
-                        "application/json;charset=UTF-8",
-                    );
-                    expect(body).to.equal('{"message":"foofoofoo"}');
-                    done();
-                },
+            const res = await fetch(`http://${hostname}/api/advanced/cookie`, {
+                method: "get",
+                headers: headers,
+            });
+            const body = await res.json();
+            expect(res.status).to.equal(201);
+            expect(res.headers.get("content-type")).to.equal(
+                "application/json;charset=UTF-8",
             );
+            expect(body).to.deep.equal({ message: "foofoofoo" });
         });
     });
 });

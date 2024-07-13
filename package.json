@@ -38,7 +38,7 @@
   },
   "dependencies": {
     "cli-table": "^0.3.0",
-    "debug": "^4.0.0",
+    "debug": "^4.3.2",
     "glob": "^10.0.0"
   },
   "devDependencies": {
@@ -49,9 +49,9 @@
     "chai": "5.1.1",
     "express": "4.19.2",
     "mocha": "10.6.0",
+    "node-fetch": "3.3.2",
     "npm-pkg-lint": "2.4.1",
-    "npm-run-all2": "6.2.2",
-    "request": "2.88.2"
+    "npm-run-all2": "6.2.2"
   },
   "peerDependencies": {
     "vite": "^4 || ^5"
@@ -62,6 +62,6 @@
     }
   },
   "engines": {
-    "node": ">= 16"
+    "node": ">= 16.14"
   }
 }
