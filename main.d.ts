@@ -37,38 +37,61 @@ export interface MockEntry {
  * Configuration options for the middleware.
  */
 export interface MiddlewareConfiguration {
-    verbose: boolean;
+    /**
+     * If enabled a summary of the configured mock will be displayed. Default is
+     *`true`.
+     */
+    verbose?: boolean;
 }
 
 /**
- * Configure apimock-express.
+ * Options for Vite plugin.
  */
-export function config(
-    mocks: MockEntry | MockEntry[],
-    config?: Partial<MiddlewareConfiguration>,
-): void;
+export interface VitePluginOptions extends MiddlewareConfiguration {
+    /**
+     * Enable/disable plugin. Can optionally be set to which command to enable
+     * the plugin for. Default is `true` (enabled for all commands).
+     */
+    enabled?: "serve" | "preview" | boolean;
+}
 
-/**
- * Express/Connect middleware.
- *
- * Usage:
- *
- * ```ts
- * app.use("*", mockRequest);
- * ```
- */
-export function mockRequest(
-    request: Request,
-    response: Response,
-    next: NextFunction,
-): void;
+declare namespace apimock {
+    /**
+     * Configure apimock-express.
+     */
+    function config(
+        mocks: MockEntry | MockEntry[],
+        config?: Partial<MiddlewareConfiguration>,
+    ): void;
 
-/**
- * Vite plugin for apimock-express.
- *
- * @param mocks - Mock configuration
- * @returns A Vite plugin instance.
- */
-export function vitePlugin(mocks: MockEntry[]): {
-    name: "apimock-plugin";
-};
+    /**
+     * Express/Connect middleware.
+     *
+     * Usage:
+     *
+     * ```ts
+     * app.use("*", mockRequest);
+     * ```
+     */
+    function mockRequest(
+        request: Request,
+        response: Response,
+        next: NextFunction,
+    ): void;
+
+    /**
+     * Vite plugin for apimock-express.
+     *
+     * @param mocks - Mock configuration
+     * @param options - Plugin options
+     * @returns A Vite plugin instance.
+     */
+    export function vitePlugin(
+        mocks: MockEntry[],
+        options?: VitePluginOptions,
+    ): {
+        name: "apimock-plugin";
+    };
+}
+
+export = apimock;
