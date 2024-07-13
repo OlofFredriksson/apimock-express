@@ -1,32 +1,28 @@
 import { expect } from "chai";
-import request from "request";
+import fetch from "node-fetch";
 import { hostname } from "../../test-server.mjs";
 
 describe("Wildcard", function () {
-    it("should pick wildcard file for GET if specific not found", function (done) {
-        const requestbody = {};
-        request.get(
-            `http://${hostname}/api/wildcard/123`,
-            { json: requestbody },
-            function (err, res, body) {
-                expect(res.statusCode).to.equal(200);
-                expect(body).to.deep.equal({ message: "Wildcard GET" });
-                done();
-            },
-        );
+    it("should pick wildcard file for GET if specific not found", async () => {
+        const res = await fetch(`http://${hostname}/api/wildcard/123`, {
+            method: "get",
+        });
+        const body = await res.json();
+        expect(res.status).to.equal(200);
+        expect(body).to.deep.equal({ message: "Wildcard GET" });
     });
 
-    it("should pick wildcard file for POST if specific not found", function (done) {
+    it("should pick wildcard file for POST if specific not found", async () => {
         const requestbody = {};
-        request.post(
-            `http://${hostname}/api/wildcard/123`,
-            { json: requestbody },
-            function (err, res, body) {
-                expect(res.statusCode).to.equal(200);
-                expect(body).to.deep.equal({ message: "Wildcard POST" });
-
-                done();
+        const res = await fetch(`http://${hostname}/api/wildcard/123`, {
+            method: "post",
+            body: JSON.stringify(requestbody),
+            headers: {
+                "Content-Type": "application/json",
             },
-        );
+        });
+        const body = await res.json();
+        expect(res.status).to.equal(200);
+        expect(body).to.deep.equal({ message: "Wildcard POST" });
     });
 });

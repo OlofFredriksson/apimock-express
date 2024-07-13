@@ -1,115 +1,112 @@
 import { expect } from "chai";
-import request from "request";
+import fetch from "node-fetch";
 import { hostname } from "../../test-server.mjs";
 
 describe("Advanced mockformat", function () {
     describe("Errors", function () {
-        it("Should return an empty string for an empty file", function (done) {
-            request.get(
+        it("Should return an empty string for an empty file", async () => {
+            const res = await fetch(
                 `http://${hostname}/api/advanced/emptyfile`,
-                function (err, res, body) {
-                    expect(res.statusCode).to.equal(200);
-                    expect(res.headers["content-type"]).to.equal(
-                        "application/json;charset=UTF-8",
-                    );
-                    expect(body).to.equal("");
-                    done();
-                },
+                { method: "get" },
             );
+            const body = await res.text();
+            expect(res.status).to.equal(200);
+            expect(res.headers.get("content-type")).to.equal(
+                "application/json;charset=UTF-8",
+            );
+            expect(body).to.equal("");
         });
 
-        it("Should return the default response if only default response", function (done) {
-            request.get(
+        it("Should return the default response if only default response", async () => {
+            const res = await fetch(
                 `http://${hostname}/api/advanced/only_defaultresponse`,
-                function (err, res, body) {
-                    expect(res.statusCode).to.equal(201);
-                    expect(res.headers["content-type"]).to.equal(
-                        "application/json;charset=UTF-8",
-                    );
-                    expect(body).to.equal('{"message":"foofoofoo"}');
-                    done();
-                },
+                { method: "get" },
             );
+            const body = await res.json();
+            expect(res.status).to.equal(201);
+            expect(res.headers.get("content-type")).to.equal(
+                "application/json;charset=UTF-8",
+            );
+            expect(body).to.deep.equal({ message: "foofoofoo" });
         });
 
-        it("Should return an empty string if no body in only default response", function (done) {
-            request.get(
+        it("Should return an empty string if no body in only default response", async () => {
+            const res = await fetch(
                 `http://${hostname}/api/advanced/only_defaultresponse_no_body`,
-                function (err, res, body) {
-                    expect(res.statusCode).to.equal(201);
-                    expect(res.headers["content-type"]).to.equal(
-                        "application/json;charset=UTF-8",
-                    );
-                    expect(body).to.equal("");
-                    done();
-                },
+                { method: "get" },
             );
+            const body = await res.text();
+            expect(res.status).to.equal(201);
+            expect(res.headers.get("content-type")).to.equal(
+                "application/json;charset=UTF-8",
+            );
+            expect(body).to.equal("");
         });
 
-        it("Should return the default status if no status in only default response", function (done) {
-            request.get(
+        it("Should return the default status if no status in only default response", async () => {
+            const res = await fetch(
                 `http://${hostname}/api/advanced/only_defaultresponse_no_status`,
-                function (err, res, body) {
-                    expect(res.statusCode).to.equal(200);
-                    expect(res.headers["content-type"]).to.equal(
-                        "application/json;charset=UTF-8",
-                    );
-                    expect(body).to.equal('{"message":"foofoofoo"}');
-                    done();
-                },
+                { method: "get" },
             );
+            const body = await res.json();
+            expect(res.status).to.equal(200);
+            expect(res.headers.get("content-type")).to.equal(
+                "application/json;charset=UTF-8",
+            );
+            expect(body).to.deep.equal({ message: "foofoofoo" });
         });
 
-        it("Should return an error if the file is malformed", function (done) {
-            request.get(
+        it("Should return an error if the file is malformed", async () => {
+            const res = await fetch(
                 `http://${hostname}/api/advanced/malformedfile`,
-                function (err, res, body) {
-                    expect(res.statusCode).to.equal(500);
-                    expect(res.headers["content-type"]).to.equal(
-                        "application/json;charset=UTF-8",
-                    );
-                    expect(body).to.equal(
-                        '{"error":"Malformed mockfile. See server log"}',
-                    );
-                    done();
-                },
+                { method: "get" },
             );
+            const body = await res.json();
+            expect(res.status).to.equal(500);
+            expect(res.headers.get("content-type")).to.equal(
+                "application/json;charset=UTF-8",
+            );
+            expect(body).to.deep.equal({
+                error: "Malformed mockfile. See server log",
+            });
         });
 
-        it("Should return an error if the input body is malformed", function (done) {
-            const headers = {};
-            headers["Content-type"] = "application/json";
-            const options = { body: "{", headers: headers };
-            request.post(
+        it("Should return an error if the input body is malformed", async () => {
+            const res = await fetch(
                 `http://${hostname}/api/advanced/bodyparameter`,
-                options,
-                function (err, res, body) {
-                    expect(res.statusCode).to.equal(500);
-                    expect(res.headers["content-type"]).to.equal(
-                        "application/json;charset=UTF-8",
-                    );
-                    expect(body).to.equal('{"error":"Malformed input body"}');
-                    done();
+                {
+                    method: "post",
+                    body: "{",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
                 },
             );
+            const body = await res.json();
+            expect(res.status).to.equal(500);
+            expect(res.headers.get("content-type")).to.equal(
+                "application/json;charset=UTF-8",
+            );
+            expect(body).to.deep.equal({ error: "Malformed input body" });
         });
 
-        it("Should not parse the body, but return the default response if input body is not json", function (done) {
-            const headers = {};
-            headers["Content-type"] = "application/x-www-form-urlencoded";
-            const options = { body: "foo=bar", headers: headers };
-            request.post(
+        it("Should not parse the body, but return the default response if input body is not json", async () => {
+            const res = await fetch(
                 `http://${hostname}/api/advanced/bodyparameter`,
-                options,
-                function (err, res, body) {
-                    expect(res.statusCode).to.equal(201);
-                    expect(res.headers["content-type"]).to.equal(
-                        "application/json;charset=UTF-8",
-                    );
-                    expect(body).to.equal('{"message":"foofoofoo"}');
-                    done();
+                {
+                    method: "post",
+                    body: "foo=bar",
+                    headers: {
+                        "Content-Type": "application/x-www-form-urlencoded",
+                    },
                 },
             );
+            const body = await res.json();
+            expect(res.status).to.equal(201);
+            expect(res.headers.get("content-type")).to.equal(
+                "application/json;charset=UTF-8",
+            );
+            expect(body).to.deep.equal({ message: "foofoofoo" });
         });
     });
 });
