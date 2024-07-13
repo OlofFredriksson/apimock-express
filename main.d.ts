@@ -55,39 +55,43 @@ export interface VitePluginOptions extends MiddlewareConfiguration {
     enabled?: "serve" | "preview" | boolean;
 }
 
-/**
- * Configure apimock-express.
- */
-export function config(
-    mocks: MockEntry | MockEntry[],
-    config?: Partial<MiddlewareConfiguration>,
-): void;
+declare namespace apimock {
+    /**
+     * Configure apimock-express.
+     */
+    function config(
+        mocks: MockEntry | MockEntry[],
+        config?: Partial<MiddlewareConfiguration>,
+    ): void;
 
-/**
- * Express/Connect middleware.
- *
- * Usage:
- *
- * ```ts
- * app.use("*", mockRequest);
- * ```
- */
-export function mockRequest(
-    request: Request,
-    response: Response,
-    next: NextFunction,
-): void;
+    /**
+     * Express/Connect middleware.
+     *
+     * Usage:
+     *
+     * ```ts
+     * app.use("*", mockRequest);
+     * ```
+     */
+    function mockRequest(
+        request: Request,
+        response: Response,
+        next: NextFunction,
+    ): void;
 
-/**
- * Vite plugin for apimock-express.
- *
- * @param mocks - Mock configuration
- * @param options - Plugin options
- * @returns A Vite plugin instance.
- */
-export function vitePlugin(
-    mocks: MockEntry[],
-    options?: VitePluginOptions,
-): {
-    name: "apimock-plugin";
-};
+    /**
+     * Vite plugin for apimock-express.
+     *
+     * @param mocks - Mock configuration
+     * @param options - Plugin options
+     * @returns A Vite plugin instance.
+     */
+    export function vitePlugin(
+        mocks: MockEntry[],
+        options?: VitePluginOptions,
+    ): {
+        name: "apimock-plugin";
+    };
+}
+
+export = apimock;
