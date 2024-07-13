@@ -13,6 +13,7 @@ const { version } = require("./package.json");
 /**
  * @typedef {import("./main").MockEntry} MockEntry
  * @typedef {import("./main").MiddlewareConfiguration} MiddlewareConfiguration
+ * @typedef {import("./main").VitePluginOptions} VitePluginOptions
  */
 
 /** @type {MockEntry[]} */
@@ -148,18 +149,24 @@ const apimock = {
      * Vite plugin for apimock-express.
      *
      * @param {MockEntry[]} mocks - Mock configuration
+     * @param {VitePluginOptions} [options] - Options
      * @returns {Plugin}
      */
-    vitePlugin(mocks) {
+    vitePlugin(mocks, options = {}) {
+        const { enabled = true } = options;
         return {
             name: "apimock-plugin",
             configureServer(server) {
-                apimock.config(mocks);
-                server.middlewares.use("/", apimock.mockRequest);
+                if (enabled === true || enabled === "serve") {
+                    apimock.config(mocks, options);
+                    server.middlewares.use("/", apimock.mockRequest);
+                }
             },
             configurePreviewServer(server) {
-                apimock.config(mocks);
-                server.middlewares.use("/", apimock.mockRequest);
+                if (enabled === true || enabled === "preview") {
+                    apimock.config(mocks, options);
+                    server.middlewares.use("/", apimock.mockRequest);
+                }
             },
         };
     },

@@ -37,7 +37,22 @@ export interface MockEntry {
  * Configuration options for the middleware.
  */
 export interface MiddlewareConfiguration {
-    verbose: boolean;
+    /**
+     * If enabled a summary of the configured mock will be displayed. Default is
+     *`true`.
+     */
+    verbose?: boolean;
+}
+
+/**
+ * Options for Vite plugin.
+ */
+export interface VitePluginOptions extends MiddlewareConfiguration {
+    /**
+     * Enable/disable plugin. Can optionally be set to which command to enable
+     * the plugin for. Default is `true` (enabled for all commands).
+     */
+    enabled?: "serve" | "preview" | boolean;
 }
 
 /**
@@ -67,8 +82,12 @@ export function mockRequest(
  * Vite plugin for apimock-express.
  *
  * @param mocks - Mock configuration
+ * @param options - Plugin options
  * @returns A Vite plugin instance.
  */
-export function vitePlugin(mocks: MockEntry[]): {
+export function vitePlugin(
+    mocks: MockEntry[],
+    options?: VitePluginOptions,
+): {
     name: "apimock-plugin";
 };
