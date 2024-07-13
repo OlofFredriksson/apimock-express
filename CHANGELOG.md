@@ -1,5 +1,20 @@
 # CHANGELOG
 
+## [1.3.0](https://github.com/Forsakringskassan/apimock-express/compare/v1.2.5...v1.3.0) (2024-07-13)
+
+
+### Features
+
+* **vite:** configurable which commands to enable mocks for ([ef4ba33](https://github.com/Forsakringskassan/apimock-express/commit/ef4ba33e239f333fa35a58ecf72cf725987eb3d3))
+
+
+### Bug Fixes
+
+* **deps:** update dependency glob to v10.4.4 ([2cc46fb](https://github.com/Forsakringskassan/apimock-express/commit/2cc46fbc329e2cf63be7ca7219a110edd11e0f87))
+* **deps:** update dependency glob to v10.4.5 ([508074f](https://github.com/Forsakringskassan/apimock-express/commit/508074f4bdd4d76a4d22ff06f49af090cde9b5c1))
+* **typescript:** fix lack to default export in typescript typings ([cfd8e3d](https://github.com/Forsakringskassan/apimock-express/commit/cfd8e3d3130f31760c912b080d01a81e64878647))
+* **vite:** enable mocks in preview mode ([572b030](https://github.com/Forsakringskassan/apimock-express/commit/572b030d7b68350fcd2901a2f2bd5bcaeb6af548))
+
 ## [1.2.5](https://github.com/Forsakringskassan/apimock-express/compare/v1.2.4...v1.2.5) (2024-07-12)
 
 
