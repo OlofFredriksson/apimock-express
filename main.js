@@ -157,6 +157,10 @@ const apimock = {
                 apimock.config(mocks);
                 server.middlewares.use("/", apimock.mockRequest);
             },
+            configurePreviewServer(server) {
+                apimock.config(mocks);
+                server.middlewares.use("/", apimock.mockRequest);
+            },
         };
     },
 };
