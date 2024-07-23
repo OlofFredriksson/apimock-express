@@ -49,7 +49,7 @@
     "@forsakringskassan/prettier-config": "2.1.1",
     "chai": "5.1.1",
     "express": "4.19.2",
-    "mocha": "10.6.0",
+    "mocha": "10.7.0",
     "node-fetch": "3.3.2",
     "npm-pkg-lint": "3.6.5",
     "npm-run-all2": "6.2.2"
