@@ -17,21 +17,37 @@
   },
   "license": "MIT",
   "author": "Försäkringskassan",
-  "main": "main.js",
+  "exports": {
+    ".": {
+      "types": "./main.d.ts",
+      "import": "./dist/main.mjs",
+      "require": "./dist/main.cjs"
+    },
+    "./helpers": {
+      "types": "./helpers.d.ts",
+      "import": "./dist/helpers.mjs",
+      "require": "./dist/helpers.cjs"
+    },
+    "./mockfile": {
+      "types": "./main.d.ts"
+    }
+  },
+  "main": "dist/main.cjs",
+  "module": "dist/main.mjs",
   "files": [
-    "helpers.js",
+    "dist",
     "helpers.d.ts",
-    "main.js",
     "main.d.ts",
     "mockfile.d.ts"
   ],
   "scripts": {
+    "build": "node build.mjs",
     "eslint": "eslint .",
     "eslint:fix": "eslint --fix .",
     "prettier:check": "prettier --check .",
     "prettier:write": "prettier --write .",
     "pretest": "run-s prettier:check eslint",
-    "test": "mocha --exit test/**/*.spec.mjs"
+    "test": "mocha --exit --require @babel/register test/**/*.spec.mjs"
   },
   "prettier": "@forsakringskassan/prettier-config",
   "release": {
@@ -43,11 +59,15 @@
     "glob": "^10.0.0"
   },
   "devDependencies": {
+    "@babel/core": "7.25.2",
+    "@babel/preset-env": "7.25.4",
+    "@babel/register": "7.24.6",
     "@forsakringskassan/eslint-config": "11.2.5",
     "@forsakringskassan/eslint-config-cli": "11.2.0",
     "@forsakringskassan/eslint-config-typescript": "11.2.6",
     "@forsakringskassan/prettier-config": "2.1.1",
     "chai": "5.1.1",
+    "esbuild": "0.23.1",
     "express": "4.19.2",
     "mocha": "10.7.3",
     "node-fetch": "3.3.2",

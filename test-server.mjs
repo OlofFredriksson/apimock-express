@@ -1,7 +1,7 @@
 import express from "express";
 
 /* eslint-disable-next-line import/extensions -- esm requires extension */
-import mock from "./main.js";
+import mock from "./src/main.js";
 
 const app = express();
 

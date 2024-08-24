@@ -1,10 +1,14 @@
-const fs = require("fs");
-const path = require("path/posix");
-const url = require("url");
-const glob = require("glob");
-const debug = require("debug")("apimock");
-const Table = require("cli-table");
-const { version } = require("./package.json");
+import fs from "node:fs";
+import path from "node:path/posix";
+import url from "node:url";
+import { globSync } from "glob";
+import createDebug from "debug";
+import Table from "cli-table";
+
+const pkgPath = require.resolve("../package.json");
+const { version } = JSON.parse(fs.readFileSync(pkgPath, "utf-8"));
+
+const debug = createDebug("apimock");
 
 /**
  * @typedef {import("vite").Plugin} Plugin
@@ -226,9 +230,9 @@ function getFilepath(req, optionIndex) {
         "__default",
     )}.*{js,json}`;
     const globPattern = `${appendMethodType(req, filepath)}.*{js,json}`;
-    const files = glob.sync(globPattern);
+    const files = globSync(globPattern);
 
-    const wildcard = glob.sync(wildcardPattern);
+    const wildcard = globSync(wildcardPattern);
     if (files.length === 0) {
         if (wildcard.length === 1) {
             return wildcard[0];
