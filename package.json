@@ -19,28 +19,27 @@
   "author": "Försäkringskassan",
   "exports": {
     ".": {
-      "types": "./main.d.ts",
+      "types": "./dist/main.d.ts",
       "import": "./dist/main.mjs",
       "require": "./dist/main.cjs"
     },
     "./helpers": {
-      "types": "./helpers.d.ts",
+      "types": "./dist/helpers.d.ts",
       "import": "./dist/helpers.mjs",
       "require": "./dist/helpers.cjs"
     },
     "./mockfile": {
-      "types": "./main.d.ts"
+      "types": "./dist/mockfile.d.ts"
     }
   },
   "main": "dist/main.cjs",
   "module": "dist/main.mjs",
+  "types": "dist/main.d.ts",
   "files": [
-    "dist",
-    "helpers.d.ts",
-    "main.d.ts",
-    "mockfile.d.ts"
+    "dist"
   ],
   "scripts": {
+    "postbuild": "tsc",
     "build": "node build.mjs",
     "eslint": "eslint .",
     "eslint:fix": "eslint --fix .",
@@ -66,13 +65,17 @@
     "@forsakringskassan/eslint-config-cli": "11.2.0",
     "@forsakringskassan/eslint-config-typescript": "11.2.6",
     "@forsakringskassan/prettier-config": "2.1.1",
+    "@types/debug": "4.1.12",
+    "@types/node": "18.19.45",
     "chai": "5.1.1",
     "esbuild": "0.23.1",
     "express": "4.19.2",
     "mocha": "10.7.3",
     "node-fetch": "3.3.2",
     "npm-pkg-lint": "3.6.8",
-    "npm-run-all2": "6.2.2"
+    "npm-run-all2": "6.2.2",
+    "typescript": "5.5.4",
+    "vite": "5.4.2"
   },
   "peerDependencies": {
     "vite": "^4 || ^5"

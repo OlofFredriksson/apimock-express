@@ -11,16 +11,21 @@ const { version } = JSON.parse(fs.readFileSync(pkgPath, "utf-8"));
 const debug = createDebug("apimock");
 
 /**
- * @typedef {import("vite").Plugin} Plugin
+ * @typedef {import("./mock-entry").MockEntry} MockEntry
+ * @typedef {import("./normalized-entry").NormalizedEntry} NormalizedEntry
+ * @typedef {import("./middleware-configuration").MiddlewareConfiguration} MiddlewareConfiguration
+ * @typedef {import("./vite-plugin-options").VitePluginOptions} VitePluginOptions
  */
 
 /**
- * @typedef {import("./main").MockEntry} MockEntry
- * @typedef {import("./main").MiddlewareConfiguration} MiddlewareConfiguration
- * @typedef {import("./main").VitePluginOptions} VitePluginOptions
+ * @typedef {import("./mockfile").Mock} Mock
+ * @typedef {import("./mockfile").MockMatcher} MockMatcher
+ * @typedef {import("./mockfile").MockMeta} MockMeta
+ * @typedef {import("./mockfile").MockRequest} MockRequest
+ * @typedef {import("./mockfile").MockResponse} MockResponse
  */
 
-/** @type {MockEntry[]} */
+/** @type {NormalizedEntry[]} */
 let mockOptions = [];
 const defaultStatus = 200;
 const defaultContentType = "application/json;charset=UTF-8";
@@ -46,7 +51,7 @@ function findMachingIndex(url) {
         } else {
             debug(`Found another matching mock at ${i}:`, config);
         }
-        found = i;
+        found = parseInt(i, 10);
     }
     return found;
 }
@@ -62,12 +67,13 @@ function toArray(value) {
 
 const apimock = {
     /**
-     * Configuration of the mock.
+     * Configure apimock-express.
      *
      * @param {MockEntry | MockEntry[]} mocks
      * @param {Partial<MiddlewareConfiguration>} [userConfig]
+     * @returns {void}
      */
-    config: function (mocks, userConfig) {
+    config(mocks, userConfig) {
         const config = { ...defaultConfig, ...userConfig };
         const table = new Table({
             head: ["URL", "Directory", "Delay"],
@@ -77,7 +83,7 @@ const apimock = {
         });
 
         mockOptions = toArray(mocks).map((option) => {
-            /** @type {MockEntry} */
+            /** @type {NormalizedEntry} */
             const mockOption = {
                 mockurl: option.url,
                 mockdir: option.dir,
@@ -100,10 +106,21 @@ const apimock = {
     },
 
     /**
-     * The Connect middleware function that handles a request.
+     * Express/Connect middleware.
+     *
+     * Usage:
+     *
+     * ```ts
+     * app.use("*", mockRequest);
+     * ```
+     *
+     * @param {import("node:http").IncomingMessage & { originalUrl?: string }} req
+     * @param {import("node:http").ServerResponse} res
+     * @param {() => void} next
+     * @returns {void}
      */
-    mockRequest: function (req, res, next) {
-        const url = req.originalUrl;
+    mockRequest(req, res, next) {
+        const url = req.originalUrl ?? "";
         const optionIndex = findMachingIndex(url);
         if (optionIndex < 0) {
             const config = JSON.stringify(mockOptions, null, 4);
@@ -154,11 +171,11 @@ const apimock = {
      *
      * @param {MockEntry[]} mocks - Mock configuration
      * @param {VitePluginOptions} [options] - Options
-     * @returns {Plugin}
+     * @returns {{ name: string }}
      */
     vitePlugin(mocks, options = {}) {
         const { enabled = true } = options;
-        return {
+        return /** @type {import("vite").Plugin} */ ({
             name: "apimock-plugin",
             configureServer(server) {
                 if (enabled === true || enabled === "serve") {
@@ -172,11 +189,11 @@ const apimock = {
                     server.middlewares.use("/", apimock.mockRequest);
                 }
             },
-        };
+        });
     },
 };
 
-module.exports = apimock;
+export default apimock;
 
 /**
  * Extracts filecontent for both js and json files
@@ -500,6 +517,10 @@ function matchParameters(incomingParameters, mockParameters) {
     return true;
 }
 
+/**
+ * @param {string} filepath
+ * @returns {string}
+ */
 function appendMethodType(req, filepath) {
     if (req.method !== "GET") {
         filepath = `${filepath}_${req.method.toLowerCase()}`;
