@@ -1,6 +1,9 @@
 import fs from "node:fs/promises";
 import path from "node:path/posix";
+import { Extractor, ExtractorConfig } from "@microsoft/api-extractor";
 import * as esbuild from "esbuild";
+import { glob } from "glob";
+import isCI from "is-ci";
 
 const extension = {
     esm: ".mjs",
@@ -51,5 +54,42 @@ for (const format of ["cjs", "esm"]) {
 
     if (format === "esm") {
         console.log(await esbuild.analyzeMetafile(result.metafile));
+    }
+}
+
+const configFiles = await glob("config/api-extractor.*.json");
+const numFiles = configFiles.length;
+const strFiles = `${numFiles} file${numFiles === 1 ? "" : "s"}`;
+
+if (isCI) {
+    console.group(`Running API Extractor in CI mode on ${strFiles}:`);
+} else {
+    console.group(`Running API Extractor in local mode on ${strFiles}:`);
+}
+
+for (const filePath of configFiles) {
+    console.log(`- ${path.basename(filePath)}`);
+}
+console.groupEnd();
+console.log();
+
+for (const filePath of configFiles) {
+    const config = ExtractorConfig.loadFileAndPrepare(filePath);
+    const result = Extractor.invoke(config, {
+        localBuild: !isCI,
+        showVerboseMessages: true,
+    });
+
+    if (result.succeeded) {
+        console.log(`API Extractor completed successfully`);
+    } else {
+        const { errorCount, warningCount } = result;
+        console.error(
+            [
+                "API Extractor completed with",
+                `${errorCount} error(s) and ${warningCount} warning(s)`,
+            ].join("\n"),
+        );
+        process.exitCode = 1;
     }
 }

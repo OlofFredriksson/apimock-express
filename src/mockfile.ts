@@ -1,5 +1,7 @@
 /**
  * API metadata.
+ *
+ * @public
  */
 export interface MockMeta {
     /** Human readable title of this endpoint */
@@ -13,6 +15,7 @@ export interface MockMeta {
 /**
  * Describes a mock response.
  *
+ * @public
  * @typeParam T - The type of the response body.
  */
 export interface MockResponse<T = unknown> {
@@ -46,6 +49,7 @@ export interface MockResponse<T = unknown> {
 /**
  * Describes a request for the mock server to listen for.
  *
+ * @public
  * @typeParam T - The type of the request body.
  */
 export interface MockRequest<T = unknown> {
@@ -73,6 +77,7 @@ export interface MockRequest<T = unknown> {
 /**
  * Describes a mapping of a request to a specific mock response.
  *
+ * @public
  * @typeParam T - The type of the response body.
  * @typeParam U - The type of the request body.
  */
@@ -91,6 +96,7 @@ export interface MockMatcher<T = unknown, U = unknown> {
 /**
  * A complete mock description.
  *
+ * @public
  * @typeParam T - The type of the response bodies.
  * @typeParam U - The type of the request bodies.
  */

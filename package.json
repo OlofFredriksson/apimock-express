@@ -39,7 +39,7 @@
     "dist"
   ],
   "scripts": {
-    "postbuild": "tsc",
+    "prebuild": "tsc",
     "build": "node build.mjs",
     "eslint": "eslint .",
     "eslint:fix": "eslint --fix .",
@@ -65,11 +65,13 @@
     "@forsakringskassan/eslint-config-cli": "11.2.0",
     "@forsakringskassan/eslint-config-typescript": "11.2.6",
     "@forsakringskassan/prettier-config": "2.1.1",
+    "@microsoft/api-extractor": "7.47.7",
     "@types/debug": "4.1.12",
     "@types/node": "18.19.45",
     "chai": "5.1.1",
     "esbuild": "0.23.1",
     "express": "4.19.2",
+    "is-ci": "3.0.1",
     "mocha": "10.7.3",
     "node-fetch": "3.3.2",
     "npm-pkg-lint": "3.6.8",

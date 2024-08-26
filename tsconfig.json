@@ -10,7 +10,7 @@
         "allowJs": true,
         "checkJs": true,
         "declaration": true,
-        "declarationDir": "dist",
+        "declarationDir": "temp/types",
         "emitDeclarationOnly": true
     },
     "include": ["src/**/*.js", "src/**/*.ts"],
