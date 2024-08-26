@@ -30,4 +30,4 @@ jobs:
               if: matrix.node-version == '20.x'
               run: |
                   npm pack
-                  npm exec npm-pkg-lint -- --ignore-node-version=16
+                  npm exec npm-pkg-lint
