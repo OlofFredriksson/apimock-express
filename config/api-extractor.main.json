@@ -7,35 +7,5 @@
     },
     "dtsRollup": {
         "publicTrimmedFilePath": "<projectFolder>/dist/main.d.ts"
-    },
-    "messages": {
-        "extractorMessageReporting": {
-            "ae-missing-release-tag": {
-                "logLevel": "none",
-                "addToApiReportFile": true
-            }
-        },
-        "tsdocMessageReporting": {
-            "tsdoc-param-tag-missing-hyphen": {
-                "logLevel": "none",
-                "addToApiReportFile": true
-            },
-            "tsdoc-param-tag-with-invalid-type": {
-                "logLevel": "none",
-                "addToApiReportFile": true
-            },
-            "tsdoc-param-tag-with-invalid-optional-name": {
-                "logLevel": "none",
-                "addToApiReportFile": true
-            },
-            "tsdoc-escape-right-brace": {
-                "logLevel": "none",
-                "addToApiReportFile": true
-            },
-            "tsdoc-malformed-inline-tag": {
-                "logLevel": "none",
-                "addToApiReportFile": true
-            }
-        }
     }
 }

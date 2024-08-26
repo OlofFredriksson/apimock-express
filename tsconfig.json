@@ -7,12 +7,10 @@
         "noImplicitAny": false,
         "esModuleInterop": true,
         "moduleResolution": "bundler",
-        "allowJs": true,
-        "checkJs": true,
         "declaration": true,
         "declarationDir": "temp/types",
         "emitDeclarationOnly": true
     },
-    "include": ["src/**/*.js", "src/**/*.ts"],
+    "include": ["src/**/*.ts"],
     "exclude": ["node_modules"]
 }

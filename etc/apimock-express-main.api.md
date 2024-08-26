@@ -7,95 +7,70 @@
 import { IncomingMessage } from 'node:http';
 import { ServerResponse } from 'node:http';
 
-// Warning: (ae-missing-release-tag) "apimock" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
 // @public (undocumented)
-namespace apimock {
-    // Warning: (tsdoc-param-tag-missing-hyphen) The @param block should be followed by a parameter name and then a hyphen
-    // Warning: (tsdoc-param-tag-with-invalid-type) The @param block should not include a JSDoc-style '{type}'
-    // Warning: (tsdoc-param-tag-missing-hyphen) The @param block should be followed by a parameter name and then a hyphen
-    // Warning: (tsdoc-param-tag-with-invalid-optional-name) The @param should not include a JSDoc-style optional name; it must not be enclosed in '[ ]' brackets.
-    // Warning: (tsdoc-param-tag-with-invalid-type) The @param block should not include a JSDoc-style '{type}'
-    // Warning: (tsdoc-escape-right-brace) The "}" character should be escaped using a backslash to avoid confusion with a TSDoc inline tag
-    // Warning: (tsdoc-malformed-inline-tag) Expecting a TSDoc tag starting with "{@"
-    // Warning: (ae-forgotten-export) The symbol "MiddlewareConfiguration_2" needs to be exported by the entry point main.d.ts
-    function config(mocks: MockEntry | MockEntry[], userConfig?: Partial<MiddlewareConfiguration_2> | undefined): void;
-    // Warning: (tsdoc-param-tag-missing-hyphen) The @param block should be followed by a parameter name and then a hyphen
-    // Warning: (tsdoc-param-tag-with-invalid-type) The @param block should not include a JSDoc-style '{type}'
-    // Warning: (tsdoc-param-tag-missing-hyphen) The @param block should be followed by a parameter name and then a hyphen
-    // Warning: (tsdoc-param-tag-with-invalid-type) The @param block should not include a JSDoc-style '{type}'
-    // Warning: (tsdoc-param-tag-missing-hyphen) The @param block should be followed by a parameter name and then a hyphen
-    // Warning: (tsdoc-param-tag-with-invalid-type) The @param block should not include a JSDoc-style '{type}'
-    // Warning: (tsdoc-escape-right-brace) The "}" character should be escaped using a backslash to avoid confusion with a TSDoc inline tag
-    // Warning: (tsdoc-malformed-inline-tag) Expecting a TSDoc tag starting with "{@"
-    function mockRequest(req: IncomingMessage & {
-        originalUrl?: string;
-    }, res: ServerResponse, next: () => void): void;
-    // Warning: (tsdoc-param-tag-with-invalid-type) The @param block should not include a JSDoc-style '{type}'
-    // Warning: (tsdoc-param-tag-with-invalid-optional-name) The @param should not include a JSDoc-style optional name; it must not be enclosed in '[ ]' brackets.
-    // Warning: (tsdoc-param-tag-with-invalid-type) The @param block should not include a JSDoc-style '{type}'
-    // Warning: (tsdoc-escape-right-brace) The "}" character should be escaped using a backslash to avoid confusion with a TSDoc inline tag
-    // Warning: (tsdoc-escape-right-brace) The "}" character should be escaped using a backslash to avoid confusion with a TSDoc inline tag
-    // Warning: (tsdoc-malformed-inline-tag) Expecting a TSDoc tag starting with "{@"
-    // Warning: (tsdoc-malformed-inline-tag) Expecting a TSDoc tag starting with "{@"
-    // Warning: (ae-forgotten-export) The symbol "VitePluginOptions_2" needs to be exported by the entry point main.d.ts
-    function vitePlugin(mocks: MockEntry[], options?: VitePluginOptions_2 | undefined): {
+const apimock: {
+    config(mocks: MockEntry | MockEntry[], userConfig?: Partial<MiddlewareConfiguration>): void;
+    mockRequest(req: IncomingMessage, res: ServerResponse, next: () => void): void;
+    vitePlugin(mocks: MockEntry | MockEntry[], options?: Partial<VitePluginOptions>): {
         name: string;
     };
-}
+};
 export default apimock;
 
-// Warning: (ae-missing-release-tag) "MiddlewareConfiguration" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
-// @public (undocumented)
-export type MiddlewareConfiguration = MiddlewareConfiguration_2;
+// @public
+export interface MiddlewareConfiguration {
+    verbose?: boolean;
+}
 
-// Warning: (ae-forgotten-export) The symbol "Mock_2" needs to be exported by the entry point main.d.ts
-// Warning: (ae-missing-release-tag) "Mock" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
-// @public (undocumented)
-export type Mock = Mock_2;
+// @public
+export interface Mock<T = unknown, U = unknown> {
+    defaultResponse: MockResponse<T>;
+    // (undocumented)
+    meta?: MockMeta;
+    responses: Array<MockMatcher<T, U>>;
+}
 
-// Warning: (ae-forgotten-export) The symbol "MockEntry_2" needs to be exported by the entry point main.d.ts
-// Warning: (ae-missing-release-tag) "MockEntry" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
 // @public (undocumented)
-export type MockEntry = MockEntry_2;
+export interface MockEntry {
+    delay?: number;
+    dir: string;
+    url: string;
+}
 
-// Warning: (ae-forgotten-export) The symbol "MockMatcher_2" needs to be exported by the entry point main.d.ts
-// Warning: (ae-missing-release-tag) "MockMatcher" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
-// @public (undocumented)
-export type MockMatcher = MockMatcher_2;
+// @public
+export interface MockMatcher<T = unknown, U = unknown> {
+    request: MockRequest<U>;
+    response: MockResponse<T>;
+}
 
-// Warning: (ae-forgotten-export) The symbol "MockMeta_2" needs to be exported by the entry point main.d.ts
-// Warning: (ae-missing-release-tag) "MockMeta" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
-// @public (undocumented)
-export type MockMeta = MockMeta_2;
+// @public
+export interface MockMeta {
+    key?: string;
+    title?: string;
+}
 
-// Warning: (ae-forgotten-export) The symbol "MockRequest_2" needs to be exported by the entry point main.d.ts
-// Warning: (ae-missing-release-tag) "MockRequest" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
-// @public (undocumented)
-export type MockRequest = MockRequest_2;
+// @public
+export interface MockRequest<T = unknown> {
+    body?: T;
+    cookies?: Record<string, string>;
+    headers?: Record<string, string>;
+    parameters?: Record<string, string>;
+}
 
-// Warning: (ae-forgotten-export) The symbol "MockResponse_2" needs to be exported by the entry point main.d.ts
-// Warning: (ae-missing-release-tag) "MockResponse" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
-// @public (undocumented)
-export type MockResponse = MockResponse_2;
+// @public
+export interface MockResponse<T = unknown> {
+    body?: T;
+    delay?: number;
+    description?: string;
+    headers?: Record<string, string>;
+    label?: string;
+    status?: number;
+}
 
-// Warning: (ae-forgotten-export) The symbol "NormalizedEntry_2" needs to be exported by the entry point main.d.ts
-// Warning: (ae-missing-release-tag) "NormalizedEntry" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
-// @public (undocumented)
-export type NormalizedEntry = NormalizedEntry_2;
-
-// Warning: (ae-missing-release-tag) "VitePluginOptions" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
-// @public (undocumented)
-export type VitePluginOptions = VitePluginOptions_2;
+// @public
+export interface VitePluginOptions extends MiddlewareConfiguration {
+    enabled?: "serve" | "preview" | boolean;
+}
 
 // (No @packageDocumentation comment for this package)
 

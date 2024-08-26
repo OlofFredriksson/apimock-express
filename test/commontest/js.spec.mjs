@@ -1,6 +1,8 @@
 import { expect } from "chai";
 import fetch from "node-fetch";
-import { hostname } from "../../test-server.mjs";
+import pkg from "../../test-server.js";
+
+const { hostname } = pkg;
 
 describe("js mocks", function () {
     it("plain file", async () => {

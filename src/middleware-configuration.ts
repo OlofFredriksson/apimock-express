@@ -1,5 +1,7 @@
 /**
  * Configuration options for the middleware.
+ *
+ * @public
  */
 export interface MiddlewareConfiguration {
     /**

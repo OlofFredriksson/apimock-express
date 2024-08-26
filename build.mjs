@@ -34,7 +34,7 @@ await fs.rm("dist", { recursive: true, force: true });
 
 for (const format of ["cjs", "esm"]) {
     const result = await esbuild.build({
-        entryPoints: ["src/main.js", "src/helpers.ts"],
+        entryPoints: ["src/main.ts", "src/helpers.ts"],
         outdir: path.join("dist"),
         format,
         platform: "node",

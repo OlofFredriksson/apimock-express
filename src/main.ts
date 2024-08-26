@@ -1,45 +1,56 @@
 import fs from "node:fs";
+import {
+    type IncomingHttpHeaders,
+    type IncomingMessage,
+    type ServerResponse,
+} from "node:http";
 import path from "node:path/posix";
+import { type ParsedUrlQuery } from "node:querystring";
 import url from "node:url";
 import { globSync } from "glob";
 import createDebug from "debug";
 import Table from "cli-table";
+import { type Plugin } from "vite";
+import { type MiddlewareConfiguration } from "./middleware-configuration";
+import { type Mock, type MockResponse } from "./mockfile";
+import { type MockEntry } from "./mock-entry";
+import { type NormalizedEntry } from "./normalized-entry";
+import { VitePluginOptions } from "./vite-plugin-options";
+
+export { type MiddlewareConfiguration } from "./middleware-configuration";
+export {
+    type Mock,
+    type MockMatcher,
+    type MockMeta,
+    type MockRequest,
+    type MockResponse,
+} from "./mockfile";
+export { type MockEntry } from "./mock-entry";
+export { type VitePluginOptions } from "./vite-plugin-options";
+
+declare module "node:http" {
+    interface IncomingMessage {
+        originalUrl?: string;
+    }
+}
 
 const pkgPath = require.resolve("../package.json");
 const { version } = JSON.parse(fs.readFileSync(pkgPath, "utf-8"));
 
 const debug = createDebug("apimock");
 
-/**
- * @typedef {import("./mock-entry").MockEntry} MockEntry
- * @typedef {import("./normalized-entry").NormalizedEntry} NormalizedEntry
- * @typedef {import("./middleware-configuration").MiddlewareConfiguration} MiddlewareConfiguration
- * @typedef {import("./vite-plugin-options").VitePluginOptions} VitePluginOptions
- */
-
-/**
- * @typedef {import("./mockfile").Mock} Mock
- * @typedef {import("./mockfile").MockMatcher} MockMatcher
- * @typedef {import("./mockfile").MockMeta} MockMeta
- * @typedef {import("./mockfile").MockRequest} MockRequest
- * @typedef {import("./mockfile").MockResponse} MockResponse
- */
-
-/** @type {NormalizedEntry[]} */
-let mockOptions = [];
+let mockOptions: NormalizedEntry[] = [];
 const defaultStatus = 200;
 const defaultContentType = "application/json;charset=UTF-8";
 
-/** @type {MiddlewareConfiguration} */
-const defaultConfig = {
+const defaultConfig: MiddlewareConfiguration = {
     verbose: true,
 };
 
 /**
- * @param {string} url
- * @returns {number} Matching index or -1 if no match was found
+ * @returns Matching index or -1 if no match was found
  */
-function findMachingIndex(url) {
+function findMachingIndex(url: string): number {
     let found = -1;
     for (const i in mockOptions) {
         const config = mockOptions[i];
@@ -56,24 +67,21 @@ function findMachingIndex(url) {
     return found;
 }
 
-/**
- * @template T
- * @param {T | T[]} value
- * @returns {T[]}
- */
-function toArray(value) {
+function toArray<T>(value: T | T[]): T[] {
     return Array.isArray(value) ? value : [value];
 }
 
+/**
+ * @public
+ */
 const apimock = {
     /**
      * Configure apimock-express.
-     *
-     * @param {MockEntry | MockEntry[]} mocks
-     * @param {Partial<MiddlewareConfiguration>} [userConfig]
-     * @returns {void}
      */
-    config(mocks, userConfig) {
+    config(
+        mocks: MockEntry | MockEntry[],
+        userConfig: Partial<MiddlewareConfiguration> = {},
+    ): void {
         const config = { ...defaultConfig, ...userConfig };
         const table = new Table({
             head: ["URL", "Directory", "Delay"],
@@ -83,8 +91,7 @@ const apimock = {
         });
 
         mockOptions = toArray(mocks).map((option) => {
-            /** @type {NormalizedEntry} */
-            const mockOption = {
+            const mockOption: NormalizedEntry = {
                 mockurl: option.url,
                 mockdir: option.dir,
                 delay: option.delay,
@@ -113,13 +120,12 @@ const apimock = {
      * ```ts
      * app.use("*", mockRequest);
      * ```
-     *
-     * @param {import("node:http").IncomingMessage & { originalUrl?: string }} req
-     * @param {import("node:http").ServerResponse} res
-     * @param {() => void} next
-     * @returns {void}
      */
-    mockRequest(req, res, next) {
+    mockRequest(
+        req: IncomingMessage,
+        res: ServerResponse,
+        next: () => void,
+    ): void {
         const url = req.originalUrl ?? "";
         const optionIndex = findMachingIndex(url);
         if (optionIndex < 0) {
@@ -134,7 +140,7 @@ const apimock = {
         res.setHeader("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE");
         res.setHeader("Access-Control-Allow-Headers", "Content-Type");
 
-        const filepath = getFilepath(req, optionIndex);
+        const filepath = getFilepath(req, url, optionIndex);
         if (fs.existsSync(filepath)) {
             const fileContent = extractFileContent(filepath);
 
@@ -169,13 +175,15 @@ const apimock = {
     /**
      * Vite plugin for apimock-express.
      *
-     * @param {MockEntry[]} mocks - Mock configuration
-     * @param {VitePluginOptions} [options] - Options
-     * @returns {{ name: string }}
+     * @param mocks - Mock configuration
+     * @param options - Options
      */
-    vitePlugin(mocks, options = {}) {
+    vitePlugin(
+        mocks: MockEntry | MockEntry[],
+        options: Partial<VitePluginOptions> = {},
+    ): { name: string } {
         const { enabled = true } = options;
-        return /** @type {import("vite").Plugin} */ ({
+        const plugin: Plugin = {
             name: "apimock-plugin",
             configureServer(server) {
                 if (enabled === true || enabled === "serve") {
@@ -189,7 +197,8 @@ const apimock = {
                     server.middlewares.use("/", apimock.mockRequest);
                 }
             },
-        });
+        };
+        return plugin;
     },
 };
 
@@ -197,17 +206,14 @@ export default apimock;
 
 /**
  * Extracts filecontent for both js and json files
- *
- * @param {string} filepath
- * @returns {string}
  */
-function extractFileContent(filepath) {
+function extractFileContent(filepath: string): string {
     switch (path.extname(filepath)) {
         case ".json":
             return fs.readFileSync(filepath, { encoding: "utf8" });
         case ".js": {
-            /* eslint-disable-next-line import/no-dynamic-require -- filename
-             * depends on config and isn't known until runtime */
+            /* eslint-disable-next-line import/no-dynamic-require, @typescript-eslint/no-var-requires --
+             * filename depends on config and isn't known until runtime */
             let mock = require(path.resolve(filepath));
             if (mock.default) {
                 mock = mock.default;
@@ -224,8 +230,12 @@ function extractFileContent(filepath) {
 /**
  * Create the path to the mockfile depending on the request url and the http method.
  */
-function getFilepath(req, optionIndex) {
-    let filepath = req.originalUrl;
+function getFilepath(
+    req: IncomingMessage,
+    url: string,
+    optionIndex: number,
+): string {
+    let filepath = url;
     //remove mockurl beginning
     filepath = filepath.substring(mockOptions[optionIndex].mockurl.length);
     //remove trailing /
@@ -275,10 +285,11 @@ function getFilepath(req, optionIndex) {
 /**
  * Make sure that delay is a number or return a 0
  */
-function parseDelay(delay) {
+function parseDelay(delay: number | undefined): number {
     if (delay === undefined) {
         return 0;
     }
+    /* @ts-expect-error -- code doesn't make sense, technical debt. */
     if (!isNaN(parseFloat(delay)) && isFinite(delay)) {
         //delay is a number
         return delay;
@@ -287,11 +298,24 @@ function parseDelay(delay) {
     }
 }
 
+function isAdvancedMock(mock: unknown): mock is Mock {
+    if (mock === null || typeof mock !== "object") {
+        return false;
+    }
+    return "responses" in mock || "defaultResponse" in mock;
+}
+
 /**
  * Respond the mockfile data to the client
  */
-function respondWithMock(req, res, fileContent, filepath, baseDelay) {
-    let mockdata;
+function respondWithMock(
+    req: IncomingMessage,
+    res: ServerResponse,
+    fileContent: string,
+    filepath: string,
+    baseDelay: number,
+): void {
+    let mockdata: unknown;
     try {
         mockdata = JSON.parse(fileContent);
     } catch (err) {
@@ -303,10 +327,7 @@ function respondWithMock(req, res, fileContent, filepath, baseDelay) {
             },
         };
     }
-    if (
-        mockdata.responses === undefined &&
-        mockdata.defaultResponse === undefined
-    ) {
+    if (!isAdvancedMock(mockdata)) {
         //The mockfile has the simple format. Just respond with the mockfile content.
         setTimeout(simpleMockformat, baseDelay, res, filepath);
     } else {
@@ -319,7 +340,7 @@ function respondWithMock(req, res, fileContent, filepath, baseDelay) {
 /**
  * Respond with the mockfile content and the default status
  */
-function simpleMockformat(res, filepath) {
+function simpleMockformat(res: ServerResponse, filepath: string): void {
     res.writeHead(defaultStatus, { "Content-Type": defaultContentType });
     const filestream = fs.createReadStream(filepath);
     filestream.pipe(res);
@@ -328,10 +349,15 @@ function simpleMockformat(res, filepath) {
 /**
  * Parse the mockfile and respond with the selected response depending on the request
  */
-function advancedMockformat(req, res, mockdata, baseDelay) {
-    const requestParameters = url.parse(req.originalUrl, true).query;
+function advancedMockformat(
+    req: IncomingMessage,
+    res: ServerResponse,
+    mockdata: Mock,
+    baseDelay: number,
+): void {
+    const requestParameters = url.parse(req.originalUrl ?? "", true).query;
     const cookies = parseCookies(req);
-    let bodyParameters = {};
+    let bodyParameters: Record<string, unknown> = {};
     let body = "";
     req.on("data", function (chunk) {
         body += chunk;
@@ -344,7 +370,7 @@ function advancedMockformat(req, res, mockdata, baseDelay) {
             console.error(`Error parsing req ${req} body ${body}`, err);
             parseError = true;
         }
-        let selectedResponse;
+        let selectedResponse: MockResponse | undefined;
         if (parseError) {
             console.error(`Malformed input body. url: ${req.originalUrl}`);
             selectedResponse = {
@@ -353,7 +379,6 @@ function advancedMockformat(req, res, mockdata, baseDelay) {
             };
         } else {
             selectedResponse = selectResponse(
-                res,
                 mockdata,
                 requestParameters,
                 bodyParameters,
@@ -373,8 +398,8 @@ function advancedMockformat(req, res, mockdata, baseDelay) {
 /**
  * Parse the request cookies into a js object
  */
-function parseCookies(request) {
-    const cookies = {};
+function parseCookies(request: IncomingMessage): Record<string, string> {
+    const cookies: Record<string, string> = {};
     if (request.headers.cookie) {
         request.headers.cookie.split(";").forEach(function (cookie) {
             const parts = cookie.split("=");
@@ -389,8 +414,11 @@ function parseCookies(request) {
  * Then parse the json body into a js object.
  * Or return an empty object.
  */
-function parseBody(req, body) {
-    let bodyParameters = {};
+function parseBody(
+    req: IncomingMessage,
+    body: string,
+): Record<string, unknown> {
+    let bodyParameters: Record<string, unknown> = {};
     const contentType = req.headers["content-type"];
     if (contentType === undefined || body.length === 0) {
         //No Content-Type or no body. Don't parse the body
@@ -406,7 +434,10 @@ function parseBody(req, body) {
 /**
  * Write the selected response to the client.
  */
-function respondData(res, response) {
+function respondData(
+    res: ServerResponse,
+    response: MockResponse | undefined,
+): void {
     if (response) {
         let status = defaultStatus;
         if (typeof response === "string") {
@@ -420,7 +451,7 @@ function respondData(res, response) {
         const headers = response.headers || {
             "Content-Type": defaultContentType,
         };
-        let body = "";
+        let body: unknown = "";
         if (headers["Content-Type"] === "text/html") {
             body = response.body;
         } else if (response.body) {
@@ -443,17 +474,16 @@ function respondData(res, response) {
  * parameters, body, headers or cookies.
  * If no match could be found, then return the default response.
  */
-/* eslint-disable-next-line max-params -- technical debt */
 function selectResponse(
-    res,
-    mockdata,
-    requestparameters,
-    bodyParameters,
-    headers,
-    cookies,
-) {
+    mockdata: Mock,
+    requestparameters: ParsedUrlQuery,
+    bodyParameters: Record<string, unknown>,
+    headers: IncomingHttpHeaders,
+    cookies: Record<string, string>,
+): MockResponse | undefined {
     const mockresponses = mockdata.responses || [];
 
+    /* eslint-disable-next-line @typescript-eslint/prefer-for-of -- technical debt */
     for (let i = 0; i < mockresponses.length; i++) {
         const mockresponse = mockresponses[i];
         const parametersMatch =
@@ -487,13 +517,19 @@ function selectResponse(
 /**
  * Reqursively compare the incomingParameters with the mockParameters.
  */
-function matchParameters(incomingParameters, mockParameters) {
+function matchParameters(
+    /* eslint-disable @typescript-eslint/no-explicit-any -- technical debt */
+    incomingParameters: any,
+    mockParameters: any,
+    /* eslint-enable @typescript-eslint/no-explicit-any */
+): boolean {
     const keys = Object.getOwnPropertyNames(mockParameters);
 
     if (!incomingParameters || keys.length === 0) {
         return false;
     }
 
+    /* eslint-disable-next-line @typescript-eslint/prefer-for-of -- technical debt */
     for (let i = 0; i < keys.length; i++) {
         const key = keys[i];
 
@@ -517,13 +553,10 @@ function matchParameters(incomingParameters, mockParameters) {
     return true;
 }
 
-/**
- * @param {string} filepath
- * @returns {string}
- */
-function appendMethodType(req, filepath) {
-    if (req.method !== "GET") {
-        filepath = `${filepath}_${req.method.toLowerCase()}`;
+function appendMethodType(req: IncomingMessage, filepath: string): string {
+    const { method } = req;
+    if (method && method !== "GET") {
+        filepath = `${filepath}_${method.toLowerCase()}`;
     }
     return filepath;
 }

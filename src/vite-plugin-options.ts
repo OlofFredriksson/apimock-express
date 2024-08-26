@@ -2,6 +2,8 @@ import { type MiddlewareConfiguration } from "./middleware-configuration";
 
 /**
  * Options for Vite plugin.
+ *
+ * @public
  */
 export interface VitePluginOptions extends MiddlewareConfiguration {
     /**

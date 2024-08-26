@@ -28,6 +28,10 @@ module.exports = {
                 mocha: true,
             },
             rules: {
+                /* disabled for interop between cjs/esm/babel */
+                "import/extensions": "off",
+                "import/no-named-as-default-member": "off",
+
                 "sonarjs/no-duplicate-string": "off",
             },
         },

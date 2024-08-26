@@ -1,3 +1,6 @@
+/**
+ * @public
+ */
 export interface MockEntry {
     /**
      * URL to match. Should always start with a `/`.
