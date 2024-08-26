@@ -46,7 +46,7 @@
     "prettier:check": "prettier --check .",
     "prettier:write": "prettier --write .",
     "pretest": "run-s prettier:check eslint",
-    "test": "mocha --exit --require @babel/register test/**/*.spec.mjs"
+    "test": "mocha --exit --require ./babel-register test/**/*.spec.mjs"
   },
   "prettier": "@forsakringskassan/prettier-config",
   "release": {
@@ -60,6 +60,7 @@
   "devDependencies": {
     "@babel/core": "7.25.2",
     "@babel/preset-env": "7.25.4",
+    "@babel/preset-typescript": "7.24.7",
     "@babel/register": "7.24.6",
     "@forsakringskassan/eslint-config": "11.2.5",
     "@forsakringskassan/eslint-config-cli": "11.2.0",

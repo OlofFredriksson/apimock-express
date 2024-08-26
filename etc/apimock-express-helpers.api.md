@@ -4,57 +4,49 @@
 
 ```ts
 
-// Warning: (tsdoc-undefined-tag) The TSDoc tag "@template" is not defined in this configuration
-// Warning: (tsdoc-undefined-tag) The TSDoc tag "@template" is not defined in this configuration
-// Warning: (tsdoc-param-tag-missing-hyphen) The @param block should be followed by a parameter name and then a hyphen
-// Warning: (tsdoc-param-tag-with-invalid-type) The @param block should not include a JSDoc-style '{type}'
-// Warning: (tsdoc-param-tag-missing-hyphen) The @param block should be followed by a parameter name and then a hyphen
-// Warning: (tsdoc-param-tag-with-invalid-type) The @param block should not include a JSDoc-style '{type}'
-// Warning: (tsdoc-param-tag-missing-hyphen) The @param block should be followed by a parameter name and then a hyphen
-// Warning: (tsdoc-param-tag-with-invalid-type) The @param block should not include a JSDoc-style '{type}'
-// Warning: (tsdoc-escape-greater-than) The ">" character should be escaped using a backslash to avoid confusion with an HTML tag
-// Warning: (tsdoc-escape-right-brace) The "}" character should be escaped using a backslash to avoid confusion with a TSDoc inline tag
-// Warning: (tsdoc-html-tag-missing-greater-than) The HTML tag has invalid syntax: Expecting an attribute or ">" or "/>"
-// Warning: (tsdoc-malformed-inline-tag) Expecting a TSDoc tag starting with "{@"
-// Warning: (ae-missing-release-tag) "createResponseByCookie" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
-// @public
+// @public (undocumented)
 export function createResponseByCookie<T, U = unknown>(cookieName: string, cookieValue: string, response: MockResponse<T>): MockMatcher<T, U>;
 
-// Warning: (tsdoc-undefined-tag) The TSDoc tag "@template" is not defined in this configuration
-// Warning: (tsdoc-undefined-tag) The TSDoc tag "@template" is not defined in this configuration
-// Warning: (tsdoc-param-tag-missing-hyphen) The @param block should be followed by a parameter name and then a hyphen
-// Warning: (tsdoc-param-tag-with-invalid-type) The @param block should not include a JSDoc-style '{type}'
-// Warning: (tsdoc-escape-greater-than) The ">" character should be escaped using a backslash to avoid confusion with an HTML tag
-// Warning: (tsdoc-escape-right-brace) The "}" character should be escaped using a backslash to avoid confusion with a TSDoc inline tag
-// Warning: (tsdoc-html-tag-missing-greater-than) The HTML tag has invalid syntax: Expecting an attribute or ">" or "/>"
-// Warning: (tsdoc-malformed-inline-tag) Expecting a TSDoc tag starting with "{@"
-// Warning: (ae-missing-release-tag) "defineMock" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
-// @public
+// @public (undocumented)
 export function defineMock<T = unknown, U = unknown>(mock: Mock<T, U>): Mock<T, U>;
 
-// Warning: (tsdoc-escape-greater-than) The ">" character should be escaped using a backslash to avoid confusion with an HTML tag
-// Warning: (tsdoc-html-tag-missing-greater-than) The HTML tag has invalid syntax: Expecting an attribute or ">" or "/>"
-// Warning: (ae-forgotten-export) The symbol "Mock_2" needs to be exported by the entry point helpers.d.ts
-// Warning: (ae-missing-release-tag) "Mock" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
 // @public
-export type Mock<T = unknown, U = unknown> = Mock_2<T, U>;
+export interface Mock<T = unknown, U = unknown> {
+    defaultResponse: MockResponse<T>;
+    // (undocumented)
+    meta?: MockMeta;
+    responses: Array<MockMatcher<T, U>>;
+}
 
-// Warning: (tsdoc-escape-greater-than) The ">" character should be escaped using a backslash to avoid confusion with an HTML tag
-// Warning: (tsdoc-html-tag-missing-greater-than) The HTML tag has invalid syntax: Expecting an attribute or ">" or "/>"
-// Warning: (ae-forgotten-export) The symbol "MockMatcher_2" needs to be exported by the entry point helpers.d.ts
-// Warning: (ae-missing-release-tag) "MockMatcher" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
 // @public
-export type MockMatcher<T = unknown, U = unknown> = MockMatcher_2<T, U>;
+export interface MockMatcher<T = unknown, U = unknown> {
+    request: MockRequest<U>;
+    response: MockResponse<T>;
+}
 
-// Warning: (ae-forgotten-export) The symbol "MockResponse_2" needs to be exported by the entry point helpers.d.ts
-// Warning: (ae-missing-release-tag) "MockResponse" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
-// @public (undocumented)
-export type MockResponse<T = unknown> = MockResponse_2<T>;
+// @public
+export interface MockMeta {
+    key?: string;
+    title?: string;
+}
+
+// @public
+export interface MockRequest<T = unknown> {
+    body?: T;
+    cookies?: Record<string, string>;
+    headers?: Record<string, string>;
+    parameters?: Record<string, string>;
+}
+
+// @public
+export interface MockResponse<T = unknown> {
+    body?: T;
+    delay?: number;
+    description?: string;
+    headers?: Record<string, string>;
+    label?: string;
+    status?: number;
+}
 
 // (No @packageDocumentation comment for this package)
 
