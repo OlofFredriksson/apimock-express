@@ -5,6 +5,8 @@ import * as esbuild from "esbuild";
 import { glob } from "glob";
 import isCI from "is-ci";
 
+const pkg = JSON.parse(await fs.readFile("package.json", "utf-8"));
+
 const extension = {
     esm: ".mjs",
     cjs: ".cjs",
@@ -35,12 +37,14 @@ await fs.rm("dist", { recursive: true, force: true });
 for (const format of ["cjs", "esm"]) {
     const result = await esbuild.build({
         entryPoints: ["src/main.ts", "src/helpers.ts"],
+        bundle: true,
         outdir: path.join("dist"),
         format,
         platform: "node",
         target: "node18",
         logLevel: "info",
         metafile: true,
+        external: pkg.externalDependencies,
         outExtension: {
             ".js": extension[format],
         },

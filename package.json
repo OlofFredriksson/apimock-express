@@ -45,6 +45,10 @@
     "eslint:fix": "eslint --fix .",
     "prettier:check": "prettier --check .",
     "prettier:write": "prettier --write .",
+    "prepack": "release-prepack --bundle",
+    "postpack": "release-postpack",
+    "prepublishOnly": "release-prepublish --bundle",
+    "postpublish": "release-postpublish",
     "selftest": "node test/selftest.cjs && node test/selftest.mjs",
     "pretest": "run-s prettier:check eslint",
     "test": "mocha --exit --require ./babel-register test/**/*.spec.mjs"
@@ -67,6 +71,7 @@
     "@forsakringskassan/eslint-config-cli": "11.2.0",
     "@forsakringskassan/eslint-config-typescript": "11.2.6",
     "@forsakringskassan/prettier-config": "2.1.1",
+    "@html-validate/release-scripts": "6.5.3",
     "@microsoft/api-extractor": "7.47.7",
     "@types/cli-table": "0.3.4",
     "@types/debug": "4.1.12",
@@ -92,5 +97,8 @@
   },
   "engines": {
     "node": ">= 18"
-  }
+  },
+  "externalDependencies": [
+    "glob"
+  ]
 }
