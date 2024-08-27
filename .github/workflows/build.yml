@@ -26,6 +26,8 @@ jobs:
               run: npm exec mocha -- --exit --require ./babel-register "test/**/*.spec.mjs"
             - name: Build
               run: npm run --if-present build
+            - name: Selftest
+              run: npm run --if-present selftest
             - name: npm-pkg-lint
               if: matrix.node-version == '20.x'
               run: |

@@ -45,6 +45,7 @@
     "eslint:fix": "eslint --fix .",
     "prettier:check": "prettier --check .",
     "prettier:write": "prettier --write .",
+    "selftest": "node test/selftest.cjs && node test/selftest.mjs",
     "pretest": "run-s prettier:check eslint",
     "test": "mocha --exit --require ./babel-register test/**/*.spec.mjs"
   },
