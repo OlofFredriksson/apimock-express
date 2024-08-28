@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## [1.4.0](https://github.com/Forsakringskassan/apimock-express/compare/v1.3.2...v1.4.0) (2024-08-28)
+
+
+### Features
+
+* **deps:** require nodejs 18 or later ([717e6cb](https://github.com/Forsakringskassan/apimock-express/commit/717e6cb77cdaf87440282a2154341e2fe95f8556))
+
 ## [1.3.2](https://github.com/Forsakringskassan/apimock-express/compare/v1.3.1...v1.3.2) (2024-08-02)
 
 
