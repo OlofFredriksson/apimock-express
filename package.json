@@ -17,21 +17,41 @@
   },
   "license": "MIT",
   "author": "Försäkringskassan",
-  "main": "main.js",
+  "exports": {
+    ".": {
+      "types": "./dist/main.d.ts",
+      "import": "./dist/main.mjs",
+      "require": "./dist/main.cjs"
+    },
+    "./helpers": {
+      "types": "./dist/helpers.d.ts",
+      "import": "./dist/helpers.mjs",
+      "require": "./dist/helpers.cjs"
+    },
+    "./mockfile": {
+      "types": "./dist/mockfile.d.ts"
+    }
+  },
+  "main": "dist/main.cjs",
+  "module": "dist/main.mjs",
+  "types": "dist/main.d.ts",
   "files": [
-    "helpers.js",
-    "helpers.d.ts",
-    "main.js",
-    "main.d.ts",
-    "mockfile.d.ts"
+    "dist"
   ],
   "scripts": {
+    "prebuild": "tsc",
+    "build": "node build.mjs",
     "eslint": "eslint .",
     "eslint:fix": "eslint --fix .",
     "prettier:check": "prettier --check .",
     "prettier:write": "prettier --write .",
+    "prepack": "release-prepack --bundle",
+    "postpack": "release-postpack",
+    "prepublishOnly": "release-prepublish --bundle",
+    "postpublish": "release-postpublish",
+    "selftest": "node test/selftest.cjs && node test/selftest.mjs",
     "pretest": "run-s prettier:check eslint",
-    "test": "mocha --exit test/**/*.spec.mjs"
+    "test": "mocha --exit --require ./babel-register test/**/*.spec.mjs"
   },
   "prettier": "@forsakringskassan/prettier-config",
   "release": {
@@ -43,16 +63,29 @@
     "glob": "^10.0.0"
   },
   "devDependencies": {
+    "@babel/core": "7.25.2",
+    "@babel/preset-env": "7.25.4",
+    "@babel/preset-typescript": "7.24.7",
+    "@babel/register": "7.24.6",
     "@forsakringskassan/eslint-config": "11.2.5",
     "@forsakringskassan/eslint-config-cli": "11.2.0",
     "@forsakringskassan/eslint-config-typescript": "11.2.6",
     "@forsakringskassan/prettier-config": "2.1.1",
+    "@html-validate/release-scripts": "6.5.3",
+    "@microsoft/api-extractor": "7.47.7",
+    "@types/cli-table": "0.3.4",
+    "@types/debug": "4.1.12",
+    "@types/node": "18.19.45",
     "chai": "5.1.1",
+    "esbuild": "0.23.1",
     "express": "4.19.2",
+    "is-ci": "3.0.1",
     "mocha": "10.7.3",
     "node-fetch": "3.3.2",
     "npm-pkg-lint": "3.6.8",
-    "npm-run-all2": "6.2.2"
+    "npm-run-all2": "6.2.2",
+    "typescript": "5.5.4",
+    "vite": "5.4.2"
   },
   "peerDependencies": {
     "vite": "^4 || ^5"
@@ -63,6 +96,9 @@
     }
   },
   "engines": {
-    "node": ">= 16.14"
-  }
+    "node": ">= 18"
+  },
+  "externalDependencies": [
+    "glob"
+  ]
 }

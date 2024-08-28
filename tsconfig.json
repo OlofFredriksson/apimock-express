@@ -1,0 +1,16 @@
+{
+    "compilerOptions": {
+        "lib": ["es2023", "dom"],
+        "module": "esnext",
+        "target": "es2022",
+        "strict": true,
+        "noImplicitAny": false,
+        "esModuleInterop": true,
+        "moduleResolution": "bundler",
+        "declaration": true,
+        "declarationDir": "temp/types",
+        "emitDeclarationOnly": true
+    },
+    "include": ["src/**/*.ts"],
+    "exclude": ["node_modules"]
+}

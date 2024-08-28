@@ -1,4 +1,4 @@
-const { defineMock } = require("../../../helpers");
+const { defineMock } = require("../../../src/helpers");
 
 module.exports = {
     default: defineMock({

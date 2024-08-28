@@ -1,7 +1,9 @@
 import fs from "node:fs";
 import { expect } from "chai";
 import fetch from "node-fetch";
-import { hostname } from "../../test-server.mjs";
+import pkg from "../../test-server.js";
+
+const { hostname } = pkg;
 
 describe("Multiconfig", function () {
     it("Local config GET /api2/simple/users/ should return test/api/simple/users.json", async () => {
