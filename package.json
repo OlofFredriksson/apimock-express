@@ -67,7 +67,7 @@
     "@babel/preset-env": "7.25.4",
     "@babel/preset-typescript": "7.24.7",
     "@babel/register": "7.24.6",
-    "@forsakringskassan/eslint-config": "11.2.5",
+    "@forsakringskassan/eslint-config": "11.2.8",
     "@forsakringskassan/eslint-config-cli": "11.2.0",
     "@forsakringskassan/eslint-config-typescript": "11.2.6",
     "@forsakringskassan/prettier-config": "2.1.1",
