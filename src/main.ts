@@ -202,6 +202,20 @@ const apimock = {
     },
 };
 
+/**
+ * Vite plugin for apimock-express.
+ *
+ * @public
+ * @param mocks - Mock configuration
+ * @param options - Options
+ */
+export function vitePlugin(
+    mocks: MockEntry | MockEntry[],
+    options: Partial<VitePluginOptions> = {},
+): { name: string } {
+    return apimock.vitePlugin(mocks, options);
+}
+
 export default apimock;
 
 /**

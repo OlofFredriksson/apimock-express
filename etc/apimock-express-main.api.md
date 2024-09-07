@@ -68,6 +68,11 @@ export interface MockResponse<T = unknown> {
 }
 
 // @public
+export function vitePlugin(mocks: MockEntry | MockEntry[], options?: Partial<VitePluginOptions>): {
+    name: string;
+};
+
+// @public
 export interface VitePluginOptions extends MiddlewareConfiguration {
     enabled?: "serve" | "preview" | boolean;
 }
