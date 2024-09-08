@@ -226,7 +226,7 @@ function extractFileContent(filepath: string): string {
         case ".json":
             return fs.readFileSync(filepath, { encoding: "utf8" });
         case ".js": {
-            /* eslint-disable-next-line import/no-dynamic-require, @typescript-eslint/no-var-requires --
+            /* eslint-disable-next-line import/no-dynamic-require, @typescript-eslint/no-require-imports --
              * filename depends on config and isn't known until runtime */
             let mock = require(path.resolve(filepath));
             if (mock.default) {
@@ -332,7 +332,7 @@ function respondWithMock(
     let mockdata: unknown;
     try {
         mockdata = JSON.parse(fileContent);
-    } catch (err) {
+    } catch {
         console.error(`Malformed file: ${filepath} with content `, fileContent);
         mockdata = {
             defaultResponse: {

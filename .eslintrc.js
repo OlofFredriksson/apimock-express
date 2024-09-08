@@ -33,6 +33,9 @@ module.exports = {
                  * file is being imported (same filenames exists with both .cjs
                  * and .mjs extension) */
                 "import/extensions": "off",
+
+                /* want to test both variants for backwards compatibility */
+                "import/no-named-as-default-member": "off",
             },
         },
         {
