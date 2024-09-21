@@ -24,8 +24,9 @@ Major differences from the original:
 ### With Connect
 
 ```js
-const connect = require("connect");
+const apimock = require("@forsakringskassan/apimock-express");
 const http = require("http");
+const connect = require("connect");
 
 const app = connect();
 
@@ -36,7 +37,7 @@ apimock.config([
 ]);
 
 /* install middleware */
-server.middlewares.use("/", apimockExpress.mockRequest);
+app.use("/", apimock.mockRequest);
 
 http.createServer(app).listen(3000);
 ```
