@@ -85,7 +85,7 @@
     "npm-pkg-lint": "3.9.0",
     "npm-run-all2": "6.2.3",
     "typescript": "5.5.4",
-    "vite": "5.4.7"
+    "vite": "5.4.8"
   },
   "peerDependencies": {
     "vite": "^4 || ^5"
