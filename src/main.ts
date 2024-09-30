@@ -274,22 +274,15 @@ function getFilepath(
     const files = globSync(globPattern);
 
     const wildcard = globSync(wildcardPattern);
+    const resolvedPath = path.resolve(process.cwd(), globPattern);
     if (files.length === 0) {
         if (wildcard.length === 1) {
             return wildcard[0];
         }
-        throw Error(
-            `Cannot find file matching glob ${process.cwd()}/${globPattern.replace(
-                /^(?:\.\.\/)+/,
-                "",
-            )}`,
-        );
+        throw Error(`Cannot find file matching glob ${resolvedPath})`);
     } else if (files.length > 1) {
         console.warn(
-            `Found multiple files matching glob ${process.cwd()}/${globPattern.replace(
-                /^(?:\.\.\/)+/,
-                "",
-            )}, using ${files[0]}, found:`,
+            `Found multiple files matching glob ${resolvedPath}, using ${files[0]}, found:`,
             files,
         );
     }
