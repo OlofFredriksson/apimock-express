@@ -1,6 +1,4 @@
 * @ext @dvitamin @NicklasWei @MCFK @OlofFredriksson
 
-[dependencies][1]
-@@dep-review @ext
-package.json @@dep-review
-package-lock.json @@dep-review
+# dependency updates
+package.json package-lock.json @ext
