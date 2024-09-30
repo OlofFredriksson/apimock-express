@@ -1,4 +1,5 @@
 * @ext @dvitamin @NicklasWei @MCFK @OlofFredriksson
 
 # dependency updates
-package.json package-lock.json @ext
+package.json @ext
+package-lock.json @ext
