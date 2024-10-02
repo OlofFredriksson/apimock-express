@@ -71,7 +71,7 @@
     "@forsakringskassan/eslint-config-cli": "11.4.0",
     "@forsakringskassan/eslint-config-typescript": "11.4.0",
     "@forsakringskassan/prettier-config": "2.1.1",
-    "@html-validate/release-scripts": "6.6.0",
+    "@html-validate/release-scripts": "6.7.0",
     "@microsoft/api-extractor": "7.47.9",
     "@types/cli-table": "0.3.4",
     "@types/debug": "4.1.12",
