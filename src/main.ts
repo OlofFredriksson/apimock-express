@@ -6,7 +6,7 @@ import { globSync } from "glob";
 import createDebug from "debug";
 import Table from "cli-table";
 import { type Plugin } from "vite";
-import { parseBody, selectResponse } from "./common";
+import { parseBody, parseCookies, selectResponse } from "./common";
 import { type MiddlewareConfiguration } from "./middleware-configuration";
 import { type Mock, type MockResponse } from "./mockfile";
 import { type MockEntry } from "./mock-entry";
@@ -397,18 +397,4 @@ function advancedMockformat(
         const delay = requestDelay + baseDelay;
         setTimeout(respondData, delay, res, selectedResponse);
     });
-}
-
-/**
- * Parse the request cookies into a js object
- */
-function parseCookies(request: IncomingMessage): Record<string, string> {
-    const cookies: Record<string, string> = {};
-    if (request.headers.cookie) {
-        request.headers.cookie.split(";").forEach(function (cookie) {
-            const parts = cookie.split("=");
-            cookies[parts[0].trim()] = (parts[1] || "").trim();
-        });
-    }
-    return cookies;
 }
