@@ -13,6 +13,7 @@ import { type MockEntry } from "./mock-entry";
 import { type NormalizedEntry } from "./normalized-entry";
 import { VitePluginOptions } from "./vite-plugin-options";
 import { appendMethodType } from "./node/append-method-type";
+import { defaultContentType, defaultStatus } from "./constants";
 
 export { type MiddlewareConfiguration } from "./middleware-configuration";
 export {
@@ -37,8 +38,6 @@ const { version } = JSON.parse(fs.readFileSync(pkgPath, "utf-8"));
 const debug = createDebug("apimock");
 
 let mockOptions: NormalizedEntry[] = [];
-const defaultStatus = 200;
-const defaultContentType = "application/json;charset=UTF-8";
 
 const defaultConfig: MiddlewareConfiguration = {
     verbose: true,
