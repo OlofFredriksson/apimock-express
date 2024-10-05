@@ -16,6 +16,7 @@ import { type Mock, type MockResponse } from "./mockfile";
 import { type MockEntry } from "./mock-entry";
 import { type NormalizedEntry } from "./normalized-entry";
 import { VitePluginOptions } from "./vite-plugin-options";
+import { appendMethodType } from "./node/append-method-type";
 
 export { type MiddlewareConfiguration } from "./middleware-configuration";
 export {
@@ -558,12 +559,4 @@ function matchParameters(
     }
 
     return true;
-}
-
-function appendMethodType(req: IncomingMessage, filepath: string): string {
-    const { method } = req;
-    if (method && method !== "GET") {
-        filepath = `${filepath}_${method.toLowerCase()}`;
-    }
-    return filepath;
 }
