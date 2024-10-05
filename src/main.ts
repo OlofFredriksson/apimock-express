@@ -1,25 +1,18 @@
 import fs from "node:fs";
 import { type IncomingMessage, type ServerResponse } from "node:http";
 import path from "node:path/posix";
-import url from "node:url";
 import { globSync } from "glob";
 import createDebug from "debug";
 import Table from "cli-table";
 import { type Plugin } from "vite";
-import {
-    isAdvancedMock,
-    parseBody,
-    parseCookies,
-    parseDelay,
-    selectResponse,
-} from "./common";
+import { isAdvancedMock, parseDelay } from "./common";
 import { type MiddlewareConfiguration } from "./middleware-configuration";
-import { type Mock, type MockResponse } from "./mockfile";
 import { type MockEntry } from "./mock-entry";
+import { advancedMockformat } from "./node/advanced-mockformat";
+import { appendMethodType } from "./node/append-method-type";
 import { respondData } from "./node/respond-data";
 import { type NormalizedEntry } from "./normalized-entry";
 import { VitePluginOptions } from "./vite-plugin-options";
-import { appendMethodType } from "./node/append-method-type";
 import { defaultContentType, defaultStatus } from "./constants";
 
 export { type MiddlewareConfiguration } from "./middleware-configuration";
@@ -331,53 +324,4 @@ function simpleMockformat(res: ServerResponse, filepath: string): void {
     res.writeHead(defaultStatus, { "Content-Type": defaultContentType });
     const filestream = fs.createReadStream(filepath);
     filestream.pipe(res);
-}
-
-/**
- * Parse the mockfile and respond with the selected response depending on the request
- */
-function advancedMockformat(
-    req: IncomingMessage,
-    res: ServerResponse,
-    mockdata: Mock,
-    baseDelay: number,
-): void {
-    const requestParameters = url.parse(req.originalUrl ?? "", true).query;
-    const cookies = parseCookies(req);
-    let bodyParameters: Record<string, unknown> = {};
-    let body = "";
-    req.on("data", function (chunk) {
-        body += chunk;
-    });
-    req.on("end", function () {
-        let parseError = false;
-        try {
-            bodyParameters = parseBody(req, body);
-        } catch (err) {
-            console.error(`Error parsing req ${req} body ${body}`, err);
-            parseError = true;
-        }
-        let selectedResponse: MockResponse | undefined;
-        if (parseError) {
-            console.error(`Malformed input body. url: ${req.originalUrl}`);
-            selectedResponse = {
-                status: 500,
-                body: { error: "Malformed input body" },
-            };
-        } else {
-            selectedResponse = selectResponse(
-                mockdata,
-                requestParameters,
-                bodyParameters,
-                req.headers,
-                cookies,
-            );
-        }
-        const requestDelay =
-            selectedResponse !== undefined
-                ? parseDelay(selectedResponse.delay)
-                : 0;
-        const delay = requestDelay + baseDelay;
-        setTimeout(respondData, delay, res, selectedResponse);
-    });
 }
