@@ -6,7 +6,7 @@ import { globSync } from "glob";
 import createDebug from "debug";
 import Table from "cli-table";
 import { type Plugin } from "vite";
-import { selectResponse } from "./common";
+import { parseBody, selectResponse } from "./common";
 import { type MiddlewareConfiguration } from "./middleware-configuration";
 import { type Mock, type MockResponse } from "./mockfile";
 import { type MockEntry } from "./mock-entry";
@@ -411,26 +411,4 @@ function parseCookies(request: IncomingMessage): Record<string, string> {
         });
     }
     return cookies;
-}
-
-/**
- * If the request Content-Type is json.
- * Then parse the json body into a js object.
- * Or return an empty object.
- */
-function parseBody(
-    req: IncomingMessage,
-    body: string,
-): Record<string, unknown> {
-    let bodyParameters: Record<string, unknown> = {};
-    const contentType = req.headers["content-type"];
-    if (contentType === undefined || body.length === 0) {
-        //No Content-Type or no body. Don't parse the body
-        return bodyParameters;
-    }
-    if (contentType.includes("application/json")) {
-        //Content-Type is json
-        bodyParameters = JSON.parse(body);
-    }
-    return bodyParameters;
 }
