@@ -6,7 +6,13 @@ import { globSync } from "glob";
 import createDebug from "debug";
 import Table from "cli-table";
 import { type Plugin } from "vite";
-import { parseBody, parseCookies, parseDelay, selectResponse } from "./common";
+import {
+    isAdvancedMock,
+    parseBody,
+    parseCookies,
+    parseDelay,
+    selectResponse,
+} from "./common";
 import { type MiddlewareConfiguration } from "./middleware-configuration";
 import { type Mock, type MockResponse } from "./mockfile";
 import { type MockEntry } from "./mock-entry";
@@ -284,13 +290,6 @@ function getFilepath(
         );
     }
     return files[0];
-}
-
-function isAdvancedMock(mock: unknown): mock is Mock {
-    if (mock === null || typeof mock !== "object") {
-        return false;
-    }
-    return "responses" in mock || "defaultResponse" in mock;
 }
 
 /**
