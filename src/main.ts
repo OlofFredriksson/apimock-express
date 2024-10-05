@@ -6,7 +6,7 @@ import { globSync } from "glob";
 import createDebug from "debug";
 import Table from "cli-table";
 import { type Plugin } from "vite";
-import { parseBody, parseCookies, selectResponse } from "./common";
+import { parseBody, parseCookies, parseDelay, selectResponse } from "./common";
 import { type MiddlewareConfiguration } from "./middleware-configuration";
 import { type Mock, type MockResponse } from "./mockfile";
 import { type MockEntry } from "./mock-entry";
@@ -284,22 +284,6 @@ function getFilepath(
         );
     }
     return files[0];
-}
-
-/**
- * Make sure that delay is a number or return a 0
- */
-function parseDelay(delay: number | undefined): number {
-    if (delay === undefined) {
-        return 0;
-    }
-    /* @ts-expect-error -- code doesn't make sense, technical debt. */
-    if (!isNaN(parseFloat(delay)) && isFinite(delay)) {
-        //delay is a number
-        return delay;
-    } else {
-        return 0;
-    }
 }
 
 function isAdvancedMock(mock: unknown): mock is Mock {
