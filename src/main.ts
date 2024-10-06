@@ -8,7 +8,7 @@ import { type Plugin } from "vite";
 import { parseDelay } from "./common";
 import { type MiddlewareConfiguration } from "./middleware-configuration";
 import { type MockEntry } from "./mock-entry";
-import { respondWithMock } from "./node";
+import { extractFileContent, respondWithMock } from "./node";
 import { appendMethodType } from "./node/append-method-type";
 import { respondData } from "./node/respond-data";
 import { type NormalizedEntry } from "./normalized-entry";
@@ -213,29 +213,6 @@ export function vitePlugin(
 }
 
 export default apimock;
-
-/**
- * Extracts filecontent for both js and json files
- */
-function extractFileContent(filepath: string): string {
-    switch (path.extname(filepath)) {
-        case ".json":
-            return fs.readFileSync(filepath, { encoding: "utf8" });
-        case ".js": {
-            /* eslint-disable-next-line import/no-dynamic-require, @typescript-eslint/no-require-imports --
-             * filename depends on config and isn't known until runtime */
-            let mock = require(path.resolve(filepath));
-            if (mock.default) {
-                mock = mock.default;
-            }
-            return typeof mock === "string" ? mock : JSON.stringify(mock);
-        }
-        default:
-            throw new Error(
-                `Unknown extension when importing mock from "${filepath}"`,
-            );
-    }
-}
 
 /**
  * Create the path to the mockfile depending on the request url and the http method.
