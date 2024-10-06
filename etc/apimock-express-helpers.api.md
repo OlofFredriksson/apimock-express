@@ -15,7 +15,7 @@ export interface Mock<T = unknown, U = unknown> {
     defaultResponse: MockResponse<T>;
     // (undocumented)
     meta?: MockMeta;
-    responses: Array<MockMatcher<T, U>>;
+    responses?: Array<MockMatcher<T, U>>;
 }
 
 // @public

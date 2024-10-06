@@ -5,13 +5,12 @@ import { globSync } from "glob";
 import createDebug from "debug";
 import Table from "cli-table";
 import { type Plugin } from "vite";
-import { isAdvancedMock, parseDelay } from "./common";
+import { parseDelay } from "./common";
 import { type MiddlewareConfiguration } from "./middleware-configuration";
 import { type MockEntry } from "./mock-entry";
-import { advancedMockformat } from "./node/advanced-mockformat";
+import { respondWithMock } from "./node";
 import { appendMethodType } from "./node/append-method-type";
 import { respondData } from "./node/respond-data";
-import { simpleMockformat } from "./node/simple-mockformat";
 import { type NormalizedEntry } from "./normalized-entry";
 import { VitePluginOptions } from "./vite-plugin-options";
 import { defaultContentType, defaultStatus } from "./constants";
@@ -284,36 +283,4 @@ function getFilepath(
         );
     }
     return files[0];
-}
-
-/**
- * Respond the mockfile data to the client
- */
-function respondWithMock(
-    req: IncomingMessage,
-    res: ServerResponse,
-    fileContent: string,
-    filepath: string,
-    baseDelay: number,
-): void {
-    let mockdata: unknown;
-    try {
-        mockdata = JSON.parse(fileContent);
-    } catch {
-        console.error(`Malformed file: ${filepath} with content `, fileContent);
-        mockdata = {
-            defaultResponse: {
-                status: 500,
-                body: { error: "Malformed mockfile. See server log" },
-            },
-        };
-    }
-    if (!isAdvancedMock(mockdata)) {
-        //The mockfile has the simple format. Just respond with the mockfile content.
-        setTimeout(simpleMockformat, baseDelay, res, filepath);
-    } else {
-        //The mockfile has the advanced format.
-        //Parse the mockfile and respond with the selected response depending on the request.
-        advancedMockformat(req, res, mockdata, baseDelay);
-    }
 }
