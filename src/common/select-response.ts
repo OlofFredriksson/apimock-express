@@ -7,7 +7,7 @@ import { type Mock, type MockResponse } from "../mockfile";
  * parameters, body, headers or cookies.
  * If no match could be found, then return the default response.
  *
- * @internal
+ * @public
  */
 export function selectResponse(
     mockdata: Mock,

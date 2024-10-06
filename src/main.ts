@@ -12,6 +12,7 @@ import { type NormalizedEntry } from "./normalized-entry";
 import { VitePluginOptions } from "./vite-plugin-options";
 import { defaultContentType, defaultStatus } from "./constants";
 
+export { selectResponse } from "./common";
 export { type MiddlewareConfiguration } from "./middleware-configuration";
 export {
     type Mock,

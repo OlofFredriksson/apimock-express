@@ -5,6 +5,7 @@
 ```ts
 
 import { IncomingMessage } from 'node:http';
+import { ParsedUrlQuery } from 'node:querystring';
 import { ServerResponse } from 'node:http';
 
 // @public (undocumented)
@@ -66,6 +67,9 @@ export interface MockResponse<T = unknown> {
     label?: string;
     status?: number;
 }
+
+// @public
+export function selectResponse(mockdata: Mock, requestparameters: ParsedUrlQuery, bodyParameters: Record<string, unknown>, headers: Record<string, string | string[] | undefined>, cookies: Record<string, string>): MockResponse | undefined;
 
 // @public
 export function vitePlugin(mocks: MockEntry | MockEntry[], options?: Partial<VitePluginOptions>): {
