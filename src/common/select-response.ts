@@ -1,4 +1,3 @@
-import { type ParsedUrlQuery } from "node:querystring";
 import { type Mock, type MockResponse } from "../mockfile";
 
 /**
@@ -11,7 +10,7 @@ import { type Mock, type MockResponse } from "../mockfile";
  */
 export function selectResponse(
     mockdata: Mock,
-    requestparameters: ParsedUrlQuery,
+    requestparameters: Record<string, string | string[] | undefined>,
     bodyParameters: Record<string, unknown>,
     headers: Record<string, string | string[] | undefined>,
     cookies: Record<string, string>,
