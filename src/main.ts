@@ -11,6 +11,7 @@ import { type MockEntry } from "./mock-entry";
 import { advancedMockformat } from "./node/advanced-mockformat";
 import { appendMethodType } from "./node/append-method-type";
 import { respondData } from "./node/respond-data";
+import { simpleMockformat } from "./node/simple-mockformat";
 import { type NormalizedEntry } from "./normalized-entry";
 import { VitePluginOptions } from "./vite-plugin-options";
 import { defaultContentType, defaultStatus } from "./constants";
@@ -315,13 +316,4 @@ function respondWithMock(
         //Parse the mockfile and respond with the selected response depending on the request.
         advancedMockformat(req, res, mockdata, baseDelay);
     }
-}
-
-/**
- * Respond with the mockfile content and the default status
- */
-function simpleMockformat(res: ServerResponse, filepath: string): void {
-    res.writeHead(defaultStatus, { "Content-Type": defaultContentType });
-    const filestream = fs.createReadStream(filepath);
-    filestream.pipe(res);
 }
