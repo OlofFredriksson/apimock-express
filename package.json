@@ -19,9 +19,19 @@
   "author": "Försäkringskassan",
   "exports": {
     ".": {
-      "types": "./dist/main.d.ts",
-      "import": "./dist/main.mjs",
-      "require": "./dist/main.cjs"
+      "browser": {
+        "types": "./dist/browser.d.ts",
+        "import": "./dist/browser.mjs"
+      },
+      "default": {
+        "types": "./dist/main.d.ts",
+        "import": "./dist/main.mjs",
+        "require": "./dist/main.cjs"
+      }
+    },
+    "./browser": {
+      "types": "./dist/browser.d.ts",
+      "import": "./dist/browser.mjs"
     },
     "./helpers": {
       "types": "./dist/helpers.d.ts",

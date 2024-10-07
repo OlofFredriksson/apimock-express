@@ -61,6 +61,22 @@ for (const format of ["cjs", "esm"]) {
     }
 }
 
+const browserResult = await esbuild.build({
+    entryPoints: ["src/browser.ts"],
+    bundle: true,
+    outdir: path.join("dist"),
+    format: "esm",
+    platform: "browser",
+    logLevel: "info",
+    metafile: true,
+    external: pkg.externalDependencies,
+    outExtension: {
+        ".js": ".mjs",
+    },
+});
+
+console.log(await esbuild.analyzeMetafile(browserResult.metafile));
+
 const configFiles = await glob("config/api-extractor.*.json");
 const numFiles = configFiles.length;
 const strFiles = `${numFiles} file${numFiles === 1 ? "" : "s"}`;
