@@ -1,5 +1,18 @@
 # CHANGELOG
 
+## [1.5.0](https://github.com/Forsakringskassan/apimock-express/compare/v1.4.2...v1.5.0) (2024-10-08)
+
+
+### Features
+
+* add browser entrypoint ([56a976f](https://github.com/Forsakringskassan/apimock-express/commit/56a976f48194a51c2b4a732c9d439b21fd043e1f))
+* export `selectResponse` function ([bfc2fc9](https://github.com/Forsakringskassan/apimock-express/commit/bfc2fc9adc16a45782ed51378a511c8e78866886))
+
+
+### Bug Fixes
+
+* print proper path in debug log ([883ee20](https://github.com/Forsakringskassan/apimock-express/commit/883ee2035fdadb062f6812be6e9e393ea36abd55))
+
 ## [1.4.2](https://github.com/Forsakringskassan/apimock-express/compare/v1.4.1...v1.4.2) (2024-09-13)
 
 
