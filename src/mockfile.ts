@@ -106,7 +106,7 @@ export interface Mock<T = unknown, U = unknown> {
     /**
      * An array of mappings between requests and corresponding mock responses.
      */
-    responses: Array<MockMatcher<T, U>>;
+    responses?: Array<MockMatcher<T, U>>;
 
     /**
      * The default response if no other match (from responses) could be found.

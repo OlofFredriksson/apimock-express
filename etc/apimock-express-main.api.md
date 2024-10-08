@@ -27,7 +27,7 @@ export interface Mock<T = unknown, U = unknown> {
     defaultResponse: MockResponse<T>;
     // (undocumented)
     meta?: MockMeta;
-    responses: Array<MockMatcher<T, U>>;
+    responses?: Array<MockMatcher<T, U>>;
 }
 
 // @public (undocumented)
@@ -66,6 +66,9 @@ export interface MockResponse<T = unknown> {
     label?: string;
     status?: number;
 }
+
+// @public
+export function selectResponse(mockdata: Mock, requestparameters: Record<string, string | string[] | undefined>, bodyParameters: Record<string, unknown>, headers: Record<string, string | string[] | undefined>, cookies: Record<string, string>): MockResponse | undefined;
 
 // @public
 export function vitePlugin(mocks: MockEntry | MockEntry[], options?: Partial<VitePluginOptions>): {

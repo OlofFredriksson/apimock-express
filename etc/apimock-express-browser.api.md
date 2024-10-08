@@ -42,6 +42,9 @@ export interface MockResponse<T = unknown> {
     status?: number;
 }
 
+// @public
+export function selectResponse(mockdata: Mock, requestparameters: Record<string, string | string[] | undefined>, bodyParameters: Record<string, unknown>, headers: Record<string, string | string[] | undefined>, cookies: Record<string, string>): MockResponse | undefined;
+
 // (No @packageDocumentation comment for this package)
 
 ```
