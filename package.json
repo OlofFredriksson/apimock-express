@@ -85,7 +85,7 @@
     "@microsoft/api-extractor": "7.47.10",
     "@types/cli-table": "0.3.4",
     "@types/debug": "4.1.12",
-    "@types/node": "18.19.55",
+    "@types/node": "18.19.56",
     "chai": "5.1.1",
     "esbuild": "0.24.0",
     "express": "4.21.1",
