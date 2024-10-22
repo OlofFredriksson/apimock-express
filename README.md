@@ -45,6 +45,7 @@ http.createServer(app).listen(3000);
 ### With Express
 
 ```js
+const apimock = require("@forsakringskassan/apimock-express");
 const express = require("express");
 
 const app = express();
@@ -56,7 +57,7 @@ apimock.config([
 ]);
 
 /* install middleware */
-server.middlewares.use("/", apimockExpress.mockRequest);
+app.use("/", apimock.mockRequest);
 
 app.listen(3000);
 ```
