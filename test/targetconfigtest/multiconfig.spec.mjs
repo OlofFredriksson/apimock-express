@@ -1,6 +1,5 @@
 import fs from "node:fs";
 import { expect } from "chai";
-import fetch from "node-fetch";
 import pkg from "../../test-server.js";
 
 const { hostname } = pkg;
