@@ -76,7 +76,7 @@
     "@babel/core": "7.25.9",
     "@babel/preset-env": "7.25.9",
     "@babel/preset-typescript": "7.25.9",
-    "@babel/register": "7.25.7",
+    "@babel/register": "7.25.9",
     "@forsakringskassan/eslint-config": "11.4.3",
     "@forsakringskassan/eslint-config-cli": "11.4.2",
     "@forsakringskassan/eslint-config-typescript": "11.4.5",
