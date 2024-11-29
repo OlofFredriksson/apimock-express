@@ -61,7 +61,10 @@
     "postpublish": "release-postpublish",
     "selftest": "node test/selftest.cjs && node test/selftest.mjs",
     "pretest": "run-s prettier:check eslint",
-    "test": "mocha --exit --require ./babel-register test/**/*.spec.mjs"
+    "test": "mocha --exit --require ./babel-register test/**/*.spec.mjs",
+    "vite": "npm run vite:cjs && npm run vite:mjs",
+    "vite:cjs": "start-server-and-test 'vite --config test/vite/vite.config.cts --port 8010' http-get://127.0.0.1:8010/index.html 'curl -v --no-progress-meter http://127.0.0.1:8010/api/foo'",
+    "vite:mjs": "start-server-and-test 'vite --config test/vite/vite.config.mts --port 8020' http-get://127.0.0.1:8020/index.html 'curl -v --no-progress-meter http://127.0.0.1:8020/api/foo'"
   },
   "prettier": "@forsakringskassan/prettier-config",
   "release": {
@@ -94,11 +97,12 @@
     "node-fetch": "3.3.2",
     "npm-pkg-lint": "3.10.3",
     "npm-run-all2": "7.0.1",
+    "start-server-and-test": "2.0.8",
     "typescript": "5.7.2",
-    "vite": "5.4.11"
+    "vite": "6.0.0"
   },
   "peerDependencies": {
-    "vite": "^4 || ^5"
+    "vite": "^4.0.0 || ^5.0.0 || ^6.0.0"
   },
   "peerDependenciesMeta": {
     "vite": {

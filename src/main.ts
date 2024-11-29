@@ -3,6 +3,7 @@ import { type IncomingMessage, type ServerResponse } from "node:http";
 import createDebug from "debug";
 import Table from "cli-table";
 import { type Plugin } from "vite";
+import { version } from "../package.json";
 import { parseDelay } from "./common";
 import { type MiddlewareConfiguration } from "./middleware-configuration";
 import { type MockEntry } from "./mock-entry";
@@ -29,9 +30,6 @@ declare module "node:http" {
         originalUrl?: string;
     }
 }
-
-const pkgPath = require.resolve("../package.json");
-const { version } = JSON.parse(fs.readFileSync(pkgPath, "utf-8"));
 
 const debug = createDebug("apimock");
 
