@@ -1,5 +1,17 @@
 # CHANGELOG
 
+## [2.0.0](https://github.com/Forsakringskassan/apimock-express/compare/v1.6.0...v2.0.0) (2024-12-03)
+
+
+### ⚠ BREAKING CHANGES
+
+* **deps:** requires nodejs v20 or later
+
+### Features
+
+* **deps:** requires nodejs v20 or later ([fe51deb](https://github.com/Forsakringskassan/apimock-express/commit/fe51deb90f00ee1129b1998d0f34ada62b3ac020))
+* **deps:** update dependency glob to v11 ([ae6eb8a](https://github.com/Forsakringskassan/apimock-express/commit/ae6eb8ac501bb417a581d82bd3fd4cce916d5d21))
+
 ## [1.6.0](https://github.com/Forsakringskassan/apimock-express/compare/v1.5.0...v1.6.0) (2024-11-29)
 
 
