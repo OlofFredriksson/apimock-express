@@ -9,13 +9,13 @@ This was originally forked from [grunt-connect-apimock][grunt-connect-apimock] v
 
 Major differences from the original:
 
--   Works with both Express and Connect (without specifically requiring Grunt).
--   Supports both `.js` and `.json` mocks.
--   Supports wildcards as the final path component.
--   Improved and configurable logging.
--   Helpers such as `defineMock` to assist IDE writing mocks.
--   Typescript support.
--   Builtin Vite Plugin.
+- Works with both Express and Connect (without specifically requiring Grunt).
+- Supports both `.js` and `.json` mocks.
+- Supports wildcards as the final path component.
+- Improved and configurable logging.
+- Helpers such as `defineMock` to assist IDE writing mocks.
+- Typescript support.
+- Builtin Vite Plugin.
 
 ## Usage
 
@@ -117,8 +117,8 @@ E.g. with this configuration `{ "url": "/myApp/api/", "dir": "mymockdirectory" }
 
 The format of the files can be in a simple or an advanced format.
 
--   When using the simple format, the file content will be returned as the body of the response and http-status 200.
--   When using the advanced format, it is possible to specify different responses and different http-status depending on the request parameters, body parameters, request headers or cookies of the request.
+- When using the simple format, the file content will be returned as the body of the response and http-status 200.
+- When using the advanced format, it is possible to specify different responses and different http-status depending on the request parameters, body parameters, request headers or cookies of the request.
 
 ### Wildcard / global file
 
