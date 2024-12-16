@@ -95,7 +95,7 @@
     "is-ci": "4.1.0",
     "mocha": "11.0.1",
     "node-fetch": "3.3.2",
-    "npm-pkg-lint": "3.10.5",
+    "npm-pkg-lint": "3.10.6",
     "npm-run-all2": "7.0.1",
     "start-server-and-test": "2.0.9",
     "typescript": "5.7.2",
