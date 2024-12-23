@@ -90,7 +90,7 @@
     "@types/debug": "4.1.12",
     "@types/node": "20.17.10",
     "chai": "5.1.2",
-    "esbuild": "0.24.0",
+    "esbuild": "0.24.2",
     "express": "4.21.2",
     "is-ci": "4.1.0",
     "mocha": "11.0.1",
