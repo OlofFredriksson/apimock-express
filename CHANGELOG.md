@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## [2.0.2](https://github.com/Forsakringskassan/apimock-express/compare/v2.0.1...v2.0.2) (2025-01-17)
+
+### Bug Fixes
+
+* **deps:** update dependency glob to v11.0.1 ([f9633bf](https://github.com/Forsakringskassan/apimock-express/commit/f9633bfb6e7f7c7801d2318270c4d66c87ec32e0))
+
 ## [2.0.1](https://github.com/Forsakringskassan/apimock-express/compare/v2.0.0...v2.0.1) (2024-12-20)
 
 ### Bug Fixes
