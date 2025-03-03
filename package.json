@@ -98,7 +98,7 @@
     "npm-pkg-lint": "3.10.10",
     "npm-run-all2": "7.0.2",
     "start-server-and-test": "2.0.10",
-    "typescript": "5.7.3",
+    "typescript": "5.8.2",
     "vite": "6.2.0"
   },
   "peerDependencies": {
