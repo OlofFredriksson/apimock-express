@@ -35,8 +35,7 @@ const cjsShim = [
 await fs.rm("dist", { recursive: true, force: true });
 
 for (const format of ["cjs", "esm"]) {
-    const result = await esbuild.build({
-        entryPoints: ["src/main.ts", "src/helpers.ts"],
+    const commonConfig = {
         bundle: true,
         outdir: path.join("dist"),
         format,
@@ -48,6 +47,10 @@ for (const format of ["cjs", "esm"]) {
         outExtension: {
             ".js": extension[format],
         },
+    };
+    const result = await esbuild.build({
+        ...commonConfig,
+        entryPoints: ["src/main.ts"],
         banner: {
             js: format === "esm" ? esmShim : "",
         },
@@ -56,8 +59,15 @@ for (const format of ["cjs", "esm"]) {
         },
     });
 
+    const result2 = await esbuild.build({
+        ...commonConfig,
+        entryPoints: ["src/helpers.ts"],
+        platform: "neutral",
+    });
+
     if (format === "esm") {
         console.log(await esbuild.analyzeMetafile(result.metafile));
+        console.log(await esbuild.analyzeMetafile(result2.metafile));
     }
 }
 
