@@ -1,8 +1,6 @@
 import fs from "node:fs";
 import { expect } from "chai";
-import pkg from "../../test-server.js";
-
-const { hostname } = pkg;
+import { hostname } from "../../test-server.mjs";
 
 describe("Url matching", function () {
     it("A correct url that starts with mock url should match", async () => {

@@ -1,7 +1,5 @@
 import { expect } from "chai";
-import pkg from "../../test-server.js";
-
-const { hostname } = pkg;
+import { hostname } from "../../test-server.mjs";
 
 describe("Wildcard", function () {
     it("should pick wildcard file for GET if specific not found", async () => {

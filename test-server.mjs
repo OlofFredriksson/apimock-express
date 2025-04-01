@@ -1,9 +1,9 @@
-const express = require("express");
+import Module from "node:module";
+import express from "express";
 
-/* eslint-disable-next-line import/extensions -- esm requires extension */
-const module = require("./src/main.ts");
+const require = Module.createRequire(import.meta.url);
+const module = require("./src/main");
 
-/* mocha/babel seems to not properly import the default export */
 const mock = module.default;
 
 const app = express();
