@@ -1,7 +1,5 @@
 import { expect } from "chai";
-import pkg from "../../test-server.js";
-
-const { hostname } = pkg;
+import { hostname } from "../../test-server.mjs";
 
 describe("Relative path mocks", function () {
     it("GET - should find json file", async () => {

@@ -1,7 +1,5 @@
 import { expect } from "chai";
-import pkg from "../../test-server.js";
-
-const { hostname } = pkg;
+import { hostname } from "../../test-server.mjs";
 
 describe("Examplefile", function () {
     it("Nothing matches", async () => {

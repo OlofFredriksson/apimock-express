@@ -1,8 +1,6 @@
 import fs from "node:fs";
 import { expect } from "chai";
-import pkg from "../../test-server.js";
-
-const { hostname } = pkg;
+import { hostname } from "../../test-server.mjs";
 
 describe("Simple mockformat", function () {
     it("GET /api/simple/users/ should return test/api/simple/users.json", async () => {

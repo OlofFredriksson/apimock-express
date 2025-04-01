@@ -1,11 +1,9 @@
-const { defineMock } = require("../../../src/helpers");
+import { defineMock } from "../../../src/helpers";
 
-module.exports = {
-    default: defineMock({
-        defaultResponse: {
-            body: {
-                id: "relativeJs",
-            },
+export default defineMock({
+    defaultResponse: {
+        body: {
+            id: "relativeJs",
         },
-    }),
-};
+    },
+});
