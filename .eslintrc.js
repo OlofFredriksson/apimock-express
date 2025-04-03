@@ -6,7 +6,11 @@ module.exports = {
 
     overrides: [
         {
-            files: ["./browser.d.ts", "./browser.mjs"],
+            files: [
+                "./browser.d.ts",
+                "./browser.mjs",
+                "./test/browser/**/*.mjs",
+            ],
             rules: {
                 /* disabled so it passes even if the project isn't built yet */
                 "import/no-unresolved": "off",

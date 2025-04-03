@@ -5,6 +5,17 @@
 ```ts
 
 // @public
+export function matchResponse(options: {
+    mockdata: Mock[];
+    requestUrl: string;
+    method: "GET" | "DELETE" | "PUT" | "DELETE";
+    requestParameters: Record<string, string | string[] | undefined>;
+    bodyParameters: Record<string, unknown>;
+    headers: Record<string, string | string[] | undefined>;
+    cookies: Record<string, string>;
+}): MockResponse | undefined;
+
+// @public
 export interface Mock<T = unknown, U = unknown> {
     defaultResponse: MockResponse<T>;
     // (undocumented)
@@ -21,7 +32,9 @@ export interface MockMatcher<T = unknown, U = unknown> {
 // @public
 export interface MockMeta {
     key?: string;
+    method?: string;
     title?: string;
+    url?: string;
 }
 
 // @public

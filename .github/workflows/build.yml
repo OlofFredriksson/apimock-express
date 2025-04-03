@@ -16,10 +16,10 @@ jobs:
                   node-version: ${{ matrix.node-version }}
             - name: Install dependencies
               run: npm ci
-            - name: Mocha
-              run: npm test --ignore-scripts
             - name: Build
               run: npm run --if-present build
+            - name: Mocha
+              run: npm test --ignore-scripts
             - name: Selftest
               run: npm run --if-present selftest
             - name: Integration test

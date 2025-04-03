@@ -5,4 +5,4 @@ export {
     type MockResponse,
     type MockRequest,
 } from "./mockfile";
-export { selectResponse } from "./common";
+export { selectResponse, matchResponse } from "./common";
