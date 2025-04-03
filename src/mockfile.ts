@@ -10,6 +10,14 @@ export interface MockMeta {
     /** Unique key for this endpoint, if present it should be used as the cookie
      * for all requests */
     key?: string;
+
+    /** Unique url for mock, not in use for file based mocks, example: /path/subpath */
+    url?: string;
+
+    /** HTTP Method, not in use for file based mocks.
+     * Valid values: GET / POST / DELETE / PUT
+     */
+    method?: string;
 }
 
 /**

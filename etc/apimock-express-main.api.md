@@ -46,7 +46,9 @@ export interface MockMatcher<T = unknown, U = unknown> {
 // @public
 export interface MockMeta {
     key?: string;
+    method?: string;
     title?: string;
+    url?: string;
 }
 
 // @public
