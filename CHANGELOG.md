@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## [2.0.3](https://github.com/Forsakringskassan/apimock-express/compare/v2.0.2...v2.0.3) (2025-04-04)
+
+### Bug Fixes
+
+* helpers should be able to import both in browser and node ([6db770c](https://github.com/Forsakringskassan/apimock-express/commit/6db770c43af1a0431a188c905c6b545cd18ed7e1))
+
 ## [2.0.2](https://github.com/Forsakringskassan/apimock-express/compare/v2.0.1...v2.0.2) (2025-01-17)
 
 ### Bug Fixes
