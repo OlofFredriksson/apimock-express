@@ -1,9 +1,9 @@
-import { expect } from "chai";
-import { hostname } from "../../test-server.mjs";
+import { describe, expect, test } from "vitest";
+import { hostname } from "../../test-server";
 
 describe("Advanced mockformat", function () {
     describe("Headers", function () {
-        it("Should return the second response if one matches", async () => {
+        test("Should return the second response if one matches", async () => {
             const headers = {
                 header1: "one",
                 header2: "2",
@@ -20,7 +20,7 @@ describe("Advanced mockformat", function () {
             expect(body).to.deep.equal({ message: "one" });
         });
 
-        it("Should return the first response if both matches", async () => {
+        test("Should return the first response if both matches", async () => {
             const headers = {
                 header1: "one",
                 header2: "two",
@@ -37,7 +37,7 @@ describe("Advanced mockformat", function () {
             expect(body).to.deep.equal({ message: "onetwo" });
         });
 
-        it("Should return the first response if two of three matches", async () => {
+        test("Should return the first response if two of three matches", async () => {
             const headers = {
                 header1: "one",
                 header2: "two",
@@ -55,7 +55,7 @@ describe("Advanced mockformat", function () {
             expect(body).to.deep.equal({ message: "onetwo" });
         });
 
-        it("Should return the default response if no matches", async () => {
+        test("Should return the default response if no matches", async () => {
             const headers = {
                 header1: "foo",
                 header2: "bar",

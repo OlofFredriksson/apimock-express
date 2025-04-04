@@ -1,8 +1,8 @@
-import { expect } from "chai";
-import { hostname } from "../../test-server.mjs";
+import { describe, expect, test } from "vitest";
+import { hostname } from "../../test-server";
 
 describe("Examplefile", function () {
-    it("Nothing matches", async () => {
+    test("Nothing matches", async () => {
         const requestbody = {};
         const res = await fetch(`http://${hostname}/api/examplefile`, {
             method: "post",
@@ -18,7 +18,7 @@ describe("Examplefile", function () {
         });
     });
 
-    it("One request parameter matches", async () => {
+    test("One request parameter matches", async () => {
         const requestbody = {};
         const res = await fetch(`http://${hostname}/api/examplefile?foo=bar`, {
             method: "post",
@@ -34,7 +34,7 @@ describe("Examplefile", function () {
         });
     });
 
-    it("Two request parameters matches", async () => {
+    test("Two request parameters matches", async () => {
         const requestbody = {};
         const res = await fetch(
             `http://${hostname}/api/examplefile?foo=bar&bar=foo`,
@@ -53,7 +53,7 @@ describe("Examplefile", function () {
         });
     });
 
-    it("One body parameter matches", async () => {
+    test("One body parameter matches", async () => {
         const requestbody = { foo: "foo" };
         const res = await fetch(`http://${hostname}/api/examplefile`, {
             method: "post",
@@ -69,7 +69,7 @@ describe("Examplefile", function () {
         });
     });
 
-    it("Two body parameters matches", async () => {
+    test("Two body parameters matches", async () => {
         const requestbody = {
             user: { firstname: "Luke", lastname: "Skywalker" },
         };
@@ -87,7 +87,7 @@ describe("Examplefile", function () {
         });
     });
 
-    it("Both request parameter and body matches", async () => {
+    test("Both request parameter and body matches", async () => {
         const requestbody = { bar: "foo" };
         const res = await fetch(`http://${hostname}/api/examplefile?foo=bar`, {
             method: "post",
@@ -103,7 +103,7 @@ describe("Examplefile", function () {
         });
     });
 
-    it("One body parameter matches. Default status", async () => {
+    test("One body parameter matches. Default status", async () => {
         const requestbody = { foo: "bar" };
         const res = await fetch(`http://${hostname}/api/examplefile`, {
             method: "post",

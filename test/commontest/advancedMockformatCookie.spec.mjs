@@ -1,9 +1,9 @@
-import { expect } from "chai";
-import { hostname } from "../../test-server.mjs";
+import { describe, expect, test } from "vitest";
+import { hostname } from "../../test-server";
 
 describe("Advanced mockformat", function () {
     describe("Cookies", function () {
-        it("Should return the response for the first cookie match", async () => {
+        test("Should return the response for the first cookie match", async () => {
             const headers = {
                 Cookie: "foo=foo",
             };
@@ -19,7 +19,7 @@ describe("Advanced mockformat", function () {
             expect(body).to.deep.equal({ message: "foo" });
         });
 
-        it("Should return the response for the second cookie match", async () => {
+        test("Should return the response for the second cookie match", async () => {
             const headers = {
                 Cookie: "foo=bar",
             };
@@ -35,7 +35,7 @@ describe("Advanced mockformat", function () {
             expect(body).to.deep.equal({ message: "bar" });
         });
 
-        it("Should return the default response if no match", async () => {
+        test("Should return the default response if no match", async () => {
             const headers = {
                 Cookie: "asdf=asdf",
             };
@@ -51,7 +51,7 @@ describe("Advanced mockformat", function () {
             expect(body).to.deep.equal({ message: "foofoofoo" });
         });
 
-        it("Should return the default response if no cookies in mockfile", async () => {
+        test("Should return the default response if no cookies in mockfile", async () => {
             const headers = {
                 Cookie: "foo=foo",
             };
@@ -70,7 +70,7 @@ describe("Advanced mockformat", function () {
             expect(body).to.deep.equal({ message: "foofoofoo" });
         });
 
-        it("Should return the default response if no cookies in request", async () => {
+        test("Should return the default response if no cookies in request", async () => {
             const headers = {};
             const res = await fetch(`http://${hostname}/api/advanced/cookie`, {
                 method: "get",

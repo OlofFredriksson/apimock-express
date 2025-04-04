@@ -1,9 +1,7 @@
-import { defineMock } from "../../../src/helpers";
-
-export default defineMock({
+module.exports = {
     defaultResponse: {
         body: {
             foo: "bar",
         },
     },
-});
+};

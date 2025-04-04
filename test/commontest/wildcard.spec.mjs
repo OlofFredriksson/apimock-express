@@ -1,8 +1,8 @@
-import { expect } from "chai";
-import { hostname } from "../../test-server.mjs";
+import { describe, expect, test } from "vitest";
+import { hostname } from "../../test-server";
 
 describe("Wildcard", function () {
-    it("should pick wildcard file for GET if specific not found", async () => {
+    test("should pick wildcard file for GET if specific not found", async () => {
         const res = await fetch(`http://${hostname}/api/wildcard/123`, {
             method: "get",
         });
@@ -11,7 +11,7 @@ describe("Wildcard", function () {
         expect(body).to.deep.equal({ message: "Wildcard GET" });
     });
 
-    it("should pick wildcard file for POST if specific not found", async () => {
+    test("should pick wildcard file for POST if specific not found", async () => {
         const requestbody = {};
         const res = await fetch(`http://${hostname}/api/wildcard/123`, {
             method: "post",

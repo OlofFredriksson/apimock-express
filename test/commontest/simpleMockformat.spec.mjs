@@ -1,9 +1,9 @@
 import fs from "node:fs";
-import { expect } from "chai";
-import { hostname } from "../../test-server.mjs";
+import { describe, expect, test } from "vitest";
+import { hostname } from "../../test-server";
 
 describe("Simple mockformat", function () {
-    it("GET /api/simple/users/ should return test/api/simple/users.json", async () => {
+    test("GET /api/simple/users/ should return test/api/simple/users.json", async () => {
         const expectedBody = fs.readFileSync("test/api/simple/users.json", {
             encoding: "utf-8",
         });
@@ -18,7 +18,7 @@ describe("Simple mockformat", function () {
         expect(body).to.deep.equal(JSON.parse(expectedBody));
     });
 
-    it("GET /api/simple/users/1 should return test/api/simple/users/1.json", async () => {
+    test("GET /api/simple/users/1 should return test/api/simple/users/1.json", async () => {
         const expectedBody = fs.readFileSync("test/api/simple/users/1.json", {
             encoding: "utf-8",
         });
@@ -33,7 +33,7 @@ describe("Simple mockformat", function () {
         expect(body).to.deep.equal(JSON.parse(expectedBody));
     });
 
-    it("POST /api/simple/users/ should return test/api/simple/users_post.json", async () => {
+    test("POST /api/simple/users/ should return test/api/simple/users_post.json", async () => {
         const expectedBody = fs.readFileSync(
             "test/api/simple/users_post.json",
             {
@@ -51,7 +51,7 @@ describe("Simple mockformat", function () {
         expect(body).to.deep.equal(JSON.parse(expectedBody));
     });
 
-    it("PUT /api/simple/users/ should return test/api/simple/users/1_put.json", async () => {
+    test("PUT /api/simple/users/ should return test/api/simple/users/1_put.json", async () => {
         const expectedBody = fs.readFileSync(
             "test/api/simple/users/1_put.json",
             {
@@ -69,7 +69,7 @@ describe("Simple mockformat", function () {
         expect(body).to.deep.equal(JSON.parse(expectedBody));
     });
 
-    it("DELETE /api/simple/users/ should return test/api/simple/users/1_delete.json", async () => {
+    test("DELETE /api/simple/users/ should return test/api/simple/users/1_delete.json", async () => {
         const expectedBody = fs.readFileSync(
             "test/api/simple/users/1_delete.json",
             { encoding: "utf-8" },
@@ -85,7 +85,7 @@ describe("Simple mockformat", function () {
         expect(body).to.deep.equal(JSON.parse(expectedBody));
     });
 
-    it("path not found should return an error", async () => {
+    test("path not found should return an error", async () => {
         const expectedBody = "Error: Cannot find file matching glob";
         const res = await fetch(`http://${hostname}/api/simple/users/1234`, {
             method: "get",

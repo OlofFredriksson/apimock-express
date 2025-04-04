@@ -1,8 +1,8 @@
-import { expect } from "chai";
-import { hostname } from "../../test-server.mjs";
+import { describe, expect, test } from "vitest";
+import { hostname } from "../../test-server";
 
 describe("Intercepted call", function () {
-    it("Should handle when an earlier middleware intercepts request body", async () => {
+    test("Should handle when an earlier middleware intercepts request body", async () => {
         const res = await fetch(`http://${hostname}/api/intercepted`, {
             method: "get",
         });

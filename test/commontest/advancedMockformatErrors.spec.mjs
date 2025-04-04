@@ -1,9 +1,9 @@
-import { expect } from "chai";
-import { hostname } from "../../test-server.mjs";
+import { describe, expect, test } from "vitest";
+import { hostname } from "../../test-server";
 
 describe("Advanced mockformat", function () {
     describe("Errors", function () {
-        it("Should return an empty string for an empty file", async () => {
+        test("Should return an empty string for an empty file", async () => {
             const res = await fetch(
                 `http://${hostname}/api/advanced/emptyfile`,
                 { method: "get" },
@@ -16,7 +16,7 @@ describe("Advanced mockformat", function () {
             expect(body).to.equal("");
         });
 
-        it("Should return the default response if only default response", async () => {
+        test("Should return the default response if only default response", async () => {
             const res = await fetch(
                 `http://${hostname}/api/advanced/only_defaultresponse`,
                 { method: "get" },
@@ -29,7 +29,7 @@ describe("Advanced mockformat", function () {
             expect(body).to.deep.equal({ message: "foofoofoo" });
         });
 
-        it("Should return an empty string if no body in only default response", async () => {
+        test("Should return an empty string if no body in only default response", async () => {
             const res = await fetch(
                 `http://${hostname}/api/advanced/only_defaultresponse_no_body`,
                 { method: "get" },
@@ -42,7 +42,7 @@ describe("Advanced mockformat", function () {
             expect(body).to.equal("");
         });
 
-        it("Should return the default status if no status in only default response", async () => {
+        test("Should return the default status if no status in only default response", async () => {
             const res = await fetch(
                 `http://${hostname}/api/advanced/only_defaultresponse_no_status`,
                 { method: "get" },
@@ -55,7 +55,7 @@ describe("Advanced mockformat", function () {
             expect(body).to.deep.equal({ message: "foofoofoo" });
         });
 
-        it("Should return an error if the file is malformed", async () => {
+        test("Should return an error if the file is malformed", async () => {
             const res = await fetch(
                 `http://${hostname}/api/advanced/malformedfile`,
                 { method: "get" },
@@ -70,7 +70,7 @@ describe("Advanced mockformat", function () {
             });
         });
 
-        it("Should return an error if the input body is malformed", async () => {
+        test("Should return an error if the input body is malformed", async () => {
             const res = await fetch(
                 `http://${hostname}/api/advanced/bodyparameter`,
                 {
@@ -89,7 +89,7 @@ describe("Advanced mockformat", function () {
             expect(body).to.deep.equal({ error: "Malformed input body" });
         });
 
-        it("Should not parse the body, but return the default response if input body is not json", async () => {
+        test("Should not parse the body, but return the default response if input body is not json", async () => {
             const res = await fetch(
                 `http://${hostname}/api/advanced/bodyparameter`,
                 {

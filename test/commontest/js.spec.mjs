@@ -1,8 +1,9 @@
-import { expect } from "chai";
-import { hostname } from "../../test-server.mjs";
+import { describe, expect, test } from "vitest";
+import fetch from "node-fetch";
+import { hostname } from "../../test-server";
 
 describe("js mocks", function () {
-    it("plain file", async () => {
+    test("plain file", async () => {
         const requestbody = {};
         const res = await fetch(`http://${hostname}/api/js/file`, {
             method: "post",
@@ -18,7 +19,7 @@ describe("js mocks", function () {
         });
     });
 
-    it("default export", async () => {
+    test("default export", async () => {
         const requestbody = {};
         const res = await fetch(`http://${hostname}/api/js/default-export`, {
             method: "post",
@@ -34,7 +35,7 @@ describe("js mocks", function () {
         });
     });
 
-    it("remove relativ path for error message, file not found", () => {
+    test("remove relativ path for error message, file not found", () => {
         expect("../../app/private/../v1".replace(/^(?:\.\.\/)+/, "")).to.equal(
             "app/private/../v1",
         );

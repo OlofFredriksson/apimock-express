@@ -1,9 +1,9 @@
-import { expect } from "chai";
-import { hostname } from "../../test-server.mjs";
+import { describe, expect, test } from "vitest";
+import { hostname } from "../../test-server";
 
 describe("Advanced mockformat", function () {
     describe("Bodyparameter", function () {
-        it("Should return the response for the first bodyparamter match", async () => {
+        test("Should return the response for the first bodyparamter match", async () => {
             const requestbody = { foo: "foo" };
             const res = await fetch(
                 `http://${hostname}/api/advanced/bodyparameter`,
@@ -21,7 +21,7 @@ describe("Advanced mockformat", function () {
             expect(body).to.deep.equal({ message: "foo" });
         });
 
-        it("Should return the response for the second bodyparamter match", async () => {
+        test("Should return the response for the second bodyparamter match", async () => {
             const requestbody = { foo: "bar" };
             const res = await fetch(
                 `http://${hostname}/api/advanced/bodyparameter`,
@@ -39,7 +39,7 @@ describe("Advanced mockformat", function () {
             expect(body).to.deep.equal({ message: "bar" });
         });
 
-        it("Should return the default response if no match in bodyparameter value", async () => {
+        test("Should return the default response if no match in bodyparameter value", async () => {
             const requestbody = { foo: "asdf" };
             const res = await fetch(
                 `http://${hostname}/api/advanced/bodyparameter`,
@@ -57,7 +57,7 @@ describe("Advanced mockformat", function () {
             expect(body).to.deep.equal({ message: "foofoofoo" });
         });
 
-        it("Should return the default response if no match in bodyparameter name", async () => {
+        test("Should return the default response if no match in bodyparameter name", async () => {
             const requestbody = { bar: "asdf" };
             const res = await fetch(
                 `http://${hostname}/api/advanced/bodyparameter`,
@@ -75,7 +75,7 @@ describe("Advanced mockformat", function () {
             expect(body).to.deep.equal({ message: "foofoofoo" });
         });
 
-        it("Should return an error if no match and no default response", async () => {
+        test("Should return an error if no match and no default response", async () => {
             const requestbody = { foo: "asdf" };
             const res = await fetch(
                 `http://${hostname}/api/advanced/bodyparameter_no_defaultresponse`,
@@ -95,7 +95,7 @@ describe("Advanced mockformat", function () {
             });
         });
 
-        it("Should return the default response if no bodyparameters in mockfile", async () => {
+        test("Should return the default response if no bodyparameters in mockfile", async () => {
             const requestbody = { foo: "bar" };
             const res = await fetch(
                 `http://${hostname}/api/advanced/bodyparameter_no_parameters`,
@@ -115,7 +115,7 @@ describe("Advanced mockformat", function () {
     });
 
     describe("Complex Bodyparameter", function () {
-        it("Should match two parameters on second level", async () => {
+        test("Should match two parameters on second level", async () => {
             const requestbody = {
                 user: {
                     firstname: "Luke",
@@ -142,7 +142,7 @@ describe("Advanced mockformat", function () {
             });
         });
 
-        it("Should match one parameter on second level", async () => {
+        test("Should match one parameter on second level", async () => {
             const requestbody = {
                 user: {
                     firstname: "Luke",
@@ -169,7 +169,7 @@ describe("Advanced mockformat", function () {
             });
         });
 
-        it("Should match one parameter on third level", async () => {
+        test("Should match one parameter on third level", async () => {
             const requestbody = {
                 user: {
                     firstname: "Zeb",
@@ -196,7 +196,7 @@ describe("Advanced mockformat", function () {
             });
         });
 
-        it("Should match one parameter on first level", async () => {
+        test("Should match one parameter on first level", async () => {
             const requestbody = {
                 user: {
                     firstname: "Zeb",
@@ -223,7 +223,7 @@ describe("Advanced mockformat", function () {
             });
         });
 
-        it("Should handle a request that do not contain all of the mock parameters", async () => {
+        test("Should handle a request that do not contain all of the mock parameters", async () => {
             const requestbody = { foo: "bar" };
             const res = await fetch(
                 `http://${hostname}/api/advanced/bodyparameter_complex_body`,
@@ -243,7 +243,7 @@ describe("Advanced mockformat", function () {
             });
         });
 
-        it("Should return the default answer if no match", async () => {
+        test("Should return the default answer if no match", async () => {
             const requestbody = { asdf: "asdf" };
             const res = await fetch(
                 `http://${hostname}/api/advanced/bodyparameter_complex_body`,
@@ -265,7 +265,7 @@ describe("Advanced mockformat", function () {
     });
 
     describe("Bodyparameters", function () {
-        it("Should return the default answer if only one of two bodyparameters matches", async () => {
+        test("Should return the default answer if only one of two bodyparameters matches", async () => {
             const requestbody = { foo: "bar" };
             const res = await fetch(
                 `http://${hostname}/api/advanced/bodyparameters`,
@@ -283,7 +283,7 @@ describe("Advanced mockformat", function () {
             expect(body).to.deep.equal({ message: "foofoofoo" });
         });
 
-        it("Should return the answer for both bodyparameters match", async () => {
+        test("Should return the answer for both bodyparameters match", async () => {
             const requestbody = { foo: "bar", bar: "foo" };
             const res = await fetch(
                 `http://${hostname}/api/advanced/bodyparameters`,
@@ -303,7 +303,7 @@ describe("Advanced mockformat", function () {
     });
 
     describe("Bodyparameter and requestparameter", function () {
-        it("Should return the default answer if only the requestparameter matches", async () => {
+        test("Should return the default answer if only the requestparameter matches", async () => {
             const requestbody = { asdf: "asdf" };
             const res = await fetch(
                 `http://${hostname}/api/advanced/requestparameter_bodyparameter?foo=bar`,
@@ -321,7 +321,7 @@ describe("Advanced mockformat", function () {
             expect(body).to.deep.equal({ message: "foofoofoo" });
         });
 
-        it("Should return the default answer if only the bodyparameter matches", async () => {
+        test("Should return the default answer if only the bodyparameter matches", async () => {
             const requestbody = { bar: "foo" };
             const res = await fetch(
                 `http://${hostname}/api/advanced/requestparameter_bodyparameter?asdf=asdf`,
@@ -339,7 +339,7 @@ describe("Advanced mockformat", function () {
             expect(body).to.deep.equal({ message: "foofoofoo" });
         });
 
-        it("Should return the answer for requestparameter and bodyparameter match", async () => {
+        test("Should return the answer for requestparameter and bodyparameter match", async () => {
             const requestbody = { bar: "foo" };
             const res = await fetch(
                 `http://${hostname}/api/advanced/requestparameter_bodyparameter?foo=bar`,
