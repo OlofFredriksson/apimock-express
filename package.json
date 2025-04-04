@@ -61,7 +61,7 @@
     "postpublish": "release-postpublish",
     "selftest": "node test/selftest.cjs && node test/selftest.mjs",
     "pretest": "run-s prettier:check eslint",
-    "test": "mocha --exit --require ./babel-register test/**/*.spec.mjs",
+    "test": "vitest run",
     "vite": "npm run vite:cjs && npm run vite:mjs",
     "vite:cjs": "start-server-and-test 'vite --config test/vite/vite.config.cts --port 8010' http-get://127.0.0.1:8010/index.html 'curl -v --no-progress-meter http://127.0.0.1:8010/api/foo'",
     "vite:mjs": "start-server-and-test 'vite --config test/vite/vite.config.mts --port 8020' http-get://127.0.0.1:8020/index.html 'curl -v --no-progress-meter http://127.0.0.1:8020/api/foo'"
@@ -76,10 +76,6 @@
     "glob": "^11.0.0"
   },
   "devDependencies": {
-    "@babel/core": "7.26.10",
-    "@babel/preset-env": "7.26.9",
-    "@babel/preset-typescript": "7.27.0",
-    "@babel/register": "7.25.9",
     "@forsakringskassan/eslint-config": "11.9.0",
     "@forsakringskassan/eslint-config-cli": "11.9.0",
     "@forsakringskassan/eslint-config-typescript": "11.9.0",
@@ -89,17 +85,16 @@
     "@types/cli-table": "0.3.4",
     "@types/debug": "4.1.12",
     "@types/node": "20.17.30",
-    "chai": "5.2.0",
     "esbuild": "0.25.2",
     "express": "4.21.2",
     "is-ci": "4.1.0",
-    "mocha": "11.1.0",
     "node-fetch": "3.3.2",
     "npm-pkg-lint": "3.10.11",
     "npm-run-all2": "7.0.2",
     "start-server-and-test": "2.0.11",
     "typescript": "5.8.2",
-    "vite": "6.2.5"
+    "vite": "6.2.5",
+    "vitest": "3.1.1"
   },
   "peerDependencies": {
     "vite": "^4.0.0 || ^5.0.0 || ^6.0.0"

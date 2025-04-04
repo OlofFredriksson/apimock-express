@@ -1,9 +1,9 @@
-import { expect } from "chai";
-import { hostname } from "../../test-server.mjs";
+import { describe, expect, test } from "vitest";
+import { hostname } from "../../test-server";
 
 describe("Advanced mockformat", function () {
     describe("Headers", function () {
-        it("POST /headers/sign should respond with 302 redirect", async () => {
+        test("POST /headers/sign should respond with 302 redirect", async () => {
             const res = await fetch(`http://${hostname}/headers/redirect`, {
                 method: "post",
                 redirect: "manual",

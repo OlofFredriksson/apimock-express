@@ -1,10 +1,5 @@
-import Module from "node:module";
 import express from "express";
-
-const require = Module.createRequire(import.meta.url);
-const module = require("./src/main");
-
-const mock = module.default;
+import mock from "./src/main";
 
 const app = express();
 

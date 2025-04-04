@@ -1,11 +1,11 @@
-import { expect } from "chai";
-import { hostname } from "../../test-server.mjs";
+import { describe, expect, test } from "vitest";
+import { hostname } from "../../test-server";
 
 describe("Advanced mockformat", function () {
     const DELAY_TIME = 1000;
 
     describe("Delay", function () {
-        it("GET /api/advanced/delay?foo=bar should not be delayed", async () => {
+        test("GET /api/advanced/delay?foo=bar should not be delayed", async () => {
             const starttime = new Date().getTime();
             const res = await fetch(
                 `http://${hostname}/api/advanced/delay?foo=bar`,
@@ -18,7 +18,7 @@ describe("Advanced mockformat", function () {
             expect(executionTime).to.be.at.most(DELAY_TIME);
         });
 
-        it("GET /api/advanced/delay?foo=foo should be delayed", async () => {
+        test("GET /api/advanced/delay?foo=foo should be delayed", async () => {
             const starttime = new Date().getTime();
             const res = await fetch(
                 `http://${hostname}/api/advanced/delay?foo=foo`,
