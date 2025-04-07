@@ -12,22 +12,10 @@ import { simpleMockformat } from "./simple-mockformat";
 export function respondWithMock(
     req: IncomingMessage,
     res: ServerResponse,
-    fileContent: string,
+    mockdata: Mock,
     filepath: string,
     baseDelay: number,
 ): void {
-    let mockdata: Mock;
-    try {
-        mockdata = JSON.parse(fileContent);
-    } catch {
-        console.error(`Malformed file: ${filepath} with content `, fileContent);
-        mockdata = {
-            defaultResponse: {
-                status: 500,
-                body: { error: "Malformed mockfile. See server log" },
-            },
-        };
-    }
     if (!isAdvancedMock(mockdata)) {
         //The mockfile has the simple format. Just respond with the mockfile content.
         setTimeout(simpleMockformat, baseDelay, res, filepath);

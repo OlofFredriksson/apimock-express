@@ -1,15 +1,32 @@
-import fs from "node:fs";
+import fs from "node:fs/promises";
 import path from "node:path/posix";
+import { type Mock } from "../mockfile";
+
+function parseJson(filepath: string, fileContent: string): Mock {
+    try {
+        return JSON.parse(fileContent);
+    } catch {
+        console.error(`Malformed file: ${filepath} with content `, fileContent);
+        return {
+            defaultResponse: {
+                status: 500,
+                body: { error: "Malformed mockfile. See server log" },
+            },
+        };
+    }
+}
 
 /**
  * Extracts filecontent for both js and json files
  *
  * @internal
  */
-export async function extractFileContent(filepath: string): Promise<string> {
+export async function extractFileContent(filepath: string): Promise<Mock> {
     switch (path.extname(filepath)) {
-        case ".json":
-            return fs.readFileSync(filepath, { encoding: "utf8" });
+        case ".json": {
+            const fileContent = await fs.readFile(filepath, "utf-8");
+            return parseJson(filepath, fileContent);
+        }
         case ".js":
         case ".cjs":
         case ".mjs": {
@@ -22,7 +39,7 @@ export async function extractFileContent(filepath: string): Promise<string> {
                 mock = mock.default;
             }
 
-            return typeof mock === "string" ? mock : JSON.stringify(mock);
+            return typeof mock === "string" ? parseJson(filepath, mock) : mock;
         }
         default:
             throw new Error(

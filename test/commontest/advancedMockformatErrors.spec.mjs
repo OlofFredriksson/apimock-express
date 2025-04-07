@@ -3,19 +3,6 @@ import { hostname } from "../../test-server";
 
 describe("Advanced mockformat", function () {
     describe("Errors", function () {
-        test("Should return an empty string for an empty file", async () => {
-            const res = await fetch(
-                `http://${hostname}/api/advanced/emptyfile`,
-                { method: "get" },
-            );
-            const body = await res.text();
-            expect(res.status).to.equal(200);
-            expect(res.headers.get("content-type")).to.equal(
-                "application/json;charset=UTF-8",
-            );
-            expect(body).to.equal("");
-        });
-
         test("Should return the default response if only default response", async () => {
             const res = await fetch(
                 `http://${hostname}/api/advanced/only_defaultresponse`,

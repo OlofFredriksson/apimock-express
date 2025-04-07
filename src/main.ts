@@ -11,7 +11,6 @@ import { extractFileContent, getFilepath, respondWithMock } from "./node";
 import { respondData } from "./node/respond-data";
 import { type NormalizedEntry } from "./normalized-entry";
 import { VitePluginOptions } from "./vite-plugin-options";
-import { defaultContentType, defaultStatus } from "./constants";
 
 export { selectResponse } from "./common";
 export { type MiddlewareConfiguration } from "./middleware-configuration";
@@ -143,21 +142,9 @@ const apimock = {
                 optionIndex,
             );
             if (fs.existsSync(filepath)) {
-                const fileContent = await extractFileContent(filepath);
-
-                if (fileContent.length === 0) {
-                    //Empty file
-                    res.writeHead(defaultStatus, {
-                        "Content-Type": defaultContentType,
-                    });
-                    res.end();
-                } else {
-                    //Respond with the mockfile data
-                    const baseDelay = parseDelay(
-                        mockOptions[optionIndex].delay,
-                    );
-                    respondWithMock(req, res, fileContent, filepath, baseDelay);
-                }
+                const mockdata = await extractFileContent(filepath);
+                const baseDelay = parseDelay(mockOptions[optionIndex].delay);
+                respondWithMock(req, res, mockdata, filepath, baseDelay);
             } else {
                 console.error(
                     `Can not find mock filename "${process.cwd()}/${filepath.replace(
