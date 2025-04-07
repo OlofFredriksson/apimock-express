@@ -6,18 +6,22 @@ import path from "node:path/posix";
  *
  * @internal
  */
-export function extractFileContent(filepath: string): string {
+export async function extractFileContent(filepath: string): Promise<string> {
     switch (path.extname(filepath)) {
         case ".json":
             return fs.readFileSync(filepath, { encoding: "utf8" });
+        case ".js":
         case ".cjs":
-        case ".js": {
-            /* eslint-disable-next-line import/no-dynamic-require, @typescript-eslint/no-require-imports --
-             * filename depends on config and isn't known until runtime */
-            let mock = require(path.resolve(filepath));
+        case ".mjs": {
+            let { default: mock } = await import(filepath);
+
+            /* this should never really be required but a malformed "default"
+             * export in commonjs might (such as testcases in this repo does)
+             * would behave like this as it is not a proper default export */
             if (mock.default) {
                 mock = mock.default;
             }
+
             return typeof mock === "string" ? mock : JSON.stringify(mock);
         }
         default:

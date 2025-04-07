@@ -113,54 +113,77 @@ const apimock = {
      * app.use("/", mockRequest);
      * ```
      */
-    mockRequest(
+    async mockRequest(
         req: IncomingMessage,
         res: ServerResponse,
         next: () => void,
-    ): void {
-        const url = req.originalUrl ?? "";
-        const optionIndex = findMachingIndex(url);
-        if (optionIndex < 0) {
-            const config = JSON.stringify(mockOptions, null, 4);
-            debug(`Found no matching mocks for ${url} in:\n${config}`);
-            next();
-            return;
-        }
-
-        //req.originalUrl matches some mockurl
-        res.setHeader("Access-Control-Allow-Origin", "*");
-        res.setHeader("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE");
-        res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-
-        const filepath = getFilepath(mockOptions, req, url, optionIndex);
-        if (fs.existsSync(filepath)) {
-            const fileContent = extractFileContent(filepath);
-
-            if (fileContent.length === 0) {
-                //Empty file
-                res.writeHead(defaultStatus, {
-                    "Content-Type": defaultContentType,
-                });
-                res.end();
-            } else {
-                //Respond with the mockfile data
-                const baseDelay = parseDelay(mockOptions[optionIndex].delay);
-                respondWithMock(req, res, fileContent, filepath, baseDelay);
+    ): Promise<void> {
+        try {
+            const url = req.originalUrl ?? "";
+            const optionIndex = findMachingIndex(url);
+            if (optionIndex < 0) {
+                const config = JSON.stringify(mockOptions, null, 4);
+                debug(`Found no matching mocks for ${url} in:\n${config}`);
+                next();
+                return;
             }
-        } else {
-            console.error(
-                `Can not find mock filename "${process.cwd()}/${filepath.replace(
-                    /^(?:\.\.\/)+/,
-                    "",
-                )}" for url "${url}"`,
+
+            //req.originalUrl matches some mockurl
+            res.setHeader("Access-Control-Allow-Origin", "*");
+            res.setHeader(
+                "Access-Control-Allow-Methods",
+                "GET,PUT,POST,DELETE",
             );
-            console.error(`Searched in "${mockOptions[optionIndex].mockdir}"`);
-            console.error("Use DEBUG=apimock to see debugging messages");
-            const response = {
-                status: 404,
-                body: { error: "Can not find mockfile. See server log" },
-            };
-            respondData(res, response);
+            res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+
+            const filepath = await getFilepath(
+                mockOptions,
+                req,
+                url,
+                optionIndex,
+            );
+            if (fs.existsSync(filepath)) {
+                const fileContent = await extractFileContent(filepath);
+
+                if (fileContent.length === 0) {
+                    //Empty file
+                    res.writeHead(defaultStatus, {
+                        "Content-Type": defaultContentType,
+                    });
+                    res.end();
+                } else {
+                    //Respond with the mockfile data
+                    const baseDelay = parseDelay(
+                        mockOptions[optionIndex].delay,
+                    );
+                    respondWithMock(req, res, fileContent, filepath, baseDelay);
+                }
+            } else {
+                console.error(
+                    `Can not find mock filename "${process.cwd()}/${filepath.replace(
+                        /^(?:\.\.\/)+/,
+                        "",
+                    )}" for url "${url}"`,
+                );
+                console.error(
+                    `Searched in "${mockOptions[optionIndex].mockdir}"`,
+                );
+                console.error("Use DEBUG=apimock to see debugging messages");
+                const response = {
+                    status: 404,
+                    body: { error: "Can not find mockfile. See server log" },
+                };
+                respondData(res, response);
+            }
+        } catch (err) {
+            res.setHeader("Content-Type", "text/html; charset=utf-8");
+            res.writeHead(500);
+            res.write(
+                err instanceof Error
+                    ? `${err.name}: ${err.message}`
+                    : String(err),
+            );
+            res.end();
         }
     },
 

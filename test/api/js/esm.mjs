@@ -1,7 +1,7 @@
-module.exports = {
+export default {
     defaultResponse: {
         body: {
-            foo: "cjs",
+            foo: "esm",
         },
     },
 };
