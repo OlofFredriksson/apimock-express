@@ -10,6 +10,7 @@ export function extractFileContent(filepath: string): string {
     switch (path.extname(filepath)) {
         case ".json":
             return fs.readFileSync(filepath, { encoding: "utf8" });
+        case ".cjs":
         case ".js": {
             /* eslint-disable-next-line import/no-dynamic-require, @typescript-eslint/no-require-imports --
              * filename depends on config and isn't known until runtime */
