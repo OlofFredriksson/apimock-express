@@ -1,5 +1,4 @@
 import { describe, expect, test } from "vitest";
-import fetch from "node-fetch";
 import { hostname } from "../../test-server";
 
 describe("js mocks", function () {
