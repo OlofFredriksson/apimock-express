@@ -16,6 +16,15 @@ export function matchResponse(options: {
 }): MockResponse | undefined;
 
 // @public
+export function matchResponseBrowser(options: {
+    mockdata: Mock[];
+    requestUrl: string;
+    method: "GET" | "POST" | "PUT" | "DELETE";
+    bodyParameters: Record<string, unknown>;
+    headers: Record<string, string | string[] | undefined>;
+}): MockResponse;
+
+// @public
 export interface Mock<T = unknown, U = unknown> {
     defaultResponse: MockResponse<T>;
     // (undocumented)
