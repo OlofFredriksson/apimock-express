@@ -86,7 +86,7 @@
     "@types/debug": "4.1.12",
     "@types/node": "20.17.30",
     "esbuild": "0.25.2",
-    "express": "4.21.2",
+    "express": "5.1.0",
     "is-ci": "4.1.0",
     "node-fetch": "3.3.2",
     "npm-pkg-lint": "3.10.11",

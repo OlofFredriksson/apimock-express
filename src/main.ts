@@ -110,7 +110,7 @@ const apimock = {
      * Usage:
      *
      * ```ts
-     * app.use("*", mockRequest);
+     * app.use("/", mockRequest);
      * ```
      */
     mockRequest(

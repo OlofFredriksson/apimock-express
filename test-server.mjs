@@ -13,7 +13,7 @@ const mockConfig = [
 
 mock.config(mockConfig);
 
-app.use("*", (req, res, next) => {
+app.use("/", (req, res, next) => {
     mock.mockRequest(req, res, next);
 });
 
