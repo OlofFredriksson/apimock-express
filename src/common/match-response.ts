@@ -9,7 +9,7 @@ import { selectResponse } from "./select-response";
 export function matchResponse(options: {
     mockdata: Mock[];
     requestUrl: string;
-    method: "GET" | "DELETE" | "PUT" | "DELETE";
+    method: "GET" | "POST" | "PUT" | "DELETE";
     requestParameters: Record<string, string | string[] | undefined>;
     bodyParameters: Record<string, unknown>;
     headers: Record<string, string | string[] | undefined>;
