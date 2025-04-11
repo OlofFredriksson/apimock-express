@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## [2.1.1](https://github.com/Forsakringskassan/apimock-express/compare/v2.1.0...v2.1.1) (2025-04-11)
+
+### Bug Fixes
+
+* matchResponse should support POST-method ([7a46b95](https://github.com/Forsakringskassan/apimock-express/commit/7a46b959e913328a81cd1303ab70f81892a5ea6e))
+
 ## [2.1.0](https://github.com/Forsakringskassan/apimock-express/compare/v2.0.3...v2.1.0) (2025-04-07)
 
 ### Features
