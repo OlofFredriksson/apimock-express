@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## [2.2.0](https://github.com/Forsakringskassan/apimock-express/compare/v2.1.1...v2.2.0) (2025-04-16)
+
+### Features
+
+* matchResponseBrowser ([fd4fdb7](https://github.com/Forsakringskassan/apimock-express/commit/fd4fdb72302cab2824e7215165f82075370a6061))
+
 ## [2.1.1](https://github.com/Forsakringskassan/apimock-express/compare/v2.1.0...v2.1.1) (2025-04-11)
 
 ### Bug Fixes
