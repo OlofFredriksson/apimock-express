@@ -87,7 +87,7 @@
     "@types/node": "20.17.51",
     "esbuild": "0.25.5",
     "express": "5.1.0",
-    "happy-dom": "17.4.7",
+    "happy-dom": "17.5.6",
     "is-ci": "4.1.0",
     "npm-pkg-lint": "4.0.0",
     "npm-run-all2": "8.0.4",
