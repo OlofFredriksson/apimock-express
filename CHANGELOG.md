@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## [2.3.0](https://github.com/Forsakringskassan/apimock-express/compare/v2.2.0...v2.3.0) (2025-06-30)
+
+### Features
+
+* **deps:** support vite v7 ([0d43750](https://github.com/Forsakringskassan/apimock-express/commit/0d43750a88f08a0a212e662b7bf64ef8214dd57b))
+
 ## [2.2.0](https://github.com/Forsakringskassan/apimock-express/compare/v2.1.1...v2.2.0) (2025-04-16)
 
 ### Features
