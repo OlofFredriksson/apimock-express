@@ -32,7 +32,7 @@ jobs:
         runs-on: ubuntu-latest
         strategy:
             matrix:
-                vite-version: [4.x, 5.x, 6.x]
+                vite-version: [4.x, 5.x, 6.x, 7.x]
         env:
             WAIT_ON_TIMEOUT: 5000
         steps:
