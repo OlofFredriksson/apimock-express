@@ -10,7 +10,7 @@ import { ServerResponse } from 'node:http';
 // @public (undocumented)
 const apimock: {
     config(mocks: MockEntry | MockEntry[], userConfig?: Partial<MiddlewareConfiguration>): void;
-    mockRequest(req: IncomingMessage, res: ServerResponse, next: () => void): void;
+    mockRequest(req: IncomingMessage, res: ServerResponse, next: () => void): Promise<void>;
     vitePlugin(mocks: MockEntry | MockEntry[], options?: Partial<VitePluginOptions>): {
         name: string;
     };

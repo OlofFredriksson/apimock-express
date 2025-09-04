@@ -1,5 +1,5 @@
 import path from "node:path/posix";
-import { globSync } from "glob";
+import fs from "node:fs/promises";
 import { type NormalizedEntry } from "../normalized-entry";
 import { appendMethodType } from "./append-method-type";
 
@@ -8,12 +8,12 @@ import { appendMethodType } from "./append-method-type";
  *
  * @internal
  */
-export function getFilepath(
+export async function getFilepath(
     mockOptions: NormalizedEntry[],
     req: { method?: string },
     url: string,
     optionIndex: number,
-): string {
+): Promise<string> {
     let filepath = url;
     //remove mockurl beginning
     filepath = filepath.substring(mockOptions[optionIndex].mockurl.length);
@@ -36,11 +36,13 @@ export function getFilepath(
         "__default",
     )}.*{js,json}`;
     const globPattern = `${appendMethodType(req, filepath)}.*{js,json}`;
-    const files = globSync(globPattern);
 
-    const wildcard = globSync(wildcardPattern);
+    const files = await Array.fromAsync(fs.glob(globPattern));
+
     const resolvedPath = path.resolve(process.cwd(), globPattern);
     if (files.length === 0) {
+        const wildcard = await Array.fromAsync(fs.glob(wildcardPattern));
+
         if (wildcard.length === 1) {
             return wildcard[0];
         }

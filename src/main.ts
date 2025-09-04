@@ -113,11 +113,11 @@ const apimock = {
      * app.use("/", mockRequest);
      * ```
      */
-    mockRequest(
+    async mockRequest(
         req: IncomingMessage,
         res: ServerResponse,
         next: () => void,
-    ): void {
+    ): Promise<void> {
         const url = req.originalUrl ?? "";
         const optionIndex = findMachingIndex(url);
         if (optionIndex < 0) {
@@ -132,35 +132,52 @@ const apimock = {
         res.setHeader("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE");
         res.setHeader("Access-Control-Allow-Headers", "Content-Type");
 
-        const filepath = getFilepath(mockOptions, req, url, optionIndex);
-        if (fs.existsSync(filepath)) {
-            const fileContent = extractFileContent(filepath);
-
-            if (fileContent.length === 0) {
-                //Empty file
-                res.writeHead(defaultStatus, {
-                    "Content-Type": defaultContentType,
-                });
-                res.end();
-            } else {
-                //Respond with the mockfile data
-                const baseDelay = parseDelay(mockOptions[optionIndex].delay);
-                respondWithMock(req, res, fileContent, filepath, baseDelay);
-            }
-        } else {
-            console.error(
-                `Can not find mock filename "${process.cwd()}/${filepath.replace(
-                    /^(?:\.\.\/)+/,
-                    "",
-                )}" for url "${url}"`,
+        try {
+            const filepath = await getFilepath(
+                mockOptions,
+                req,
+                url,
+                optionIndex,
             );
-            console.error(`Searched in "${mockOptions[optionIndex].mockdir}"`);
-            console.error("Use DEBUG=apimock to see debugging messages");
-            const response = {
-                status: 404,
-                body: { error: "Can not find mockfile. See server log" },
-            };
-            respondData(res, response);
+
+            if (fs.existsSync(filepath)) {
+                const fileContent = extractFileContent(filepath);
+
+                if (fileContent.length === 0) {
+                    //Empty file
+                    res.writeHead(defaultStatus, {
+                        "Content-Type": defaultContentType,
+                    });
+                    res.end();
+                } else {
+                    //Respond with the mockfile data
+                    const baseDelay = parseDelay(
+                        mockOptions[optionIndex].delay,
+                    );
+                    respondWithMock(req, res, fileContent, filepath, baseDelay);
+                }
+            } else {
+                console.error(
+                    `Can not find mock filename "${process.cwd()}/${filepath.replace(
+                        /^(?:\.\.\/)+/,
+                        "",
+                    )}" for url "${url}"`,
+                );
+                console.error(
+                    `Searched in "${mockOptions[optionIndex].mockdir}"`,
+                );
+                console.error("Use DEBUG=apimock to see debugging messages");
+                const response = {
+                    status: 404,
+                    body: { error: "Can not find mockfile. See server log" },
+                };
+                respondData(res, response);
+            }
+        } catch (e) {
+            console.log(e);
+            res.writeHead(500, { "Content-Type": "text/html; charset=utf-8" });
+            res.write((e as Error).toString());
+            res.end();
         }
     },
 
