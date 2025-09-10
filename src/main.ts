@@ -12,6 +12,7 @@ import { respondData } from "./node/respond-data";
 import { type NormalizedEntry } from "./normalized-entry";
 import { VitePluginOptions } from "./vite-plugin-options";
 
+export { generateForBrowser } from "./node/generateForBrowser";
 export { selectResponse } from "./common";
 export { type MiddlewareConfiguration } from "./middleware-configuration";
 export {
