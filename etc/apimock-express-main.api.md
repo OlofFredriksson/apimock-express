@@ -18,6 +18,17 @@ const apimock: {
 export default apimock;
 
 // @public
+export function generateForBrowser(apiDirectory: string, userOptions?: generateForBrowserOptions): Mock[];
+
+// @public
+export interface generateForBrowserOptions {
+    // (undocumented)
+    baseApiPath: string;
+    // (undocumented)
+    rootPath: string;
+}
+
+// @public
 export interface MiddlewareConfiguration {
     verbose?: boolean;
 }

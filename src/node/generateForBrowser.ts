@@ -2,22 +2,40 @@ import { join } from "node:path";
 import { globSync } from "glob";
 import { type Mock } from "../main";
 import { extractFileContent } from "./extract-file-content";
+
+/**
+ * TBD
+ * @public
+ */
+export interface generateForBrowserOptions {
+    rootPath: string;
+    baseApiPath: string;
+}
+
+const defaultOptions: generateForBrowserOptions = {
+    rootPath: process.cwd(),
+    baseApiPath: "",
+};
+
+/**
+ * TBD
+ * @public
+ */
 export function generateForBrowser(
-    rootPath: string,
     apiDirectory: string,
+    userOptions: generateForBrowserOptions = defaultOptions,
 ): Mock[] {
-    const apiFiles = globSync(
-        [`${apiDirectory}/**/*.js`, `${apiDirectory}/**/*.json`],
-        {
-            posix: true,
-            cwd: rootPath,
-        },
-    );
+    const options = { ...defaultOptions, ...userOptions };
+    const apiFiles = globSync([`${apiDirectory}/**/*.{js,json,cjs}`], {
+        posix: true,
+        cwd: options.rootPath,
+    });
 
     const data: Mock[] = [];
     for (const file of apiFiles) {
         const apiPath = file
             .replace(apiDirectory, "")
+            .replace(".cjs", "")
             .replace(".json", "")
             .replace(".js", "");
 
@@ -27,10 +45,13 @@ export function generateForBrowser(
             methodType = findMethod.groups?.method.toLocaleUpperCase() ?? "GET";
         }
 
-        const filePath = join(rootPath, file);
+        const filePath = join(options.rootPath, file);
         console.log(filePath);
         const content = JSON.parse(extractFileContent(filePath));
-        content.meta = { url: apiPath, method: methodType };
+        content.meta = {
+            url: `${options.baseApiPath}${apiPath}`,
+            method: methodType,
+        };
         data.push(content);
     }
     return data;
