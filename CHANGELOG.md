@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## [2.4.0](https://github.com/Forsakringskassan/apimock-express/compare/v2.3.0...v2.4.0) (2025-09-12)
+
+### Features
+
+* support .cjs-files ([e3f3708](https://github.com/Forsakringskassan/apimock-express/commit/e3f3708dcce9ec45b0344326bd032fc534eb3a3b))
+
 ## [2.3.0](https://github.com/Forsakringskassan/apimock-express/compare/v2.2.0...v2.3.0) (2025-06-30)
 
 ### Features
