@@ -26,7 +26,11 @@ describe("Browser", function () {
 
         test("Should get default GET-response", async () => {
             const response = matchResponse(config);
-            expect(response).to.deep.equal({ body: { foo: "bar" } });
+            expect(response).to.deep.equal({
+                body: { foo: "bar" },
+                delay: 0,
+                status: 200,
+            });
         });
 
         test("Should remove query params in url", async () => {
@@ -35,7 +39,11 @@ describe("Browser", function () {
                 requestUrl: "/private/foo/basic?foo=bar",
             };
             const response = matchResponse(customConfig);
-            expect(response).to.deep.equal({ body: { foo: "bar" } });
+            expect(response).to.deep.equal({
+                body: { foo: "bar" },
+                delay: 0,
+                status: 200,
+            });
         });
 
         test("Should get specific GET-response", async () => {
@@ -47,6 +55,7 @@ describe("Browser", function () {
             expect(response).to.deep.equal({
                 body: { message: "foobar" },
                 status: 401,
+                delay: 0,
             });
         });
 
@@ -59,6 +68,7 @@ describe("Browser", function () {
             expect(response).to.deep.equal({
                 body: "cookies",
                 status: 200,
+                delay: 0,
             });
         });
 
@@ -71,13 +81,18 @@ describe("Browser", function () {
             expect(response).to.deep.equal({
                 body: "headers",
                 status: 200,
+                delay: 0,
             });
         });
 
         test("Should get default POST-response", async () => {
             const customConfig = { ...config, method: "POST" };
             const response = matchResponse(customConfig);
-            expect(response).to.deep.equal({ body: { post: "bar" } });
+            expect(response).to.deep.equal({
+                body: { post: "bar" },
+                delay: 0,
+                status: 200,
+            });
         });
     });
 });

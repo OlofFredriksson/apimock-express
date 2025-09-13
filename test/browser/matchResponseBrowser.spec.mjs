@@ -35,7 +35,11 @@ describe("Browser", function () {
 
         test("Should get default GET-response", async () => {
             const response = matchResponseBrowser(config);
-            expect(response).to.deep.equal({ body: { foo: "bar" } });
+            expect(response).to.deep.equal({
+                body: { foo: "bar" },
+                delay: 0,
+                status: 200,
+            });
         });
 
         test("Should be able to find mocks based on cookies", async () => {
@@ -43,7 +47,11 @@ describe("Browser", function () {
                 () => "foo=bar",
             );
             const response = matchResponseBrowser(config);
-            expect(response).to.deep.equal({ body: "cookies", status: 200 });
+            expect(response).to.deep.equal({
+                body: "cookies",
+                status: 200,
+                delay: 0,
+            });
         });
 
         test("Should be able to find mocks query params", async () => {
@@ -55,6 +63,7 @@ describe("Browser", function () {
             expect(response).to.deep.equal({
                 body: { message: "foobar" },
                 status: 401,
+                delay: 0,
             });
         });
     });

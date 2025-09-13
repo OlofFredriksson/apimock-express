@@ -12,15 +12,12 @@ export function respondData(
     response: MockResponse | undefined,
 ): void {
     if (response) {
-        let status = defaultStatus;
         if (typeof response === "string") {
             throw Error(
                 `response should be an object, with optional status and body attributes`,
             );
         }
-        if (response.status) {
-            status = response.status;
-        }
+
         const headers = response.headers || {
             "Content-Type": defaultContentType,
         };
@@ -30,7 +27,7 @@ export function respondData(
         } else if (response.body) {
             body = JSON.stringify(response.body);
         }
-        res.writeHead(status, headers);
+        res.writeHead(response.status ?? defaultStatus, headers);
         res.write(body);
         res.end();
     } else {
