@@ -1,9 +1,7 @@
 module.exports = {
-    default: {
-        defaultResponse: {
-            body: {
-                foo: "cjs",
-            },
+    defaultResponse: {
+        body: {
+            foo: "cjs",
         },
     },
 };

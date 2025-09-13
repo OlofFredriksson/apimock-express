@@ -21,10 +21,10 @@ const defaultOptions: generateForBrowserOptions = {
  * TBD
  * @public
  */
-export function generateForBrowser(
+export async function generateForBrowser(
     apiDirectory: string,
     userOptions: generateForBrowserOptions = defaultOptions,
-): Mock[] {
+): Promise<Mock[]> {
     const options = { ...defaultOptions, ...userOptions };
     const apiFiles = globSync([`${apiDirectory}/**/*.{js,json,cjs}`], {
         posix: true,
@@ -47,7 +47,7 @@ export function generateForBrowser(
 
         const filePath = join(options.rootPath, file);
         console.log(filePath);
-        const content = JSON.parse(extractFileContent(filePath));
+        const content = await extractFileContent(filePath);
         content.meta = {
             url: `${options.baseApiPath}${apiPath}`,
             method: methodType,

@@ -2,7 +2,7 @@ import { describe, expect, test } from "vitest";
 import { generateForBrowser } from "../../src/main";
 import { matchResponse } from "../../src/browser";
 
-const mockData = generateForBrowser("test/generateForBrowser", {
+const mockData = await generateForBrowser("test/generateForBrowser", {
     rootPath: process.cwd(),
 });
 const config = {
@@ -57,7 +57,7 @@ describe("generateForBrowser", function () {
             const customConfig = {
                 ...config,
             };
-            customConfig.mockdata = generateForBrowser(
+            customConfig.mockdata = await generateForBrowser(
                 "test/generateForBrowser",
                 {
                     rootPath: process.cwd(),
