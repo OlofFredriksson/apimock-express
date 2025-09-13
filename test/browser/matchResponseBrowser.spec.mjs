@@ -33,6 +33,23 @@ describe("Browser", function () {
             });
         });
 
+        test("Should be able to send in full url", async () => {
+            const customConfig = {
+                ...config,
+                requestUrl: "http://fk.se/private/foo/basic?foo=bar",
+            };
+
+            expect(matchResponseBrowser(customConfig)).to.deep.equal({
+                body: { foo: "bar" },
+            });
+
+            customConfig.requestUrl =
+                "htts://fk.se:1337/private/foo/basic?foo=bar";
+            expect(matchResponseBrowser(customConfig)).to.deep.equal({
+                body: { foo: "bar" },
+            });
+        });
+
         test("Should get default GET-response", async () => {
             const response = matchResponseBrowser(config);
             expect(response).to.deep.equal({ body: { foo: "bar" } });
