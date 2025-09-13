@@ -1,4 +1,16 @@
+import { defaultDelay, defaultStatus } from "../constants";
 import { type Mock, type MockResponse } from "../mockfile";
+
+/** Append response with default data if missing */
+function normalizeResponse(response: MockResponse): MockResponse {
+    if (!response.status) {
+        response.status = defaultStatus;
+    }
+    if (!response.delay) {
+        response.delay = defaultDelay;
+    }
+    return response;
+}
 
 /**
  * Loop through the alternative responses in the mockdata.
@@ -34,7 +46,7 @@ export function selectResponse(
             matchParameters(cookies, mockresponse.request.cookies);
 
         if (parametersMatch && bodyMatch && headersMatch && cookiesMatch) {
-            return mockresponse.response;
+            return normalizeResponse(mockresponse.response);
         }
     }
 
@@ -45,7 +57,7 @@ export function selectResponse(
         return undefined;
     }
 
-    return mockdata.defaultResponse;
+    return normalizeResponse(mockdata.defaultResponse);
 }
 
 /**
