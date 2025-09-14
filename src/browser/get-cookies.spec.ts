@@ -4,7 +4,7 @@ import { describe, expect, test, vi } from "vitest";
 import { getCookies } from "./get-cookies";
 
 describe("getCookies", function () {
-    test("parse cookies into object", async () => {
+    test("parse cookies into object", () => {
         vi.spyOn(document, "cookie", "get").mockImplementation(
             () =>
                 "tz=Europe%2FStockholm; preferredMode=light; _octo=GH__; cpuBucket=lg",
@@ -17,7 +17,7 @@ describe("getCookies", function () {
         });
     });
 
-    test("should generate empty object if no cookies defined", async () => {
+    test("should generate empty object if no cookies defined", () => {
         vi.spyOn(document, "cookie", "get").mockImplementation(() => "");
         expect(getCookies()).toEqual({});
     });

@@ -20,6 +20,7 @@ export function matchResponse(options: {
         if (!meta) {
             continue;
         }
+        /* eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- technical debt */
         if (!meta?.url || !meta?.method) {
             continue;
         }

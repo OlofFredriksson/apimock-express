@@ -4,7 +4,7 @@ import { type Mock } from "../mockfile";
 
 function parseJson(filepath: string, fileContent: string): Mock {
     try {
-        return JSON.parse(fileContent);
+        return JSON.parse(fileContent) as Mock;
     } catch {
         console.error(`Malformed file: ${filepath} with content `, fileContent);
         return {
@@ -30,12 +30,14 @@ export async function extractFileContent(filepath: string): Promise<Mock> {
         case ".js":
         case ".cjs":
         case ".mjs": {
-            let { default: mock } = await import(filepath);
+            let { default: mock } = (await import(filepath)) as {
+                default: Mock | { default: Mock };
+            };
 
             /* this should never really be required but a malformed "default"
              * export in commonjs might (such as testcases in this repo does)
              * would behave like this as it is not a proper default export */
-            if (mock.default) {
+            if ("default" in mock) {
                 mock = mock.default;
             }
 

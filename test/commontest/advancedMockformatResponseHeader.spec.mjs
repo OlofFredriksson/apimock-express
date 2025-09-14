@@ -9,7 +9,7 @@ describe("Advanced mockformat", function () {
                 redirect: "manual",
             });
             expect(res.status).to.equal(302);
-            expect(res.headers.get("location")).to.equal("http://google.com");
+            expect(res.headers.get("location")).to.equal("https://google.com");
         });
     });
 });

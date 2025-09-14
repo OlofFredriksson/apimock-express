@@ -18,7 +18,7 @@ export function respondData(
             );
         }
 
-        const headers = response.headers || {
+        const headers = response.headers ?? {
             "Content-Type": defaultContentType,
         };
         let body: unknown = "";

@@ -3,12 +3,8 @@ import { type Mock, type MockResponse } from "../mockfile";
 
 /** Append response with default data if missing */
 function normalizeResponse(response: MockResponse): MockResponse {
-    if (!response.status) {
-        response.status = defaultStatus;
-    }
-    if (!response.delay) {
-        response.delay = defaultDelay;
-    }
+    response.status ??= defaultStatus;
+    response.delay ??= defaultDelay;
     return response;
 }
 
@@ -27,7 +23,7 @@ export function selectResponse(
     headers: Record<string, string | string[] | undefined>,
     cookies: Record<string, string>,
 ): MockResponse | undefined {
-    const mockresponses = mockdata.responses || [];
+    const mockresponses = mockdata.responses ?? [];
 
     /* eslint-disable-next-line @typescript-eslint/prefer-for-of -- technical debt */
     for (let i = 0; i < mockresponses.length; i++) {
@@ -50,6 +46,7 @@ export function selectResponse(
         }
     }
 
+    /* eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- technical debt */
     if (!mockdata.defaultResponse) {
         console.error(
             `Did not find any response in ${JSON.stringify(mockdata)}`,

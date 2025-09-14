@@ -17,7 +17,7 @@ export function parseBody(
     }
     if (contentType.includes("application/json")) {
         //Content-Type is json
-        bodyParameters = JSON.parse(body);
+        bodyParameters = JSON.parse(body) as Record<string, unknown>;
     }
     return bodyParameters;
 }

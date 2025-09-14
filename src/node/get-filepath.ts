@@ -18,7 +18,7 @@ export async function getFilepath(
     //remove mockurl beginning
     filepath = filepath.substring(mockOptions[optionIndex].mockurl.length);
     //remove trailing /
-    if (filepath.indexOf("/", filepath.length - 1) !== -1) {
+    if (filepath.includes("/", filepath.length - 1)) {
         filepath = filepath.substring(0, filepath.length - 1);
     }
     //remove parameters

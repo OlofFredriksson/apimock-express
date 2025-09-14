@@ -36,7 +36,7 @@ describe("Browser", function () {
         test("Should be able to send in full url", async () => {
             const customConfig = {
                 ...config,
-                requestUrl: "http://example.net/private/foo/basic?foo=bar",
+                requestUrl: "https://example.net/private/foo/basic?foo=bar",
             };
 
             expect(matchResponseBrowser(customConfig)).to.deep.equal({
@@ -46,7 +46,7 @@ describe("Browser", function () {
             });
 
             customConfig.requestUrl =
-                "htts://example.net:1337/private/foo/basic?foo=bar";
+                "https://example.net:1337/private/foo/basic?foo=bar";
             expect(matchResponseBrowser(customConfig)).to.deep.equal({
                 body: { foo: "bar" },
                 delay: 0,

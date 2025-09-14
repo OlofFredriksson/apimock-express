@@ -4,9 +4,10 @@
  * @returns Object with list of cookies
  */
 export function getCookies(): Record<string, string> {
-    return Object.fromEntries(
-        document.cookie
-            .split("; ")
-            .map((v) => v.split(/=(.*)/s).map(decodeURIComponent)),
-    );
+    const cookies = document.cookie.split("; ");
+    const parsed = cookies.map((v) => {
+        const kvPairs = v.split(/=(.*)/s, 2) as [string, string];
+        return kvPairs.map(decodeURIComponent) as [string, string];
+    });
+    return Object.fromEntries(parsed);
 }

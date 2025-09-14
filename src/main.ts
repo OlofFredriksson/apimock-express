@@ -10,7 +10,7 @@ import { type MockEntry } from "./mock-entry";
 import { extractFileContent, getFilepath, respondWithMock } from "./node";
 import { respondData } from "./node/respond-data";
 import { type NormalizedEntry } from "./normalized-entry";
-import { VitePluginOptions } from "./vite-plugin-options";
+import { type VitePluginOptions } from "./vite-plugin-options";
 
 export { selectResponse } from "./common";
 export { type MiddlewareConfiguration } from "./middleware-configuration";
@@ -43,6 +43,7 @@ const defaultConfig: MiddlewareConfiguration = {
  */
 function findMachingIndex(url: string): number {
     let found = -1;
+    /* eslint-disable-next-line @typescript-eslint/no-for-in-array -- technical debt */
     for (const i in mockOptions) {
         const config = mockOptions[i];
         if (!url.startsWith(config.mockurl)) {
@@ -190,12 +191,14 @@ const apimock = {
             configureServer(server) {
                 if (enabled === true || enabled === "serve") {
                     apimock.config(mocks, options);
+                    /* eslint-disable-next-line @typescript-eslint/unbound-method -- technical debt */
                     server.middlewares.use("/", apimock.mockRequest);
                 }
             },
             configurePreviewServer(server) {
                 if (enabled === true || enabled === "preview") {
                     apimock.config(mocks, options);
+                    /* eslint-disable-next-line @typescript-eslint/unbound-method -- technical debt */
                     server.middlewares.use("/", apimock.mockRequest);
                 }
             },

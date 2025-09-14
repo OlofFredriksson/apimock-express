@@ -27,7 +27,7 @@ export function matchResponseBrowser(options: {
     bodyParameters: Record<string, unknown>;
     headers: Record<string, string | string[] | undefined>;
 }): MockResponse {
-    let relativeUrl;
+    let relativeUrl: string;
     const fullUrl = URL.parse(options.requestUrl);
     if (fullUrl) {
         relativeUrl = fullUrl.pathname;

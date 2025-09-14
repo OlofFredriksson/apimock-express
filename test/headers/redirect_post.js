@@ -3,7 +3,7 @@ module.exports = {
     defaultResponse: {
         status: 302,
         headers: {
-            Location: "http://google.com",
+            Location: "https://google.com",
         },
     },
 };

@@ -1,6 +1,7 @@
 import express from "express";
 import mock from "./src/main";
 
+/* eslint-disable-next-line sonarjs/x-powered-by -- only used for internal testing */
 const app = express();
 
 const mockConfig = [

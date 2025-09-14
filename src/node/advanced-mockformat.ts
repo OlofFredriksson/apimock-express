@@ -20,19 +20,22 @@ export function advancedMockformat(
     let bodyParameters: Record<string, unknown> = {};
     let body = "";
     req.on("data", function (chunk) {
-        body += chunk;
+        body += String(chunk);
     });
     req.on("end", function () {
         let parseError = false;
         try {
             bodyParameters = parseBody(req, body);
         } catch (err) {
+            /* eslint-disable-next-line @typescript-eslint/no-base-to-string, @typescript-eslint/restrict-template-expressions -- technical debt */
             console.error(`Error parsing req ${req} body ${body}`, err);
             parseError = true;
         }
         let selectedResponse: MockResponse | undefined;
         if (parseError) {
-            console.error(`Malformed input body. url: ${req.originalUrl}`);
+            console.error(
+                `Malformed input body. url: ${req.originalUrl ?? ""}`,
+            );
             selectedResponse = {
                 status: 500,
                 body: { error: "Malformed input body" },

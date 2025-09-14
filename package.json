@@ -76,9 +76,10 @@
     "glob": "^11.0.0"
   },
   "devDependencies": {
-    "@forsakringskassan/eslint-config": "12.2.2",
-    "@forsakringskassan/eslint-config-cli": "12.2.2",
-    "@forsakringskassan/eslint-config-typescript": "12.2.2",
+    "@forsakringskassan/eslint-config": "13.0.2",
+    "@forsakringskassan/eslint-config-cli": "13.0.0",
+    "@forsakringskassan/eslint-config-typescript": "13.0.1",
+    "@forsakringskassan/eslint-config-typescript-typeinfo": "13.0.1",
     "@forsakringskassan/prettier-config": "3.1.7",
     "@html-validate/release-scripts": "6.9.6",
     "@microsoft/api-extractor": "7.52.12",
