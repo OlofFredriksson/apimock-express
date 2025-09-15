@@ -76,6 +76,7 @@
     "glob": "^11.0.0"
   },
   "devDependencies": {
+    "@forsakringskassan/commitlint-config": "3.0.8",
     "@forsakringskassan/eslint-config": "13.0.2",
     "@forsakringskassan/eslint-config-cli": "13.0.0",
     "@forsakringskassan/eslint-config-typescript": "13.0.1",
@@ -110,5 +111,8 @@
   },
   "externalDependencies": [
     "glob"
-  ]
+  ],
+  "commitlint": {
+    "extends": "@forsakringskassan/commitlint-config/no-jira"
+  }
 }
