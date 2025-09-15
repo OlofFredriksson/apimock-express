@@ -90,7 +90,7 @@
     "express": "5.1.0",
     "happy-dom": "18.0.1",
     "is-ci": "4.1.0",
-    "npm-pkg-lint": "4.0.4",
+    "npm-pkg-lint": "4.0.5",
     "npm-run-all2": "8.0.4",
     "start-server-and-test": "2.1.0",
     "typescript": "5.9.2",
