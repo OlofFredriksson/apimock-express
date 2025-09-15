@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## [2.5.0](https://github.com/Forsakringskassan/apimock-express/compare/v2.4.0...v2.5.0) (2025-09-15)
+
+### Features
+
+* normalize response when using selectResponse (refs SB-4982) ([176b992](https://github.com/Forsakringskassan/apimock-express/commit/176b992f35274685b6d5afdee6d6dcc4e69cce23))
+* support ESM mocks ([ffdfb9b](https://github.com/Forsakringskassan/apimock-express/commit/ffdfb9b6124d94ce6bc3ed56b67793e069fc5102))
+
+### Bug Fixes
+
+* should be able to pass full url when using matchResponseBrowser ([594cd46](https://github.com/Forsakringskassan/apimock-express/commit/594cd460807bcc3bd0f4a3d3fd475bda452878b0))
+
 ## [2.4.0](https://github.com/Forsakringskassan/apimock-express/compare/v2.3.0...v2.4.0) (2025-09-12)
 
 ### Features
