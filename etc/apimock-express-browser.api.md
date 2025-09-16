@@ -5,6 +5,9 @@
 ```ts
 
 // @public
+export function appendBasePath(mocks: Mock[], basePath: string): Mock[];
+
+// @public
 export function matchResponse(options: {
     mockdata: Mock[];
     requestUrl: string;

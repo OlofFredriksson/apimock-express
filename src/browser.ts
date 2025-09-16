@@ -10,7 +10,7 @@ export {
     type MockResponse,
     type MockRequest,
 } from "./mockfile";
-export { selectResponse, matchResponse } from "./common";
+export { selectResponse, matchResponse, appendBasePath } from "./common";
 
 /**
  * Respond the given mockdata based by url, cookie, request parameters and headers-

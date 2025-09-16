@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vitest";
 import { generateForBrowser } from "../../src/main";
-import { matchResponse } from "../../src/browser";
+import { appendBasePath, matchResponse } from "../../src/browser";
 
 const mockData = await generateForBrowser("test/generateForBrowser", {
     rootPath: process.cwd(),
@@ -90,7 +90,7 @@ describe("generateForBrowser", function () {
             });
         });
 
-        test("Should be able to define base api path .cjs", async () => {
+        test("Should be able to define base api path", async () => {
             const customConfig = {
                 ...config,
             };
@@ -102,6 +102,32 @@ describe("generateForBrowser", function () {
                 },
             );
             customConfig.requestUrl = "api/prefix/deeply/private/commonjs";
+            const response = matchResponse(customConfig);
+            expect(response).to.deep.equal({
+                body: {
+                    foo: "cjs",
+                },
+                delay: 0,
+                status: 200,
+            });
+        });
+
+        test("Should be able to append a basePath afterwards with using appendBasePath", async () => {
+            const customConfig = {
+                ...config,
+            };
+            customConfig.mockdata = await generateForBrowser(
+                "test/generateForBrowser",
+                {
+                    rootPath: process.cwd(),
+                },
+            );
+            customConfig.requestUrl = "api/prefix/deeply/private/commonjs";
+
+            customConfig.mockdata = appendBasePath(
+                customConfig.mockdata,
+                "api/prefix",
+            );
             const response = matchResponse(customConfig);
             expect(response).to.deep.equal({
                 body: {
