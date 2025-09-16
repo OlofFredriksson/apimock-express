@@ -86,7 +86,7 @@
     "@microsoft/api-extractor": "7.52.13",
     "@types/cli-table": "0.3.4",
     "@types/debug": "4.1.12",
-    "@types/node": "20.19.13",
+    "@types/node": "20.19.14",
     "esbuild": "0.25.9",
     "express": "5.1.0",
     "happy-dom": "18.0.1",
