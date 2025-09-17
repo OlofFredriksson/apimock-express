@@ -1,4 +1,4 @@
-import { join, parse } from "node:path";
+import path from "node:path";
 import { glob } from "glob";
 import { type Mock } from "../main";
 import { extractFileContent } from "./extract-file-content";
@@ -53,9 +53,9 @@ export async function generateForBrowser(
     const data: Mock[] = [];
     for (const file of apiFiles) {
         let apiPath = file.replace(apiDirectory, "");
-        const fileParts = parse(apiPath);
+        const fileParts = path.parse(apiPath);
 
-        apiPath = join(fileParts.dir, fileParts.name);
+        apiPath = path.posix.join(fileParts.dir, fileParts.name);
 
         const findMethod = /_(?<method>.*)/.exec(fileParts.name);
         let methodType = "GET";
@@ -70,7 +70,7 @@ export async function generateForBrowser(
             }
         }
 
-        const filePath = join(options.rootPath, file);
+        const filePath = path.join(options.rootPath, file);
         const content = await extractFileContent(filePath);
         content.meta = {
             url: `${options.baseApiPath}${apiPath}`,
