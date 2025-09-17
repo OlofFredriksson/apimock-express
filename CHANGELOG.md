@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## [2.6.0](https://github.com/Forsakringskassan/apimock-express/compare/v2.5.0...v2.6.0) (2025-09-17)
+
+### Features
+
+* appendBasePath, append a prefix to your mock urls ([4bd3c78](https://github.com/Forsakringskassan/apimock-express/commit/4bd3c789fc1b1f01dd2e9777850dd2c420e70538))
+
+### Bug Fixes
+
+* api path incorrent in windows env (refs SB-4982) ([b8c82e0](https://github.com/Forsakringskassan/apimock-express/commit/b8c82e060ea17f636f1fad7a1034a353c66cf3d9))
+* transform to pathToFileURL before import of file ([af507f0](https://github.com/Forsakringskassan/apimock-express/commit/af507f08f8dbd617be767f0fe4d87f8ab68f346a))
+
 ## [2.5.0](https://github.com/Forsakringskassan/apimock-express/compare/v2.4.0...v2.5.0) (2025-09-15)
 
 ### Features
