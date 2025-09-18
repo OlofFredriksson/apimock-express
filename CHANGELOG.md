@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## [2.6.1](https://github.com/Forsakringskassan/apimock-express/compare/v2.6.0...v2.6.1) (2025-09-18)
+
+### Bug Fixes
+
+* do not append fix for malformed export if it returns a string ([f0791e5](https://github.com/Forsakringskassan/apimock-express/commit/f0791e502b838679a26557ad1d7c3d6587e13d50))
+
 ## [2.6.0](https://github.com/Forsakringskassan/apimock-express/compare/v2.5.0...v2.6.0) (2025-09-17)
 
 ### Features
