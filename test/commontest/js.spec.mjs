@@ -65,4 +65,13 @@ describe("js mocks", function () {
             foo: "esm",
         });
     });
+
+    // Invalid format, which we still need to support
+    test("should support invalid format where mock returns a string instead of object", async () => {
+        const res = await fetch(`http://${hostname}/api/js/invalid-stringify`);
+
+        expect(await res.json()).to.deep.equal({
+            invalidFormat: "support will be removed",
+        });
+    });
 });
