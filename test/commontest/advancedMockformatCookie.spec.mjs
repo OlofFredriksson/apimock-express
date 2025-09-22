@@ -9,7 +9,7 @@ describe("Advanced mockformat", function () {
             };
             const res = await fetch(`http://${hostname}/api/advanced/cookie`, {
                 method: "get",
-                headers: headers,
+                headers,
             });
             const body = await res.json();
             expect(res.status).to.equal(400);
@@ -25,7 +25,7 @@ describe("Advanced mockformat", function () {
             };
             const res = await fetch(`http://${hostname}/api/advanced/cookie`, {
                 method: "get",
-                headers: headers,
+                headers,
             });
             const body = await res.json();
             expect(res.status).to.equal(200);
@@ -41,7 +41,7 @@ describe("Advanced mockformat", function () {
             };
             const res = await fetch(`http://${hostname}/api/advanced/cookie`, {
                 method: "get",
-                headers: headers,
+                headers,
             });
             const body = await res.json();
             expect(res.status).to.equal(201);
@@ -59,7 +59,7 @@ describe("Advanced mockformat", function () {
                 `http://${hostname}/api/advanced/cookie_no_cookies`,
                 {
                     method: "get",
-                    headers: headers,
+                    headers,
                 },
             );
             const body = await res.json();
@@ -74,7 +74,7 @@ describe("Advanced mockformat", function () {
             const headers = {};
             const res = await fetch(`http://${hostname}/api/advanced/cookie`, {
                 method: "get",
-                headers: headers,
+                headers,
             });
             const body = await res.json();
             expect(res.status).to.equal(201);
