@@ -97,4 +97,16 @@ describe("Simple mockformat", function () {
         );
         expect(body).to.have.string(expectedBody);
     });
+
+    test("GET /api/apiX should get find file in apiX-folder", async () => {
+        const res = await fetch(`http://${hostname}/api/apiX`, {
+            method: "get",
+        });
+        const body = await res.json();
+        expect(res.status).to.equal(200);
+        expect(res.headers.get("content-type")).to.equal(
+            "application/json;charset=UTF-8",
+        );
+        expect(body).to.deep.equal({ id: "apiX" });
+    });
 });

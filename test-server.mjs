@@ -10,6 +10,7 @@ const mockConfig = [
     { url: "/apiX/", dir: "test/apiX", delay: 1000 },
     { url: "/headers/", dir: "test/headers" },
     { url: "/relative-path", dir: "./test/relativePath/mocks" },
+    { url: "/api/", dir: "test/apiX" }, // Intended to map same api url to several folders
 ];
 
 mock.config(mockConfig);
