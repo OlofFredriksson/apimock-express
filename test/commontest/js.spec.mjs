@@ -66,6 +66,63 @@ describe("js mocks", function () {
         });
     });
 
+    describe("Mock saving values to a global state", () => {
+        test("should get default value when no data saved", async () => {
+            const res = await fetch(`http://${hostname}/api/js/body-fn`, {
+                method: "get",
+            });
+            const body = await res.json();
+            expect(body).to.deep.equal({
+                no: "data-saved",
+            });
+        });
+
+        test("should be able to post data and then retrieve the value", async () => {
+            await fetch(`http://${hostname}/api/js/body-fn`, {
+                method: "post",
+                headers: {
+                    "Content-Type": "application/json",
+                    "BREADCRUMB-ID": "foo",
+                },
+                body: JSON.stringify({ hej: "1" }),
+            });
+            await fetch(`http://${hostname}/api/js/body-fn`, {
+                method: "post",
+                headers: {
+                    "Content-Type": "application/json",
+                    "BREADCRUMB-ID": "bar",
+                },
+                body: JSON.stringify({ hej: "2" }),
+            });
+
+            /* Get first saved value based by BREADCRUMB-ID */
+            const res = await fetch(`http://${hostname}/api/js/body-fn`, {
+                method: "get",
+                headers: {
+                    "Content-Type": "application/json",
+                    "BREADCRUMB-ID": "foo",
+                },
+            });
+            const body = await res.json();
+            expect(body).to.deep.equal({
+                hej: "1",
+            });
+        });
+
+        test("reqeust function", async () => {
+            const res = await fetch(`http://${hostname}/api/js/request-fn`, {
+                method: "get",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+            const body = await res.json();
+            expect(body).to.deep.equal({
+                foo: "bar",
+            });
+        });
+    });
+
     // Invalid format, which we still need to support
     test("should support invalid format where mock returns a string instead of object", async () => {
         const res = await fetch(`http://${hostname}/api/js/invalid-stringify`);

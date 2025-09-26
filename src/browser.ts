@@ -24,6 +24,7 @@ export function matchResponseBrowser(options: {
     mockdata: Mock[];
     requestUrl: string;
     method: "GET" | "POST" | "PUT" | "DELETE";
+    body: string;
     bodyParameters: Record<string, unknown>;
     headers: Record<string, string | string[] | undefined>;
 }): MockResponse {
@@ -39,6 +40,7 @@ export function matchResponseBrowser(options: {
         requestUrl: relativeUrl,
         method: options.method,
         requestParameters: getRequestParamsFromUrl(options.requestUrl),
+        body: options.body,
         bodyParameters: options.bodyParameters,
         headers: options.headers,
         cookies: getCookies(),

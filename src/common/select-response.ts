@@ -1,11 +1,48 @@
 import { defaultDelay, defaultStatus } from "../constants";
 import { type Mock, type MockResponse } from "../mockfile";
 
+interface NormalizeRequest {
+    headers: Record<string, string | string[] | undefined>;
+    cookies: Record<string, string>;
+    body: unknown;
+}
+
+type BodyFunction = (request: NormalizeRequest) => string;
+
+function isBodyFunction(value: unknown): value is BodyFunction {
+    return typeof value === "function";
+}
+
+/**
+ * Enforce all headers in object to be in lower case. This is typically not a problem in node mode,
+ * since Express do this, but is needed if you run the mocks in browser mode
+ * */
+function enforceLowerCaseHeaders(
+    headers: undefined | Record<string, string | string[] | undefined>,
+): Record<string, string | string[] | undefined> {
+    const lowercase = {};
+    if (headers) {
+        for (const [key, value] of Object.entries(headers)) {
+            lowercase[key.toLocaleLowerCase()] = value;
+        }
+    }
+    return lowercase;
+}
+
 /** Append response with default data if missing */
-function normalizeResponse(response: MockResponse): MockResponse {
-    response.status ??= defaultStatus;
-    response.delay ??= defaultDelay;
-    return response;
+
+function normalizeResponse(
+    request: NormalizeRequest,
+    response: MockResponse,
+): MockResponse {
+    return {
+        status: defaultStatus,
+        delay: defaultDelay,
+        ...response,
+        body: isBodyFunction(response.body)
+            ? response.body(request)
+            : response.body,
+    };
 }
 
 /**
@@ -16,13 +53,20 @@ function normalizeResponse(response: MockResponse): MockResponse {
  *
  * @public
  */
+// eslint-disable-next-line @typescript-eslint/max-params -- technical debt
 export function selectResponse(
     mockdata: Mock,
+    body: unknown,
     requestparameters: Record<string, string | string[] | undefined>,
     bodyParameters: Record<string, unknown>,
     headers: Record<string, string | string[] | undefined>,
     cookies: Record<string, string>,
 ): MockResponse | undefined {
+    const mockrequest = {
+        body,
+        cookies,
+        headers: enforceLowerCaseHeaders(headers),
+    };
     const mockresponses = mockdata.responses ?? [];
 
     /* eslint-disable-next-line @typescript-eslint/prefer-for-of -- technical debt */
@@ -36,13 +80,16 @@ export function selectResponse(
             matchParameters(bodyParameters, mockresponse.request.body);
         const headersMatch =
             !mockresponse.request.headers ||
-            matchParameters(headers, mockresponse.request.headers);
+            matchParameters(
+                headers,
+                enforceLowerCaseHeaders(mockresponse.request.headers),
+            );
         const cookiesMatch =
             !mockresponse.request.cookies ||
             matchParameters(cookies, mockresponse.request.cookies);
 
         if (parametersMatch && bodyMatch && headersMatch && cookiesMatch) {
-            return normalizeResponse(mockresponse.response);
+            return normalizeResponse(mockrequest, mockresponse.response);
         }
     }
 
@@ -54,7 +101,7 @@ export function selectResponse(
         return undefined;
     }
 
-    return normalizeResponse(mockdata.defaultResponse);
+    return normalizeResponse(mockrequest, mockdata.defaultResponse);
 }
 
 /**
