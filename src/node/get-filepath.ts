@@ -3,12 +3,40 @@ import { glob } from "glob";
 import { type NormalizedEntry } from "../normalized-entry";
 import { appendMethodType } from "./append-method-type";
 
+export interface GetFilepathResponse {
+    index: number;
+    filepath: string;
+}
+
 /**
  * Create the path to the mockfile depending on the request url and the http method.
  *
  * @internal
  */
 export async function getFilepath(
+    mockOptions: NormalizedEntry[],
+    req: { method?: string },
+    url: string,
+    matches: number[],
+): Promise<GetFilepathResponse> {
+    const errors: unknown[] = [];
+    for (const match of matches) {
+        try {
+            const reponse = await getFilepathInternal(
+                mockOptions,
+                req,
+                url,
+                match,
+            );
+            return { index: match, filepath: reponse };
+        } catch (e: unknown) {
+            errors.push(e);
+        }
+    }
+    throw Error(errors.toString());
+}
+
+async function getFilepathInternal(
     mockOptions: NormalizedEntry[],
     req: { method?: string },
     url: string,

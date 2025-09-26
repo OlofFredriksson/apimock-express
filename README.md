@@ -10,7 +10,7 @@ This was originally forked from [grunt-connect-apimock][grunt-connect-apimock] v
 Major differences from the original:
 
 - Works with both Express and Connect (without specifically requiring Grunt).
-- Supports both `.js` and `.json` mocks.
+- Supports both `.mjs/.cjs/.js` and `.json` mocks.
 - Supports wildcards as the final path component.
 - Improved and configurable logging.
 - Helpers such as `defineMock` to assist IDE writing mocks.
@@ -103,7 +103,7 @@ module.exports = defineConfig({
 
 ## Mock file and directory structure
 
-The mocked API consistst of a number of `.js` or `.json` files in a directory structure that represents the API.
+The mocked API consistst of a number of `.mjs/.cjs/.js` or `.json` files in a directory structure that represents the API.
 
 E.g. with this configuration `{ "url": "/myApp/api/", "dir": "mymockdirectory" }`, then apimock works like this:
 

@@ -43,22 +43,22 @@ const defaultConfig: MiddlewareConfiguration = {
 };
 
 /**
- * @returns Matching index or -1 if no match was found
+ * @returns List of matching index or empty list if no match was found
  */
-function findMachingIndex(url: string): number {
-    let found = -1;
+function findMachingIndex(url: string): number[] {
+    const found: number[] = [];
     /* eslint-disable-next-line @typescript-eslint/no-for-in-array -- technical debt */
     for (const i in mockOptions) {
         const config = mockOptions[i];
         if (!url.startsWith(config.mockurl)) {
             continue;
         }
-        if (found === -1) {
+        if (found.length === 0) {
             debug(`Found matching mock at ${i}:`, config);
         } else {
             debug(`Found another matching mock at ${i}:`, config);
         }
-        found = parseInt(i, 10);
+        found.push(parseInt(i, 10));
     }
     return found;
 }
@@ -124,8 +124,8 @@ const apimock = {
     ): Promise<void> {
         try {
             const url = req.originalUrl ?? "";
-            const optionIndex = findMachingIndex(url);
-            if (optionIndex < 0) {
+            const matches = findMachingIndex(url);
+            if (matches.length === 0) {
                 const config = JSON.stringify(mockOptions, null, 4);
                 debug(`Found no matching mocks for ${url} in:\n${config}`);
                 next();
@@ -140,15 +140,16 @@ const apimock = {
             );
             res.setHeader("Access-Control-Allow-Headers", "Content-Type");
 
-            const filepath = await getFilepath(
+            const { filepath, index } = await getFilepath(
                 mockOptions,
                 req,
                 url,
-                optionIndex,
+                matches,
             );
+
             if (fs.existsSync(filepath)) {
                 const mockdata = await extractFileContent(filepath);
-                const baseDelay = parseDelay(mockOptions[optionIndex].delay);
+                const baseDelay = parseDelay(mockOptions[index].delay);
                 respondWithMock(req, res, mockdata, filepath, baseDelay);
             } else {
                 console.error(
@@ -157,9 +158,7 @@ const apimock = {
                         "",
                     )}" for url "${url}"`,
                 );
-                console.error(
-                    `Searched in "${mockOptions[optionIndex].mockdir}"`,
-                );
+                console.error(`Searched in "${mockOptions[index].mockdir}"`);
                 console.error("Use DEBUG=apimock to see debugging messages");
                 const response = {
                     status: 404,
