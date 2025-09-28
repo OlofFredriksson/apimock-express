@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## [2.7.0](https://github.com/Forsakringskassan/apimock-express/compare/v2.6.1...v2.7.0) (2025-09-28)
+
+### Features
+
+* support body and request as functions ([a3bd753](https://github.com/Forsakringskassan/apimock-express/commit/a3bd7532e364398f1f39b46bdd4fb66b53e92854))
+
+### Bug Fixes
+
+* should search in folders for all url matches ([6b97998](https://github.com/Forsakringskassan/apimock-express/commit/6b979982d7548b2b7099d0f37bb05a97cf4bb8c5))
+
 ## [2.6.1](https://github.com/Forsakringskassan/apimock-express/compare/v2.6.0...v2.6.1) (2025-09-18)
 
 ### Bug Fixes
