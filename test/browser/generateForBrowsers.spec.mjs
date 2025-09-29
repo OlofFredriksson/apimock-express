@@ -1,12 +1,20 @@
 import { describe, expect, test } from "vitest";
 import { generateForBrowser } from "../../src/main";
-import { appendBasePath, matchResponse } from "../../src/browser";
+import { appendBasePath, matchResponse, generateMock } from "../../src/browser";
 
-const mockData = await generateForBrowser("test/generateForBrowser", {
-    rootPath: process.cwd(),
-});
+async function testGenerateMock(apiDirectory, userOptions = {}) {
+    /** To be run in a Node Context */
+    const preparedMockData = await generateForBrowser(
+        apiDirectory,
+        userOptions,
+    );
+
+    /** To be run in a Browser Context */
+    return await generateMock(preparedMockData);
+}
+
 const config = {
-    mockdata: mockData,
+    mockdata: await testGenerateMock("test/generateForBrowser"),
     requestUrl: "/deeply/private/fancyApi",
     method: "GET",
     bodyParameters: {},
@@ -94,7 +102,7 @@ describe("generateForBrowser", function () {
             const customConfig = {
                 ...config,
             };
-            customConfig.mockdata = await generateForBrowser(
+            customConfig.mockdata = await testGenerateMock(
                 "test/generateForBrowser",
                 {
                     rootPath: process.cwd(),
@@ -116,7 +124,7 @@ describe("generateForBrowser", function () {
             const customConfig = {
                 ...config,
             };
-            customConfig.mockdata = await generateForBrowser(
+            customConfig.mockdata = await testGenerateMock(
                 "test/generateForBrowser",
                 {
                     rootPath: process.cwd(),

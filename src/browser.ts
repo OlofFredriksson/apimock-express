@@ -11,7 +11,7 @@ export {
     type MockRequest,
 } from "./mockfile";
 export { selectResponse, matchResponse, appendBasePath } from "./common";
-
+export { generateMock } from "./browser/generate-mock";
 /**
  * Respond the given mockdata based by url, cookie, request parameters and headers-
  *

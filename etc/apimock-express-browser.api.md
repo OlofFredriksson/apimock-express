@@ -7,6 +7,11 @@
 // @public
 export function appendBasePath(mocks: Mock[], basePath: string): Mock[];
 
+// Warning: (ae-forgotten-export) The symbol "GenerateForBrowserResponse" needs to be exported by the entry point browser.d.ts
+//
+// @beta
+export function generateMock(list: GenerateForBrowserResponse[]): Promise<Mock[]>;
+
 // @public
 export function matchResponse(options: {
     mockdata: Mock[];

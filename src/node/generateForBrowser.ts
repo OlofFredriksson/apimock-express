@@ -1,7 +1,6 @@
 import path from "node:path";
+import { pathToFileURL } from "node:url";
 import { glob } from "glob";
-import { type Mock } from "../main";
-import { extractFileContent } from "./extract-file-content";
 
 /**
  * @beta
@@ -21,6 +20,15 @@ export interface GenerateForBrowserOptions {
 }
 
 /**
+ * @beta
+ */
+export interface GenerateForBrowserResponse {
+    filePath: URL;
+    url: string;
+    method: string;
+}
+
+/**
  * @internal
  */
 interface NormalizedBrowserOptions {
@@ -34,13 +42,14 @@ const defaultOptions: NormalizedBrowserOptions = {
 };
 
 /**
- * Create a list of responses from your file system to be used in a browser environment
+ * Create a list of mock files from your file system to be used in a browser environment.
+ * Needs to be used with generateMock in a browser env
  * @beta
  */
 export async function generateForBrowser(
     apiDirectory: string,
     userOptions: GenerateForBrowserOptions = defaultOptions,
-): Promise<Mock[]> {
+): Promise<GenerateForBrowserResponse[]> {
     const options: NormalizedBrowserOptions = {
         ...defaultOptions,
         ...userOptions,
@@ -50,7 +59,7 @@ export async function generateForBrowser(
         cwd: options.rootPath,
     });
 
-    const data: Mock[] = [];
+    const data: GenerateForBrowserResponse[] = [];
     for (const file of apiFiles) {
         let apiPath = file.replace(apiDirectory, "");
         const fileParts = path.parse(apiPath);
@@ -70,13 +79,13 @@ export async function generateForBrowser(
             }
         }
 
-        const filePath = path.join(options.rootPath, file);
-        const content = await extractFileContent(filePath);
-        content.meta = {
-            url: `${options.baseApiPath}${apiPath}`,
+        const filePath = pathToFileURL(path.join(options.rootPath, file));
+
+        data.push({
+            filePath,
             method: methodType,
-        };
-        data.push(content);
+            url: `${options.baseApiPath}${apiPath}`,
+        });
     }
     return data;
 }

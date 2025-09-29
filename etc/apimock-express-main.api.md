@@ -17,8 +17,10 @@ const apimock: {
 };
 export default apimock;
 
+// Warning: (ae-forgotten-export) The symbol "GenerateForBrowserResponse" needs to be exported by the entry point main.d.ts
+//
 // @beta
-export function generateForBrowser(apiDirectory: string, userOptions?: GenerateForBrowserOptions): Promise<Mock[]>;
+export function generateForBrowser(apiDirectory: string, userOptions?: GenerateForBrowserOptions): Promise<GenerateForBrowserResponse[]>;
 
 // @beta (undocumented)
 export interface GenerateForBrowserOptions {
