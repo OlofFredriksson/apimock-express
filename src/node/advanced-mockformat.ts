@@ -2,7 +2,6 @@ import { type IncomingMessage, type ServerResponse } from "node:http";
 import url from "node:url";
 import { type Mock, type MockResponse } from "../mockfile";
 import { parseBody, parseCookies, parseDelay, selectResponse } from "../common";
-import { normalizeBody } from "../common/normalize-body";
 import { respondData } from "./respond-data";
 
 /**
@@ -44,7 +43,7 @@ export function advancedMockformat(
         } else {
             selectedResponse = selectResponse(
                 mockdata,
-                normalizeBody(body),
+                body,
                 requestParameters,
                 bodyParameters,
                 req.headers,

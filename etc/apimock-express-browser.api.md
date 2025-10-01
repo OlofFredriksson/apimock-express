@@ -70,7 +70,7 @@ export interface MockResponse<T = unknown> {
 }
 
 // @public
-export function selectResponse(mockdata: Mock, body: unknown, requestparameters: Record<string, string | string[] | undefined>, bodyParameters: Record<string, unknown>, headers: Record<string, string | string[] | undefined>, cookies: Record<string, string>): MockResponse | undefined;
+export function selectResponse(mockdata: Mock, body: string, requestparameters: Record<string, string | string[] | undefined>, bodyParameters: Record<string, unknown>, headers: Record<string, string | string[] | undefined>, cookies: Record<string, string>): MockResponse | undefined;
 
 // (No @packageDocumentation comment for this package)
 

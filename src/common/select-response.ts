@@ -1,5 +1,6 @@
 import { defaultDelay, defaultStatus } from "../constants";
 import { type Mock, type MockResponse } from "../mockfile";
+import { normalizeBody } from "./normalize-body";
 
 interface NormalizeRequest {
     headers: Record<string, string | string[] | undefined>;
@@ -56,16 +57,17 @@ function normalizeResponse(
 // eslint-disable-next-line @typescript-eslint/max-params -- technical debt
 export function selectResponse(
     mockdata: Mock,
-    body: unknown,
+    body: string,
     requestparameters: Record<string, string | string[] | undefined>,
     bodyParameters: Record<string, unknown>,
     headers: Record<string, string | string[] | undefined>,
     cookies: Record<string, string>,
 ): MockResponse | undefined {
+    const lowercaseHeaders = enforceLowerCaseHeaders(headers);
     const mockrequest = {
-        body,
+        body: normalizeBody(lowercaseHeaders, body),
         cookies,
-        headers: enforceLowerCaseHeaders(headers),
+        headers: lowercaseHeaders,
     };
     const mockresponses = mockdata.responses ?? [];
 

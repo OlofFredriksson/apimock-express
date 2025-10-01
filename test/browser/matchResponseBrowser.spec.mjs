@@ -139,7 +139,6 @@ describe("Browser", function () {
                     ...config,
                     requestUrl: "/advanced/reading-mock",
                     headers: {
-                        "Content-Type": "application/json",
                         "BREADCRUMB-ID": "foo",
                     },
                 };

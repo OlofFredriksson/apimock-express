@@ -1,6 +1,5 @@
 import { type Mock, type MockResponse } from "../mockfile";
 import { selectResponse } from "./select-response";
-import { normalizeBody } from "./normalize-body";
 
 /**
  * Respond the given mockdata based by url, cookie, request parameters and headers
@@ -31,7 +30,7 @@ export function matchResponse(options: {
         if (meta.url === requestUrl && meta.method === options.method) {
             return selectResponse(
                 mock,
-                normalizeBody(options.body),
+                options.body,
                 options.requestParameters,
                 options.bodyParameters,
                 options.headers,

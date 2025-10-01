@@ -109,6 +109,26 @@ describe("js mocks", function () {
             });
         });
 
+        test("saving plain text", async () => {
+            await fetch(`http://${hostname}/api/js/body-fn`, {
+                method: "post",
+                headers: {
+                    "Content-Type": "text/plain; charset=UTF-8",
+                    "BREADCRUMB-ID": "plain-text",
+                },
+                body: "plain text to the rescue",
+            });
+
+            const res = await fetch(`http://${hostname}/api/js/body-fn`, {
+                method: "get",
+                headers: {
+                    "BREADCRUMB-ID": "plain-text",
+                },
+            });
+            const body = await res.json();
+            expect(body).to.deep.equal("plain text to the rescue");
+        });
+
         test("reqeust function", async () => {
             const res = await fetch(`http://${hostname}/api/js/request-fn`, {
                 method: "get",
