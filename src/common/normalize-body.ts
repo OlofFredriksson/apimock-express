@@ -24,6 +24,21 @@ export function normalizeBody(
             } catch {
                 return body;
             }
+        case "multipart/form-data": {
+            const combinedRegex =
+                // eslint-disable-next-line sonarjs/slow-regex -- technical debt
+                /filename="([^"]+?)"\s*[\r\n]+Content-Type:\s*([^\r\n]+)/gi;
+            const combinedParts = Array.from(body.matchAll(combinedRegex)).map(
+                (match) => {
+                    return {
+                        filename: match[1],
+                        contentType: match[2],
+                    };
+                },
+            );
+
+            return combinedParts;
+        }
         case "text/plain":
         default:
             return body;
