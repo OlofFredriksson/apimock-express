@@ -1,3 +1,8 @@
+interface FileStub {
+    fileName: string;
+    contentType: string;
+}
+
 /**
  * @internal
  */
@@ -15,7 +20,7 @@ export function normalizeBody(
         ? (contentTypeHeader[0] ?? "")
         : contentTypeHeader;
 
-    const type = contentTypeValue.trim().toLowerCase().split(";")[0];
+    const [type, params] = contentTypeValue.trim().toLowerCase().split(";");
 
     switch (type) {
         case "application/json":
@@ -24,6 +29,26 @@ export function normalizeBody(
             } catch {
                 return body;
             }
+        case "multipart/form-data": {
+            const boundary = params.split("=")[1];
+            let messages = body.split(new RegExp(`--${boundary}(?:--)?`));
+            messages = messages.filter((n) => n);
+
+            const files: FileStub[] = [];
+            const contentTypeRegex = /Content-Type:\s*([^;\r\n]+)/i;
+            const filenameRegex = /filename="(.*?)"/;
+            for (const message of messages) {
+                const contentType = contentTypeRegex.exec(message);
+                const fileName = filenameRegex.exec(message);
+                if (contentType && fileName) {
+                    files.push({
+                        contentType: contentType[1],
+                        fileName: fileName[1],
+                    });
+                }
+            }
+            return files;
+        }
         case "text/plain":
         default:
             return body;
