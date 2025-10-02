@@ -129,6 +129,66 @@ describe("js mocks", function () {
             expect(body).to.deep.equal("plain text to the rescue");
         });
 
+        test("saving a binary blob text", async () => {
+            const abc = new Blob(["Apimock"], { type: "text/plain" });
+            const formData = new FormData();
+            formData.append("text", abc, "text.txt");
+            await fetch(`http://${hostname}/api/js/body-fn`, {
+                method: "post",
+                headers: {
+                    "BREADCRUMB-ID": "blob-text",
+                },
+                body: formData,
+            });
+
+            const res = await fetch(`http://${hostname}/api/js/body-fn`, {
+                method: "get",
+                headers: {
+                    "BREADCRUMB-ID": "blob-text",
+                },
+            });
+            const body = await res.json();
+            expect(body).to.deep.equal([
+                {
+                    contentType: "text/plain",
+                    fileName: "text.txt",
+                },
+            ]);
+        });
+
+        test("saving multiple binary blob text", async () => {
+            const abc = new Blob(["Apimock"], { type: "text/plain" });
+            const formData = new FormData();
+            formData.append("text", abc, "text.txt");
+            formData.append("another-file", abc, "file.txt");
+
+            await fetch(`http://${hostname}/api/js/body-fn`, {
+                method: "post",
+                headers: {
+                    "BREADCRUMB-ID": "blob-text",
+                },
+                body: formData,
+            });
+
+            const res = await fetch(`http://${hostname}/api/js/body-fn`, {
+                method: "get",
+                headers: {
+                    "BREADCRUMB-ID": "blob-text",
+                },
+            });
+            const body = await res.json();
+            expect(body).to.deep.equal([
+                {
+                    contentType: "text/plain",
+                    fileName: "text.txt",
+                },
+                {
+                    contentType: "text/plain",
+                    fileName: "file.txt",
+                },
+            ]);
+        });
+
         test("reqeust function", async () => {
             const res = await fetch(`http://${hostname}/api/js/request-fn`, {
                 method: "get",
