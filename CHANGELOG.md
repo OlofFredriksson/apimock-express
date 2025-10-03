@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## [2.8.0](https://github.com/Forsakringskassan/apimock-express/compare/v2.7.0...v2.8.0) (2025-10-03)
+
+### Features
+
+* post plain text ([5a2158e](https://github.com/Forsakringskassan/apimock-express/commit/5a2158e1710ebb67fde73269a3bec9279d0bd9af))
+
 ## [2.7.0](https://github.com/Forsakringskassan/apimock-express/compare/v2.6.1...v2.7.0) (2025-09-28)
 
 ### Features
