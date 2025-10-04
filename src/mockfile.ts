@@ -51,7 +51,7 @@ export interface MockResponse<T = unknown> {
     /**
      * The response body.
      */
-    body?: T;
+    body?: T | ((req: MockRequest) => T);
 }
 
 /**

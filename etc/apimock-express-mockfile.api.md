@@ -36,7 +36,7 @@ export interface MockRequest<T = unknown> {
 
 // @public
 export interface MockResponse<T = unknown> {
-    body?: T;
+    body?: T | ((req: MockRequest) => T);
     delay?: number;
     description?: string;
     headers?: Record<string, string>;
