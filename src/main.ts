@@ -1,7 +1,6 @@
 import fs from "node:fs";
 import { type IncomingMessage, type ServerResponse } from "node:http";
 import createDebug from "debug";
-import Table from "cli-table";
 import { type Plugin } from "vite";
 import { version } from "../package.json";
 import { parseDelay } from "./common";
@@ -67,6 +66,12 @@ function toArray<T>(value: T | T[]): T[] {
     return Array.isArray(value) ? value : [value];
 }
 
+interface Table {
+    url: string;
+    directory: string;
+    delay: string;
+}
+
 /**
  * @public
  */
@@ -79,12 +84,7 @@ const apimock = {
         userConfig: Partial<MiddlewareConfiguration> = {},
     ): void {
         const config = { ...defaultConfig, ...userConfig };
-        const table = new Table({
-            head: ["URL", "Directory", "Delay"],
-            style: {
-                head: ["cyan"],
-            },
-        });
+        const table: Table[] = [];
 
         mockOptions = toArray(mocks).map((option) => {
             const mockOption: NormalizedEntry = {
@@ -92,17 +92,17 @@ const apimock = {
                 mockdir: option.dir,
                 delay: option.delay,
             };
-            table.push([
-                option.url,
-                option.dir,
-                option.delay ? `${String(option.delay)} ms` : "-",
-            ]);
+            table.push({
+                url: option.url,
+                directory: option.dir,
+                delay: option.delay ? `${String(option.delay)} ms` : "-",
+            });
             return mockOption;
         });
 
         if (config.verbose) {
             console.group(`apimock-express v${version} configuration`);
-            console.table(table.toString());
+            console.table(table);
             console.log("Use DEBUG=apimock to see debugging messages");
             console.groupEnd();
         }
