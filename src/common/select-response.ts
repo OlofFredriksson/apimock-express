@@ -9,8 +9,10 @@ interface NormalizeRequest {
 }
 
 type BodyFunction = (request: NormalizeRequest) => string;
+type ResponseFunction = (request: NormalizeRequest) => MockResponse;
 
-function isBodyFunction(value: unknown): value is BodyFunction {
+// eslint-disable-next-line @typescript-eslint/no-unnecessary-type-parameters -- intended
+function isFunction<T>(value: unknown): value is T {
     return typeof value === "function";
 }
 
@@ -34,16 +36,20 @@ function enforceLowerCaseHeaders(
 
 function normalizeResponse(
     request: NormalizeRequest,
-    response: MockResponse,
+    response: MockResponse | ResponseFunction,
 ): MockResponse {
-    return {
-        status: defaultStatus,
-        delay: defaultDelay,
-        ...response,
-        body: isBodyFunction(response.body)
-            ? response.body(request)
-            : response.body,
-    };
+    if (isFunction<ResponseFunction>(response)) {
+        return normalizeResponse(request, response(request));
+    } else {
+        return {
+            status: defaultStatus,
+            delay: defaultDelay,
+            ...response,
+            body: isFunction<BodyFunction>(response.body)
+                ? response.body(request)
+                : response.body,
+        };
+    }
 }
 
 /**
