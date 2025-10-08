@@ -151,4 +151,9 @@ describe("js mocks", function () {
             invalidFormat: "support will be removed",
         });
     });
+
+    test("should support response as function", async () => {
+        const res = await fetch(`http://${hostname}/api/js/response-function`);
+        expect(res.status).to.equal(201);
+    });
 });
