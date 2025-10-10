@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## [2.9.0](https://github.com/Forsakringskassan/apimock-express/compare/v2.8.0...v2.9.0) (2025-10-10)
+
+### Features
+
+* parse multipart body ([be731b1](https://github.com/Forsakringskassan/apimock-express/commit/be731b18f87b5d4b8c7db609059b43e9a83e2e46))
+
+### Bug Fixes
+
+* body could be a function ([9797720](https://github.com/Forsakringskassan/apimock-express/commit/979772009fc3d95687e7d58a557743458c21c8cc))
+
 ## [2.8.0](https://github.com/Forsakringskassan/apimock-express/compare/v2.7.0...v2.8.0) (2025-10-03)
 
 ### Features
