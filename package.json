@@ -85,7 +85,7 @@
     "@forsakringskassan/eslint-config-typescript-typeinfo": "13.0.8",
     "@forsakringskassan/prettier-config": "3.1.7",
     "@html-validate/release-scripts": "6.10.0",
-    "@microsoft/api-extractor": "7.53.0",
+    "@microsoft/api-extractor": "7.53.1",
     "@types/debug": "4.1.12",
     "@types/node": "20.19.19",
     "esbuild": "0.25.10",
