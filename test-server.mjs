@@ -25,4 +25,4 @@ const server = app.listen(0, function () {
 });
 const hostname = `localhost:${server.address().port}`;
 
-export { server, hostname };
+export { hostname, server };

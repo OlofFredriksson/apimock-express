@@ -1,7 +1,7 @@
 import { type IncomingMessage, type ServerResponse } from "node:http";
 import url from "node:url";
-import { type Mock, type MockResponse } from "../mockfile";
 import { parseBody, parseCookies, parseDelay, selectResponse } from "../common";
+import { type Mock, type MockResponse } from "../mockfile";
 import { respondData } from "./respond-data";
 
 /**

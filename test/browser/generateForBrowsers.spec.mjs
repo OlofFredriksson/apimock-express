@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vitest";
-import { generateForBrowser } from "../../src/main";
 import { appendBasePath, matchResponse } from "../../src/browser";
+import { generateForBrowser } from "../../src/main";
 
 const mockData = await generateForBrowser("test/generateForBrowser", {
     rootPath: process.cwd(),

@@ -1,11 +1,11 @@
-import { type Mock, type MockResponse, type MockMatcher } from "./mockfile";
+import { type Mock, type MockMatcher, type MockResponse } from "./mockfile";
 
 export {
     type Mock,
+    type MockMatcher,
     type MockMeta,
     type MockRequest,
     type MockResponse,
-    type MockMatcher,
 } from "./mockfile";
 
 /**

@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
-import apimock, { vitePlugin } from "../dist/main.mjs";
 import { defineMock } from "../dist/helpers.mjs";
+import apimock, { vitePlugin } from "../dist/main.mjs";
 
 /* ensure modules loads properly */
 assert.ok(apimock);

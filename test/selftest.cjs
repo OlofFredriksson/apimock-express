@@ -1,6 +1,6 @@
 const assert = require("node:assert/strict");
-const apimock = require("../dist/main.cjs");
 const { defineMock } = require("../dist/helpers.cjs");
+const apimock = require("../dist/main.cjs");
 
 /* ensure modules loads properly */
 assert.ok(apimock);

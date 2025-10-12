@@ -1,6 +1,6 @@
 import { type ServerResponse } from "node:http";
-import { type MockResponse } from "../mockfile";
 import { defaultContentType, defaultStatus } from "../constants";
+import { type MockResponse } from "../mockfile";
 
 /**
  * Write the selected response to the client.

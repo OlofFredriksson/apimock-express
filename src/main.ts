@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import { type IncomingMessage, type ServerResponse } from "node:http";
-import createDebug from "debug";
 import { type Plugin } from "vite";
+import createDebug from "debug";
 import { version } from "../package.json";
 import { parseDelay } from "./common";
 import { type MiddlewareConfiguration } from "./middleware-configuration";
