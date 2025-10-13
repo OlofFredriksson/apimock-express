@@ -90,7 +90,7 @@
     "@types/node": "20.19.20",
     "esbuild": "0.25.10",
     "express": "5.1.0",
-    "happy-dom": "19.0.2",
+    "happy-dom": "20.0.0",
     "is-ci": "4.1.0",
     "npm-pkg-lint": "4.1.2",
     "npm-run-all2": "8.0.4",
