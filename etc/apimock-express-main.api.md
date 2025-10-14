@@ -17,6 +17,12 @@ const apimock: {
 };
 export default apimock;
 
+// @public (undocumented)
+export interface FileStub {
+    contentType: string;
+    fileName: string;
+}
+
 // @beta
 export function generateForBrowser(apiDirectory: string, userOptions?: GenerateForBrowserOptions): Promise<Mock[]>;
 
@@ -32,11 +38,11 @@ export interface MiddlewareConfiguration {
 }
 
 // @public
-export interface Mock<T = unknown, U = unknown> {
+export interface Mock<T = unknown> {
     defaultResponse: MockResponse<T>;
     // (undocumented)
     meta?: MockMeta;
-    responses?: Array<MockMatcher<T, U>>;
+    responses?: Array<MockMatcher<T>>;
 }
 
 // @public (undocumented)
@@ -47,8 +53,8 @@ export interface MockEntry {
 }
 
 // @public
-export interface MockMatcher<T = unknown, U = unknown> {
-    request: MockRequest<U>;
+export interface MockMatcher<T = unknown> {
+    request: MockRequest;
     response: MockResponse<T>;
 }
 
@@ -61,8 +67,8 @@ export interface MockMeta {
 }
 
 // @public
-export interface MockRequest<T = unknown> {
-    body?: T;
+export interface MockRequest {
+    body?: string | Record<string, unknown> | FileStub[];
     cookies?: Record<string, string>;
     headers?: Record<string, string>;
     parameters?: Record<string, string>;

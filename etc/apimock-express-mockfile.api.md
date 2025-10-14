@@ -4,17 +4,23 @@
 
 ```ts
 
-// @public
-export interface Mock<T = unknown, U = unknown> {
-    defaultResponse: MockResponse<T>;
-    // (undocumented)
-    meta?: MockMeta;
-    responses?: Array<MockMatcher<T, U>>;
+// @public (undocumented)
+export interface FileStub {
+    contentType: string;
+    fileName: string;
 }
 
 // @public
-export interface MockMatcher<T = unknown, U = unknown> {
-    request: MockRequest<U>;
+export interface Mock<T = unknown> {
+    defaultResponse: MockResponse<T>;
+    // (undocumented)
+    meta?: MockMeta;
+    responses?: Array<MockMatcher<T>>;
+}
+
+// @public
+export interface MockMatcher<T = unknown> {
+    request: MockRequest;
     response: MockResponse<T>;
 }
 
@@ -27,8 +33,8 @@ export interface MockMeta {
 }
 
 // @public
-export interface MockRequest<T = unknown> {
-    body?: T;
+export interface MockRequest {
+    body?: string | Record<string, unknown> | FileStub[];
     cookies?: Record<string, string>;
     headers?: Record<string, string>;
     parameters?: Record<string, string>;

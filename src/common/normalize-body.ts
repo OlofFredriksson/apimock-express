@@ -1,7 +1,4 @@
-interface FileStub {
-    fileName: string;
-    contentType: string;
-}
+import { type FileStub } from "../mockfile";
 
 /**
  * @internal
@@ -9,7 +6,7 @@ interface FileStub {
 export function normalizeBody(
     headers: Record<string, string | string[] | undefined>,
     body: string,
-): unknown {
+): string | Record<string, unknown> | FileStub[] {
     const contentTypeHeader = headers["content-type"];
 
     if (!contentTypeHeader) {
@@ -25,7 +22,7 @@ export function normalizeBody(
     switch (type) {
         case "application/json":
             try {
-                return JSON.parse(body);
+                return JSON.parse(body) as Record<string, unknown>;
             } catch {
                 return body;
             }

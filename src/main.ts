@@ -18,6 +18,7 @@ export {
 export { selectResponse } from "./common";
 export { type MiddlewareConfiguration } from "./middleware-configuration";
 export {
+    type FileStub,
     type Mock,
     type MockMatcher,
     type MockMeta,

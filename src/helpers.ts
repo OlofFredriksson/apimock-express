@@ -1,6 +1,7 @@
 import { type Mock, type MockMatcher, type MockResponse } from "./mockfile";
 
 export {
+    type FileStub,
     type Mock,
     type MockMatcher,
     type MockMeta,
@@ -11,20 +12,18 @@ export {
 /**
  * @public
  */
-export function defineMock<T = unknown, U = unknown>(
-    mock: Mock<T, U>,
-): Mock<T, U> {
+export function defineMock<T = unknown>(mock: Mock<T>): Mock<T> {
     return mock;
 }
 
 /**
  * @public
  */
-export function createResponseByCookie<T, U = unknown>(
+export function createResponseByCookie<T>(
     cookieName: string,
     cookieValue: string,
     response: MockResponse<T>,
-): MockMatcher<T, U> {
+): MockMatcher<T> {
     return {
         request: {
             cookies: {

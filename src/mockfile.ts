@@ -60,7 +60,7 @@ export interface MockResponse<T = unknown> {
  * @public
  * @typeParam T - The type of the request body.
  */
-export interface MockRequest<T = unknown> {
+export interface MockRequest {
     /**
      * A key to value mapping of cookies to match.
      */
@@ -79,7 +79,7 @@ export interface MockRequest<T = unknown> {
     /**
      * The request body to match.
      */
-    body?: T;
+    body?: string | Record<string, unknown> | FileStub[];
 }
 
 /**
@@ -89,7 +89,7 @@ export interface MockRequest<T = unknown> {
  * @typeParam T - The type of the response body.
  * @typeParam U - The type of the request body.
  */
-export interface MockMatcher<T = unknown, U = unknown> {
+export interface MockMatcher<T = unknown> {
     /**
      * The response (value) for this mock match.
      */
@@ -98,7 +98,7 @@ export interface MockMatcher<T = unknown, U = unknown> {
     /**
      * The request (key) for this mock match.
      */
-    request: MockRequest<U>;
+    request: MockRequest;
 }
 
 /**
@@ -108,16 +108,26 @@ export interface MockMatcher<T = unknown, U = unknown> {
  * @typeParam T - The type of the response bodies.
  * @typeParam U - The type of the request bodies.
  */
-export interface Mock<T = unknown, U = unknown> {
+export interface Mock<T = unknown> {
     meta?: MockMeta;
 
     /**
      * An array of mappings between requests and corresponding mock responses.
      */
-    responses?: Array<MockMatcher<T, U>>;
+    responses?: Array<MockMatcher<T>>;
 
     /**
      * The default response if no other match (from responses) could be found.
      */
     defaultResponse: MockResponse<T>;
+}
+
+/**
+ * @public
+ */
+export interface FileStub {
+    /** Readable file name */
+    fileName: string;
+    /** File content type, example: text/plain for text files */
+    contentType: string;
 }
