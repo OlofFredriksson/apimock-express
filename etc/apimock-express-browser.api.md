@@ -8,26 +8,23 @@
 export function appendBasePath(mocks: Mock[], basePath: string): Mock[];
 
 // @public
-export function matchResponse(options: {
-    mockdata: Mock[];
-    requestUrl: string;
-    method: "GET" | "POST" | "PUT" | "DELETE";
-    requestParameters: Record<string, string | string[] | undefined>;
-    body: string;
-    bodyParameters: Record<string, unknown>;
-    headers: Record<string, string | string[] | undefined>;
-    cookies: Record<string, string>;
-}): MockResponse | undefined;
+export function matchResponseBrowser(options: MatchResponseBrowserInterface): MockResponse;
 
-// @public
-export function matchResponseBrowser(options: {
-    mockdata: Mock[];
-    requestUrl: string;
-    method: "GET" | "POST" | "PUT" | "DELETE";
+// @public (undocumented)
+export interface MatchResponseBrowserInterface {
+    // (undocumented)
     body: string;
+    // (undocumented)
     bodyParameters: Record<string, unknown>;
+    // (undocumented)
     headers: Record<string, string | string[] | undefined>;
-}): MockResponse;
+    // (undocumented)
+    method: "GET" | "POST" | "PUT" | "DELETE";
+    // (undocumented)
+    mockdata: Mock[];
+    // (undocumented)
+    requestUrl: string;
+}
 
 // @public
 export interface Mock<T = unknown, U = unknown> {
