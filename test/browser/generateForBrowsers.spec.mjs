@@ -1,5 +1,7 @@
+// @vitest-environment happy-dom
+
 import { describe, expect, test } from "vitest";
-import { appendBasePath, matchResponse } from "../../src/browser";
+import { appendBasePath, matchResponseBrowser } from "../../src/browser";
 import { generateForBrowser } from "../../src/main";
 
 const mockData = await generateForBrowser("test/generateForBrowser", {
@@ -19,7 +21,7 @@ describe("generateForBrowser", function () {
             const customConfig = {
                 ...config,
             };
-            const response = matchResponse(customConfig);
+            const response = matchResponseBrowser(customConfig);
             expect(response).to.deep.equal({
                 body: {
                     foo: "bar",
@@ -35,7 +37,7 @@ describe("generateForBrowser", function () {
             };
             customConfig.requestUrl = "/deeply/private/fancyApi";
             customConfig.method = "POST";
-            const response = matchResponse(customConfig);
+            const response = matchResponseBrowser(customConfig);
             expect(response).to.deep.equal({
                 body: {
                     message: "file uploaded with fancy api",
@@ -50,7 +52,7 @@ describe("generateForBrowser", function () {
                 ...config,
             };
             customConfig.requestUrl = "/deeply/private/json";
-            const response = matchResponse(customConfig);
+            const response = matchResponseBrowser(customConfig);
             expect(response).to.deep.equal({
                 body: {
                     foo: "json",
@@ -65,7 +67,7 @@ describe("generateForBrowser", function () {
                 ...config,
             };
             customConfig.requestUrl = "/deeply/private/commonjs";
-            const response = matchResponse(customConfig);
+            const response = matchResponseBrowser(customConfig);
             expect(response).to.deep.equal({
                 body: {
                     foo: "cjs",
@@ -80,7 +82,7 @@ describe("generateForBrowser", function () {
                 ...config,
             };
             customConfig.requestUrl = "/deeply/private/esm";
-            const response = matchResponse(customConfig);
+            const response = matchResponseBrowser(customConfig);
             expect(response).to.deep.equal({
                 body: {
                     foo: "esm",
@@ -102,7 +104,7 @@ describe("generateForBrowser", function () {
                 },
             );
             customConfig.requestUrl = "api/prefix/deeply/private/commonjs";
-            const response = matchResponse(customConfig);
+            const response = matchResponseBrowser(customConfig);
             expect(response).to.deep.equal({
                 body: {
                     foo: "cjs",
@@ -128,7 +130,7 @@ describe("generateForBrowser", function () {
                 customConfig.mockdata,
                 "api/prefix",
             );
-            const response = matchResponse(customConfig);
+            const response = matchResponseBrowser(customConfig);
             expect(response).to.deep.equal({
                 body: {
                     foo: "cjs",
