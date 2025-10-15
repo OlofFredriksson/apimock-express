@@ -31,7 +31,7 @@ export function normalizeBody(
             }
         case "multipart/form-data": {
             const boundary = params.split("=")[1];
-            let messages = body.split(new RegExp(`--${boundary}(?:--)?`));
+            let messages = body.split(new RegExp(`--${boundary}(?:--)?`, "i"));
             messages = messages.filter((n) => n);
 
             const files: FileStub[] = [];
