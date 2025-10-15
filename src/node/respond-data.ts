@@ -21,8 +21,12 @@ export function respondData(
         const headers = response.headers ?? {
             "Content-Type": defaultContentType,
         };
+
         let body: unknown = "";
-        if (headers["Content-Type"] === "text/html") {
+        if (
+            headers["Content-Type"] === "text/html" ||
+            headers["Content-Type"] === "text/plain"
+        ) {
             body = response.body;
         } else if (response.body) {
             body = JSON.stringify(response.body);

@@ -221,6 +221,6 @@ describe("js mocks", function () {
             body: "my request body",
         });
         expect(res.status).to.equal(201);
-        expect(await res.text()).contain("my response body");
+        expect(await res.text()).eq("my response body");
     });
 });
