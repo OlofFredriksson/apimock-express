@@ -7,6 +7,12 @@
 // @public
 export function appendBasePath(mocks: Mock[], basePath: string): Mock[];
 
+// @public (undocumented)
+export type HttpMethod = "GET" | "POST" | "PUT" | "DELETE";
+
+// @public
+export function matchRequest(mockdata: Mock[], request: Request): Promise<MockResponse>;
+
 // @public
 export function matchResponseBrowser(options: MatchResponseBrowserInterface): MockResponse;
 
@@ -19,7 +25,7 @@ export interface MatchResponseBrowserInterface {
     // (undocumented)
     headers: Record<string, string | string[] | undefined>;
     // (undocumented)
-    method: "GET" | "POST" | "PUT" | "DELETE";
+    method: HttpMethod;
     // (undocumented)
     mockdata: Mock[];
     // (undocumented)

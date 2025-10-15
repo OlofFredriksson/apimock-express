@@ -15,10 +15,48 @@ export { appendBasePath, selectResponse } from "./common";
 /**
  * @public
  */
+export type HttpMethod = "GET" | "POST" | "PUT" | "DELETE";
+
+/**
+ * Match a Fetch `Request` against provided mock array
+ *
+ * @param mockdata - List of mock definitions
+ * @param request - A Fetch API `Request`
+ * @returns A `MockResponse` describing the response to use. If no mock
+ * matches the request a default 404 mock response is returned.
+ * @public
+ */
+export async function matchRequest(
+    mockdata: Mock[],
+    request: Request,
+): Promise<MockResponse> {
+    const url = request.url;
+    const method = request.method as HttpMethod;
+    const headers: Record<string, string | string[] | undefined> = {};
+    const bodyText = await request.text();
+
+    request.headers.forEach((value, key) => {
+        headers[key] = value;
+    });
+
+    const options: MatchResponseBrowserInterface = {
+        mockdata,
+        requestUrl: url,
+        method,
+        body: bodyText,
+        bodyParameters: {},
+        headers,
+    };
+
+    return matchResponseBrowser(options);
+}
+/**
+ * @public
+ */
 export interface MatchResponseBrowserInterface {
     mockdata: Mock[];
     requestUrl: string;
-    method: "GET" | "POST" | "PUT" | "DELETE";
+    method: HttpMethod;
     body: string;
     bodyParameters: Record<string, unknown>;
     headers: Record<string, string | string[] | undefined>;
